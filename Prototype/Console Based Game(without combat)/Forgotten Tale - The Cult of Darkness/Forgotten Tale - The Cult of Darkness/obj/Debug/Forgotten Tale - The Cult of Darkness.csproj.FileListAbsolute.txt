@@ -1,0 +1,6 @@
+E:\C# Programs\Forgotten Tale - The Cult of Darkness\Forgotten Tale - The Cult of Darkness\bin\Debug\Forgotten Tale - The Cult of Darkness.exe.config
+E:\C# Programs\Forgotten Tale - The Cult of Darkness\Forgotten Tale - The Cult of Darkness\bin\Debug\Forgotten Tale - The Cult of Darkness.exe
+E:\C# Programs\Forgotten Tale - The Cult of Darkness\Forgotten Tale - The Cult of Darkness\bin\Debug\Forgotten Tale - The Cult of Darkness.pdb
+E:\C# Programs\Forgotten Tale - The Cult of Darkness\Forgotten Tale - The Cult of Darkness\obj\Debug\Forgotten Tale - The Cult of Darkness.csprojResolveAssemblyReference.cache
+E:\C# Programs\Forgotten Tale - The Cult of Darkness\Forgotten Tale - The Cult of Darkness\obj\Debug\Forgotten Tale - The Cult of Darkness.exe
+E:\C# Programs\Forgotten Tale - The Cult of Darkness\Forgotten Tale - The Cult of Darkness\obj\Debug\Forgotten Tale - The Cult of Darkness.pdb
