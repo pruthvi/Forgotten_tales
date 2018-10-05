@@ -93,7 +93,7 @@ public class BasicInput : MonoBehaviour {
                 break;
 
             case 2:
-                Debug.Log("Entering in Setting");
+                OpenSettings();
                 break;
 
             case 3:
@@ -107,4 +107,10 @@ public class BasicInput : MonoBehaviour {
     }
     #endregion
 
+
+    private void OpenSettings()
+    {
+        Debug.Log("Entering in Setting");
+
+    }
 }
