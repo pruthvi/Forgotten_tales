@@ -2,8 +2,7 @@
 
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class BasicInput : MonoBehaviour {
+public class Story : MonoBehaviour {
 
     #region Variables
 
@@ -11,42 +10,48 @@ public class BasicInput : MonoBehaviour {
     private int selectedValue;
     private GameObject[] stories;
 
+    public int OptionsNo;
+
 
     [Space]
     [Header("Menu Audio Clips")]
-    public AudioClip InstructionClip;
-    public AudioClip startClip;
-    public AudioClip settingClip;
-    public AudioClip exitClip;
+    public AudioClip StoryClip;
+    public AudioClip Option1CLip;
+    public AudioClip Option2CLip;
+    public AudioClip Option3CLip;
 
     [Space]
-    public GameObject StartStory;
-	#endregion
+    [Header("Next Option")]
+    public GameObject Option1Story;
+    public GameObject Option2Story;
+    public GameObject Option3Story;
 
-	void Start ()
-	{
+    #endregion
+
+    void Start()
+    {
+        selectedValue = 0;
+        Debug.Log("Selected Option: " + selectedValue);
+        playSound(StoryClip);
         stories = GameObject.FindGameObjectsWithTag("Story");
-        DisableStories();
 
-            selectedValue = 0;
-        Debug.Log("SelectedValue:" + selectedValue);
-        playSound(InstructionClip);
+//        gameObject.GetComponent<Story>().
     }
 
-    void Update ()
-	{
-        if(Input.GetKeyDown(KeyCode.DownArrow))
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             selectedValue++;
             speakOption(selectedValue);
-            Debug.Log("SelectedValue:" + selectedValue);
+            Debug.Log("Selected Option: " + selectedValue);
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             selectedValue--;
             speakOption(selectedValue);
-            Debug.Log("SelectedValue:" + selectedValue);
+            Debug.Log("Selected Option: " + selectedValue);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -56,25 +61,26 @@ public class BasicInput : MonoBehaviour {
 
     }
 
+
     #region Speaking which option is selected
     private void speakOption(int value)
     {
         switch (value)
         {
             case 1:
-                playSound(startClip);
+                playSound(Option1CLip);
                 break;
 
             case 2:
-                playSound(settingClip);
+                playSound(Option2CLip);
                 break;
 
             case 3:
-                playSound(exitClip);
+                playSound(Option3CLip);
                 break;
 
             default:
-                playSound(InstructionClip);
+                playSound(StoryClip);
                 selectedValue = 0;
                 break;
         }
@@ -96,38 +102,31 @@ public class BasicInput : MonoBehaviour {
         switch (value)
         {
             case 1:
-                StartStory.SetActive(true);
-                gameObject.SetActive(false);
-
+                Option(Option1Story);
                 break;
 
             case 2:
-                OpenSettings();
+                Option(Option2Story);
                 break;
 
             case 3:
-                Debug.Log("Exiting Game!");
+                Option(Option3Story);
                 break;
 
             default:
-                playSound(InstructionClip);
+                playSound(StoryClip);
                 break;
         }
     }
     #endregion
 
 
-    private void OpenSettings()
+ private void Option(GameObject NextStory)
     {
-        Debug.Log("Entering in Setting");
-
-    }
-
-    private void DisableStories()
-    {
-        foreach (GameObject story in stories)
+        foreach(GameObject story in stories)
         {
             story.SetActive(false);
         }
+        NextStory.SetActive(true);
     }
 }
