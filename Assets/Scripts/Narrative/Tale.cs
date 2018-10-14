@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Narrative
 {
-    class Tale
+    public class Tale
     {
         public IDictionary<string, Act> Acts { get; private set; }
 

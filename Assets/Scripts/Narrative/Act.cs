@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.Narrative
 {
-    class Act : ISelectable
+    public class Act : ISelectable
     {
         public static int NextAvaliableAct { get; private set; }
 
         //Properties
-        public Tale Owner { get; private set; }
         public string Id { get; private set; }
-        public string Name { get; set; }
-        public string IntroDescription { get; set; }
-        public string EndDescription { get; set; }
-        //public bool ActEnds { get; set; }
-
+        public string Name;
+        public string IntroDescription;
+        public string EndDescription;
+        
         public IDictionary<string, Action> Actions { get; private set; }
         private List<string> idList;
 
@@ -25,19 +24,22 @@ namespace Assets.Scripts.Narrative
         public bool Begin { get; set; }
         public bool End { get; set; }
 
+
+
         public bool SelectingOption { get; private set; }
 
-        public Act(Tale owner, string name)
+
+        public bool firstBegin;
+
+        public Act(string name)
         {
-            this.Id = "act" + ++NextAvaliableAct;
-            this.Owner = owner;
-            this.Owner.Add(this);
-            this.Name = name;
             this.Actions = new Dictionary<string, Action>();
             this.idList = new List<string>();
+            this.Id = "act" + ++NextAvaliableAct;
+            this.Name = name;
         }
 
-        public void Add(Action action)
+        public void AddAction(Action action)
         {
             if (!Actions.ContainsKey(action.Id))
             {
@@ -62,6 +64,7 @@ namespace Assets.Scripts.Narrative
             {
                 if (idList.Count == 0)
                 {
+                    Debug.Log(idList.Count);
                     return null;
                 }
                 return Actions[idList[0]];
@@ -80,30 +83,51 @@ namespace Assets.Scripts.Narrative
             }
         }
 
-        public void NextEvent()
+        public void MoveToNextEvent()
         {
-            if (!ActBegin)
+            switch (CurrentGameEvent.Type)
             {
-                CurrentGameEvent = FirstAction;
-                ActBegin = true;
+                case GameEventType.Action:
+                    Action action = (Action)CurrentGameEvent;
+                    if (action.Status == Action.SelectionStatus.Completed)
+                    {
+                        Debug.Log("Next id - " + action.Options[action.SelectedOptionIndex].NextActionId);
+                        CurrentGameEvent = Actions[action.Options[action.SelectedOptionIndex].NextActionId];
+                    }
+                    break;
+                case GameEventType.Combat:
+                    break;
             }
-            else
+        }
+
+
+
+        public void UpdateSelection()
+        {
+            switch (CurrentGameEvent.Type)
             {
-                switch (CurrentGameEvent.Type)
-                {
-                    case GameEventType.Action:
-                        CurrentGameEvent = ((Action)CurrentGameEvent).Options[SelectedOption];
-                        break;
-                    case GameEventType.Option:
-                        CurrentGameEvent = Actions[((Option)CurrentGameEvent).NextActionId];
-                        break;
-                    case GameEventType.Combat:
-                        break;
-                }
+                case GameEventType.Action:
+                    Debug.Log("Compeleted Selection");
+                    Action action = (Action)CurrentGameEvent;
+                    if (action.Status == Action.SelectionStatus.Completed)
+                    {
+                        Debug.Log("Next id - " + action.Options[action.SelectedOptionIndex - 1].NextActionId);
+                        CurrentGameEvent = Actions[action.Options[action.SelectedOptionIndex - 1].NextActionId];
+                    }
+                    break;
+                case GameEventType.Combat:
+                    break;
             }
         }
 
         public int SelectedOption { get; set; }
+
+
+        public void BeginAct() {
+            firstBegin = true;
+            Begin = true;
+            CurrentGameEvent = FirstAction;
+        }
 
         public IGameEvent CurrentGameEvent
         {

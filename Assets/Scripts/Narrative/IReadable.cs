@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Narrative
 {
-    interface IReadable
+    public interface IReadable
     {
         string Text { get; }
     }

@@ -34,6 +34,14 @@ namespace Assets.Scripts.Utilities
             this.interval = interval;
         }
 
+        public Timer(float interval, bool readyOnStart) : this(interval)
+        {
+            if (readyOnStart)
+            {
+                timer = interval;
+            }
+        }
+
         public void Tick(float deltaTime)
         {
             if(timer < interval)

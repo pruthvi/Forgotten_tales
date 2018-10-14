@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Assets.Scripts.Narrative
 {
-    class Option : ISelectable, IReadable, IGameEvent
+    [Serializable]
+    public class Option : ISelectable, IReadable, IGameEvent
     {
         public string NextActionId { get; private set; }
 
@@ -31,10 +32,14 @@ namespace Assets.Scripts.Narrative
             }
         }
 
-        public Option(string text, string nextActionId)
+        public Action Owner;
+
+        public Option(Action owner, string text, string nextActionId)
         {
+            this.Owner = owner;
             this.Text = text;
             this.NextActionId = nextActionId;
+            this.Owner.AddOption(this);
         }
 
         public void OnHover()

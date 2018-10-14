@@ -204,6 +204,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 922008879}
+  InputInterval: 1
+  narratorSettings:
+    text: {fileID: 0}
+  CurrentAct:
+    Name: 
+    IntroDescription: 
+    EndDescription: 
+    firstBegin: 0
 --- !u!1 &868734476
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +407,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '...'
+  m_Text: 'Loading...
+
+'
 --- !u!222 &922008880
 CanvasRenderer:
   m_ObjectHideFlags: 0

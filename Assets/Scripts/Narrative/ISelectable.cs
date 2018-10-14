@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Narrative
 {
-    interface ISelectable
+    public interface ISelectable
     {
         void OnHover();
         void OnConfirm();

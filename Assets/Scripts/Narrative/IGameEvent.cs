@@ -7,9 +7,9 @@ namespace Assets.Scripts.Narrative
 {
     public enum GameEventType { Action, Option, Combat }
 
-    interface IGameEvent
+    public interface IGameEvent
     {
         GameEventType Type { get; }
-        IGameEvent NextEvent { get; }
+        //IGameEvent NextEvent { get; }
     }
 }
