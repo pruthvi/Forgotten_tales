@@ -1,0 +1,236 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b2b238ccf4b12479f6a969e1f4d014, type: 3}
+  m_Name: Act1
+  m_EditorClassIdentifier: 
+  Name: Act 1
+  AudioName: {fileID: 0}
+  PrologueTextDescription: "It is said that history becomes legend as its events recede
+    into the mists of time and that memories grow dimmer in the slumber of peace.
+    Thus, the noble people of Atmos languished in thousand years of peaceful splendor
+    and forget the dark times they lived once. \r\nBut the evil, never forgot.\r\nSo
+    Eligos, the god of death, rise from the darkness once again to release an ancient
+    evil sealed long time ago. Consuming and corrupting every greed heart, Elios will
+    seek all decay living being to bring back his champion once more.\r\nNow, Atmos's
+    fate is uncertain as a shadowy hand rest on it.\r"
+  AudioPrologue: {fileID: 8300000, guid: 0983cfab330b40b4cb3f54eb7fcfe22b, type: 3}
+  AudioIntros:
+  - {fileID: 8300000, guid: b2e3950f8ff93544bbc6fc2ea7694e83, type: 3}
+  Dialogues:
+  - Name: Dialogue 1
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 9a5ff0da98db2884cab557715993985b, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: I go to the door and open it to know who was there
+      AudioDescription: {fileID: 8300000, guid: 4907da79f78d9414fa54653b958cab03,
+        type: 3}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: I ignore the call. I need to finish this research as soon as
+        possible.
+      AudioDescription: {fileID: 8300000, guid: e7cd7ef4614beb8489525ff193b08aad,
+        type: 3}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 2
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 9ffa775a0b7c69649a7b30573f97262f, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 8300000, guid: be787866bed57ca44b4d77d65735abd0,
+        type: 3}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 8300000, guid: 31fc872025796e145b012ccd97d774c8,
+        type: 3}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 3
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 94b885d96f5be184cbab7c43bd12a9a9, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 4
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: fdeea80c42bb29a42a037ff90e1869dd, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 5
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: e98903e061bc839499ebb909d62653a2, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 6
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 5be53808df907b348a5966f76a9c7721, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 7
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: e8e5eaa8ed4cc454e863b912703ace9a, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 8
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 82ecbbcbee0a4a248aec8c32a75d906d, type: 3}
+    Options: []
+  - Name: Dialogue 9
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: ae2fe463118167c4eacd5fa49b866c3a, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 10
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 798ff17890dbaa049ae4071984d46aa4, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 11
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 489d8390c168a9e4795dce6276605c80, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 12
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 243695f4a52bc0a4db2e279f8afdd172, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 13
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: b5934ee2fa9b33f428f3b1af467e29b0, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 14
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: c913fcb9da92f114ca7bd85034dd65e1, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 15
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 58fba0974383ea54898ce3a85ed32ca6, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 15 A
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: df7f099d0003b474c893fc0d42ee8268, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 16
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: ad92a96157add8a45a7030a205514390, type: 3}
+    Options:
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+    - Name: Option
+      TextDescription: 
+      AudioDescription: {fileID: 0}
+      NextEvent: {fileID: 0}
+  - Name: Dialogue 17
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 81891a42a5c47af4397673354ab7ccaa, type: 3}
+    Options: []
+  - Name: Dialogue 18
+    TextDescription: 
+    AudioDescription: {fileID: 8300000, guid: 1d189daecd7e4e145b7fd57c615cc841, type: 3}
+    Options: []

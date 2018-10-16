@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
-public class Spell
+[CreateAssetMenu(menuName = "Forgotten Tale/Combat/Spell")]
+public class Spell : ScriptableObject
 {
-    public float BaseDamage { get; private set; }
-
-    public float DamageModifier { get; private set; }
+    public string Name;
+    public float BaseDamage = 1;
+    public float DamageModifier = 1;
+    public AudioClip sfxSoundOnFire;
+    public AudioClip sfxSoundOnAttacked;
 
     public float TotalDamage
     {
