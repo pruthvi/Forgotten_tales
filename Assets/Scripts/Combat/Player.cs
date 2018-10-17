@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : ICombatant {
+public class Player : ScriptableObject, ICombatant {
 
     public string Name { get; set; }
     public CombatantInfo CombatantInfo { get; set; }

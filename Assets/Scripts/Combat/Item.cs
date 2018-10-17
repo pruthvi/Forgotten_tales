@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ItemType { Etc, Consumable }
-public class Item {
+
+public class Item : ScriptableObject {
 
     private static int nextItemId;
     public int Id { get; private set; }

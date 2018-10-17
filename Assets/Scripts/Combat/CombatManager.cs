@@ -7,8 +7,9 @@ public enum CombatResult { None, AttackerWon, AttackerLost }
 public enum CombatStatus { Start, InProgress, End }
 public enum CombatTurn { Attacker, Defender }
 public enum CombatAction { Idle, CastSpell, Attack, UseItem, Defense, Run }
-public class CombatManager {
-    
+public class CombatManager
+{
+
     public CombatResult CombatResult;
     public CombatStatus CombatStatus;
     public CombatTurn CombatTurn;
@@ -25,37 +26,37 @@ public class CombatManager {
         TurnEnds = false;
     }
 
-    public void CombatUpdate()
-    {
-        // if combat still in progress
-        if (CombatStatus == CombatStatus.InProgress)
-        {
-            
-
-            if (!TurnEnds)
-            {
-                Debug.Log("Select an option: 1. Attack 2. Item 3. Run");
-                // Get the user input
-                switch (GameManager.GetSelectedIntValue())
-                {
-                    case 1:
-                        Debug.Log("You Selected to attack");
-                        break;
-                    case 2:
-                        Debug.Log("You Selected to use Item");
-                        break;
-                    case 3:
-                        Debug.Log("You Selected to run");
-                        CombatResult = CombatResult.AttackerWon;
-                        break;
-                }
-                
-            }
+    //public void CombatUpdate()
+    //{
+    //    // if combat still in progress
+    //    if (CombatStatus == CombatStatus.InProgress)
+    //    {
 
 
-        }
+    //        if (!TurnEnds)
+    //        {
+    //            Debug.Log("Select an option: 1. Attack 2. Item 3. Run");
+    //            // Get the user input
+    //            switch (GameManager.GetSelectedIntValue())
+    //            {
+    //                case 1:
+    //                    Debug.Log("You Selected to attack");
+    //                    break;
+    //                case 2:
+    //                    Debug.Log("You Selected to use Item");
+    //                    break;
+    //                case 3:
+    //                    Debug.Log("You Selected to run");
+    //                    CombatResult = CombatResult.AttackerWon;
+    //                    break;
+    //            }
 
-    }
+    //        }
+
+
+    //    }
+
+    //}
 
     // Switch turns between attacker and defender
     public void SwitchTurn()

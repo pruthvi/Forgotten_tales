@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum InputLayer { MainMenu, DialogueChoice, CombatChoice, Combat }
-public enum GameState { Prologue, Dialogue, Option, Combat }
+public enum GameState { MainMenu, InGame, Settings }
 public enum NarrativeType { NarrativePrologue, NarrativeDialogue, NarrativeCombat, NarrativeCombatChoice }
-
-public class GameManager : MonoBehaviour {
+public enum NarratorStatus { Idle, Speaking, Completed }
+public enum NarratorProgress { Prologue, Intro, Dialogue, DialogueOption }
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager Instance;
 
@@ -19,24 +21,60 @@ public class GameManager : MonoBehaviour {
     public int MaxSelectionInput = 3;
 
     public InputLayer InputLayer;
-    public GameState GameState;
+    private GameState _gameState;
+    public GameState GameState
+    {
+        get
+        {
+            return _gameState;
+        }
+        set
+        {
+            _gameState = value;
+            switch (value)
+            {
+                case GameState.MainMenu:
+                    updateMainMenuDisplay();
+                    break;
+                case GameState.Settings:
+                    updateSettingsDisplay();
+                    break;
+            }
+        }
+    }
     public NarrativeType NarrativeType;
+
+    public NarratorProgress NarratorProgress;
+    public NarratorStatus NarratorStatus;
 
     [SerializeField]
     public int LastSelectionInput { get; private set; }
 
-   
 
-    public Text text;
-   
+
+    public Text textUI;
+    public Text textDescription;
+
     public Act[] Act;
 
     private Act _currentAct;
-    private Dialogue _currentDialogue;
-    private Option[] _currentOptions;
+
+    private GameEvent _currentEvent;
 
     private int _currentActIndex = 0;
     private int _currentDialogueIndex = 0;
+
+    private AudioSource _backgroundSource;
+    private AudioSource _sfxSource;
+    private AudioSource _narrativeSource;
+
+    private string[] _menuItems = { "Start", "Settings", "Exit" };
+    private int _menuSelectedIndex = 0;
+    private int _optionSelectedIndex = 0;
+
+    private int _introIndex = 0;
+
+    private string textInstruction = "[R] - Replay | [F] Fastforward | [Esc] Skip | ";
 
     void Awake()
     {
@@ -53,7 +91,9 @@ public class GameManager : MonoBehaviour {
 
         audioManager = GetComponentInChildren<AudioManager>();
 
-        
+        _backgroundSource = audioManager.BackgroundSource;
+        _sfxSource = audioManager.SfxSource;
+        _narrativeSource = audioManager.NarrativeSource;
     }
 
     void InitGame()
@@ -64,8 +104,14 @@ public class GameManager : MonoBehaviour {
         combatManager = new CombatManager();
         LastSelectionInput = -1;
 
-        GameState = GameState.Prologue;
-        InputLayer = InputLayer.MainMenu;
+        NarratorProgress = NarratorProgress.Prologue;
+        NarratorStatus = NarratorStatus.Idle;
+
+        _currentAct = Act[0];
+
+        updateMainMenuDisplay();
+        //GameState = GameState.Prologue;
+        //InputLayer = InputLayer.MainMenu;
     }
 
     // Use this for initialization
@@ -74,46 +120,301 @@ public class GameManager : MonoBehaviour {
         InitGame();
     }
 
-    public static int GetSelectedIntValue()
-    {
-        int result = -1;
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            result = 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            result = 2;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            result = 3;
-        }
-
-        if(result != -1)
-            Debug.Log("You Selected " + GetSelectedIntValue());
-
-        return result;
-    }
-
     // Update is called once per frame
     void Update()
     {
-        // update narrative type
+        // Check which state is the game in EX) MainMenu, InGame, Settings
+        switch (GameState)
+        {
+            case GameState.MainMenu:
+                updateSelection();
+                break;
+            case GameState.InGame:
+                // Update Narrator Progress
+                updateNarratorProgress();
+                updateInGame();
+                // update narrative type
 
-        narrativeTypeUpdate();
+                //narrativeTypeUpdate();
 
-        // update input layer
+                // update input layer
 
-        inputLayerUpdate();
+                //inputLayerUpdate();
 
-        // update game state
+                // update game state
 
-        gameStateUpdate();
+                //gameStateUpdate();
+                break;
+            case GameState.Settings:
+                updateSettingsDisplay();
+                updateSettings();
+                break;
+        }
     }
+
+    private void updateMainMenuDisplay()
+    {
+        string menu = "";
+        for (int i = 0; i < _menuItems.Length; i++)
+        {
+            menu += (_menuSelectedIndex == i ? "> " : "\t") + _menuItems[i] + "\n";
+        }
+        textDescription.text = menu;
+    }
+
+    private void updateSelection()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (GameState == GameState.MainMenu)
+            {
+                if (_menuSelectedIndex - 1 < 0)
+                {
+                    _menuSelectedIndex = _menuItems.Length - 1;
+                }
+                else
+                {
+                    _menuSelectedIndex--;
+                }
+                updateMainMenuDisplay();
+            }
+            else if (GameState == GameState.InGame)
+            {
+                if (_optionSelectedIndex - 1 < 0)
+                {
+                    _optionSelectedIndex = _currentAct.CurrentDialogue.Options.Count - 1;
+                }
+                else
+                {
+                    _optionSelectedIndex--;
+                    NarratorStatus = NarratorStatus.Idle;
+                }
+                updateOptionDisplay();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (GameState == GameState.MainMenu)
+            {
+                if (_menuSelectedIndex + 1 >= _menuItems.Length)
+                {
+                    _menuSelectedIndex = 0;
+                }
+                else
+                {
+                    _menuSelectedIndex++;
+                }
+                updateMainMenuDisplay();
+            }
+            else if (GameState == GameState.InGame)
+            {
+                if (_optionSelectedIndex + 1 >= _currentAct.CurrentDialogue.Options.Count)
+                {
+                    _optionSelectedIndex = 0;
+                }
+                else
+                {
+                    _optionSelectedIndex++;
+                }
+                updateOptionDisplay();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (GameState == GameState.MainMenu)
+            {
+                switch (_menuSelectedIndex)
+                {
+                    case 0:
+                        // Start Game
+                        GameState = GameState.InGame;
+                        updateInGameDisplay();
+                        break;
+                    case 1:
+                        // Go to Setting
+                        GameState = GameState.Settings;
+                        break;
+                    case 2:
+                        // Exit Game
+                        Debug.Log("Exit Game");
+                        break;
+                }
+            }
+            else if(GameState == GameState.InGame)
+            {
+                // Move to next dialogue/event
+                _currentAct.NextDialogue(_optionSelectedIndex);
+            }
+            
+        }
+    }
+
+    private void updateSettingsDisplay()
+    {
+        textUI.text = "Settings\n[Esc] Back to Menu";
+    }
+
+    private void updateSettings()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameState = GameState.MainMenu;
+        }
+    }
+
+    private void updateNarratorProgress()
+    {
+        switch (NarratorProgress)
+        {
+            case NarratorProgress.Prologue:
+                // if speaking
+                // if idel say the text
+                if (NarratorStatus == NarratorStatus.Idle)
+                {
+                    textDescription.text = _currentAct.PrologueTextDescription;
+                    _narrativeSource.clip = _currentAct.AudioPrologue;
+                    _narrativeSource.Play();
+                    NarratorStatus = NarratorStatus.Speaking;
+                    return;
+                }
+                // check if narrator speaking
+                checkIfFinishedPlay();
+                // move to next stage(intro) if narrator completed speaking
+                if (NarratorStatus == NarratorStatus.Completed)
+                {
+                    NarratorProgress = NarratorProgress.Intro;
+                    NarratorStatus = NarratorStatus.Idle;
+                }
+                break;
+            case NarratorProgress.Intro:
+                if (NarratorStatus == NarratorStatus.Idle)
+                {
+                    textDescription.text = _currentAct.IntroTextDescriptions[_introIndex];
+                    _narrativeSource.clip = _currentAct.AudioIntros[_introIndex];
+                    _narrativeSource.Play();
+                    NarratorStatus = NarratorStatus.Speaking;
+                }
+                checkIfFinishedPlay();
+                if (NarratorStatus == NarratorStatus.Completed)
+                {
+                    _introIndex++;
+                    NarratorStatus = NarratorStatus.Idle;
+                    if (_introIndex == _currentAct.IntroTextDescriptions.Length)
+                    {
+                        NarratorProgress = NarratorProgress.Dialogue;
+                    }
+                }
+                break;
+            case NarratorProgress.Dialogue:
+                if (NarratorStatus == NarratorStatus.Idle)
+                {
+                    textDescription.text = _currentAct.CurrentDialogue.TextDescription;
+                    _narrativeSource.clip = _currentAct.CurrentDialogue.AudioDescription;
+                    _narrativeSource.Play();
+                    NarratorStatus = NarratorStatus.Speaking;
+                }
+                checkIfFinishedPlay();
+                if (NarratorStatus == NarratorStatus.Completed)
+                {
+                    NarratorProgress = NarratorProgress.DialogueOption;
+                    NarratorStatus = NarratorStatus.Idle;
+                    _optionSelectedIndex = 0;
+                }
+                break;
+            case NarratorProgress.DialogueOption:
+                if (NarratorStatus == NarratorStatus.Idle)
+                {
+                    _narrativeSource.clip = _currentAct.CurrentDialogue.Options[_optionSelectedIndex].AudioDescription;
+                    updateOptionDisplay();
+                }
+                checkIfFinishedPlay();
+                if (NarratorStatus == NarratorStatus.Completed)
+                {
+                    if (_optionSelectedIndex == _currentAct.CurrentDialogue.Options.Count && _optionSelectedIndex != 0)
+                    {
+                        NarratorProgress = NarratorProgress.Dialogue;
+                    }
+                }
+                break;
+        }
+    }
+
+    private void updateOptionDisplay()
+    {
+        string options = "";
+        for (int i = 0; i < _currentAct.CurrentDialogue.Options.Count; i++)
+        {
+            options += (_optionSelectedIndex == i ? "> " : "\t") + " Option " + (i + 1) + ": \n\t\t" + _currentAct.CurrentDialogue.Options[i].TextDescription + "\n";
+        }
+        textDescription.text = _currentAct.CurrentDialogue.TextDescription + "\n" + options;
+        _narrativeSource.clip = _currentAct.CurrentDialogue.Options[_optionSelectedIndex].AudioDescription;
+        NarratorStatus = NarratorStatus.Speaking;
+        _narrativeSource.Play();
+    }
+
+    private void checkIfFinishedPlay()
+    {
+        if (NarratorStatus == NarratorStatus.Speaking)
+        {
+            // if current narrative source not playing set the narrator status to completed
+            if (!_narrativeSource.isPlaying)
+            {
+                NarratorStatus = NarratorStatus.Completed;
+            }
+        }
+    }
+
+    private void updateInGame()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _narrativeSource.Play();
+            NarratorStatus = NarratorStatus.Speaking;
+        }
+        // If currently playing options
+        if (NarratorProgress == NarratorProgress.DialogueOption)
+        {
+            updateSelection();
+        }
+        if (NarratorStatus == NarratorStatus.Speaking)
+        {
+            // Skip
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _narrativeSource.Stop();
+                NarratorStatus = NarratorStatus.Completed;
+            }
+
+            // Fastforward
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                audioManager.FastForwardNarrative();
+                updateInGameDisplay();
+            }
+        }
+    }
+
+    private void updateInGameDisplay()
+    {
+        textUI.text = textInstruction + "Speed: x" + audioManager.FastForwardModifier;
+    }
+
+    //private void narratorStatusUpdate()
+    //{
+    //    switch (NarratorStatus)
+    //    {
+    //        case NarratorStatus.Idel:
+    //            // 
+    //            break;
+    //        case NarratorStatus.Speaking:
+    //            // Skip
+
+    //            // Fastforward
+    //            break;
+    //        case NarratorStatus.Completed:
+    //            break;
+    //    }
+    //}
 
     private void narrativeTypeUpdate()
     {
@@ -122,7 +423,6 @@ public class GameManager : MonoBehaviour {
             case NarrativeType.NarrativePrologue:
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    GameState = GameState.Dialogue;
                     audioManager.NarrativeSource.Stop();
                     _currentDialogueIndex++;
                 }
@@ -148,29 +448,29 @@ public class GameManager : MonoBehaviour {
 
     private void inputLayerUpdate()
     {
-        switch (GameState)
-        {
-            case GameState.Prologue:
-                displayPrologueTextAndPlay();
-                break;
-            case GameState.Dialogue:
-                displayDialogueTextWithOptionAndPlay();
-                break;
-            case GameState.Option:
-                break;
-            case GameState.Combat:
-                if (combatManager.CombatStatus != CombatStatus.InProgress)
-                {
-                    if (Input.GetKeyDown(KeyCode.B))
-                    {
-                        Enemy goblin = new Enemy("Goblin", 100, 0);
+        //switch (GameState)
+        //{
+        //    case GameState.Prologue:
+        //        displayPrologueTextAndPlay();
+        //        break;
+        //    case GameState.Dialogue:
+        //        displayDialogueTextWithOptionAndPlay();
+        //        break;
+        //    case GameState.Option:
+        //        break;
+        //    case GameState.Combat:
+        //        if (combatManager.CombatStatus != CombatStatus.InProgress)
+        //        {
+        //            if (Input.GetKeyDown(KeyCode.B))
+        //            {
+        //                Enemy goblin = new Enemy("Goblin", 100, 0);
 
-                        combatManager.StartCombat(goblin, Player);
+        //                combatManager.StartCombat(goblin, Player);
 
-                    }
-                }
-                break;
-        }
+        //            }
+        //        }
+        //        break;
+        //}
     }
 
     private void gameStateUpdate()
@@ -185,34 +485,33 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        text.text = _currentAct.PrologueTextDescription + "\n\n Press [Enter] to continue...";
+        textDescription.text = _currentAct.PrologueTextDescription + "\n\n Press [Enter] to continue...";
         audioManager.NarrativeSource.clip = _currentAct.AudioPrologue;
         audioManager.NarrativeSource.Play();
 
-       // InputLayer = InputLayer.Narrative;
+        // InputLayer = InputLayer.Narrative;
     }
 
-    private void displayDialogueTextWithOptionAndPlay()
+    /* Switch to next GameEvent
+        Dialogue -> Dialogue
+        Dialogue -> Combat
+    */
+    public void Next()
     {
-        _currentDialogue = _currentAct.Dialogues[_currentDialogueIndex];
-        if (_currentDialogue == null)
+        switch (_currentEvent.EventType)
         {
-            return;
+            case EventType.Dialogue:
+                //   Dialogue dialogue = _currentEvent;                           
+                break;
+            case EventType.Combat:
+                // Combat eventCombat = (Combat) _currentEvent;
+                // switch(eventCombat.CombatResult)
+                // win
+                // _currentEvent = eventCombat.WinEvent;
+                // lost
+                //_currentEvent = eventCombat.LostEvent;
+                break;
         }
-
-        string textOptions = "";
-
-        for (int i = 0; i < _currentDialogue.Options.Length; i++)
-        {
-            textOptions += "\nOption " + (i+1) + ": " + _currentDialogue.Options[i];
-        }
-
-        text.text = _currentDialogue.TextDescription + "\n" + textOptions;
-        audioManager.NarrativeSource.clip = _currentDialogue.AudioDescription;
-        audioManager.NarrativeSource.Play();
-
-        GameState = GameState.Dialogue;
-        InputLayer = InputLayer.DialogueChoice;
     }
 
     private void updateLastInput()
@@ -252,6 +551,6 @@ public class GameManager : MonoBehaviour {
         //    case InputLayer.Combat:
         //        break;
         //}
-        
+
     }
 }

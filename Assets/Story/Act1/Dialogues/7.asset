@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
+  m_Name: 7
+  m_EditorClassIdentifier: 
+  NextEvent: {fileID: 0}
+  Name: Dialogue
+  TextDescription: "It's almost nighttime, you're tired. Probably someone wanted to
+    play a prank. You are very bored with yourself, for the time lost. And then you
+    go back to your room to continue your research. (go to 9)\r\n"
+  AudioDescription: {fileID: 8300000, guid: e8e5eaa8ed4cc454e863b912703ace9a, type: 3}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : ICombatant {
+public class Enemy : ScriptableObject, ICombatant {
     public string Name
     {
         get; set;

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
+  m_Name: 11
+  m_EditorClassIdentifier: 
+  NextEvent: {fileID: 0}
+  Name: Dialogue
+  TextDescription: "The room is in complete chaos. The person who invaded took almost
+    everything without a trace. There is only one local teleportation scroll, you
+    keep it and run into the Kalimari headmaster's room (go to 10)\r"
+  AudioDescription: {fileID: 8300000, guid: 489d8390c168a9e4795dce6276605c80, type: 3}
