@@ -19,3 +19,6 @@ MonoBehaviour:
     your name as I've been looking for you, worried. The person seems injured. What
     are you going to do?
   AudioDescription: {fileID: 8300000, guid: 243695f4a52bc0a4db2e279f8afdd172, type: 3}
+  Options:
+  - {fileID: 11400000, guid: 350d4a35ff92aad47918eaa8091fd449, type: 2}
+  - {fileID: 11400000, guid: ae8aed19a02ce0140b7ed0e1a1400738, type: 2}

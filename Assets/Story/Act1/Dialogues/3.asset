@@ -17,3 +17,6 @@ MonoBehaviour:
     themselves and talk to you. But after an hour no one appeared. What are you going
     to do?
   AudioDescription: {fileID: 8300000, guid: fdeea80c42bb29a42a037ff90e1869dd, type: 3}
+  Options:
+  - {fileID: 11400000, guid: 60f54bfc95aa4de4aa5a8e45a0c42ef3, type: 2}
+  - {fileID: 11400000, guid: d5144faec99632349a259fa6860bbfc5, type: 2}

@@ -32,28 +32,33 @@ public class Act : ScriptableObject {
             return _currentDialogueIndex == Dialogues.Count - 1;
         }
     }
-    //public Dictionary<string, Dialogue> Dialogues { get; private set; }
 
-    //public List<string> Keys;
-    public List<Dialogue> Dialogues;
+    public List<Dialogue> Dialogues = new List<Dialogue>();
+    
 
-    public Act()
-    {
-        Dialogues = new List<Dialogue>();
-        //Dialogues = new Dictionary<string, Dialogue>();
-    }
-
-    public void NextDialogue(int index)
+    public bool NextDialogue(int index)
     {
         // check if is valid selection
         if (index < CurrentDialogue.Options.Count)
         {
-            _currentDialogueIndex = indexOf((Dialogue)CurrentDialogue.Options[index].NextEvent);
+            int indexOfDialogue = indexOf((Dialogue)CurrentDialogue.Options[index].NextEvent);
+            if (indexOfDialogue == -1)
+            {
+                return false;
+            }
+            else
+            {
+                Debug.Log(_currentDialogueIndex);
+                if (_currentDialogueIndex + 1 < Dialogues.Count)
+                {
+                    _currentDialogueIndex++;
+                    Debug.Log(_currentDialogueIndex + "++");
+                    return true;
+                }
+            }
+            
         }
-
-
-        if(_currentDialogueIndex + 1 < Dialogues.Count)
-            _currentDialogueIndex++;
+        return false;
     }
 
     private int indexOf(Dialogue d)
@@ -72,13 +77,8 @@ public class Act : ScriptableObject {
     {
         if (d != null)
         {
+            d.Id = "A" + Dialogues.Count;
             Dialogues.Add(d);
         }
-        //Dialogue tempD = null;
-        //if (!Dialogues.TryGetValue(d.Id, out tempD))
-        //{
-        //    Dialogues.Add(d.Id, d);
-        //    return true;
-        //}
     }
 }

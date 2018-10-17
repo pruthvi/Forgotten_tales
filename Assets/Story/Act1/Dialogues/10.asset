@@ -19,3 +19,6 @@ MonoBehaviour:
     through it you see several flaming points going in the direction of the Arcane
     Academy. They are huge fireballs! What are you going to do?
   AudioDescription: {fileID: 8300000, guid: 798ff17890dbaa049ae4071984d46aa4, type: 3}
+  Options:
+  - {fileID: 11400000, guid: b4b912ce31a81eb4890b0da66b3c70ca, type: 2}
+  - {fileID: 11400000, guid: 55917cbffdaf2e64b838a96e346e122b, type: 2}

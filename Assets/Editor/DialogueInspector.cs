@@ -7,7 +7,7 @@ using UnityEditor;
 [CanEditMultipleObjects]
 public class DialogueInspector : Editor {
 
-    private Option newOption;
+    private Option option;
 
     public override void OnInspectorGUI()
     {
@@ -16,24 +16,32 @@ public class DialogueInspector : Editor {
 
         Dialogue d = target as Dialogue;
 
+        /*
         // Dialogues
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Options: ");
-        newOption = (Option)EditorGUILayout.ObjectField(newOption, typeof(Option), false);
+        option = (Option)EditorGUILayout.ObjectField(option, typeof(Option), false);
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Add Option"))
         {
-            d.AddOption(newOption);
-            newOption = null;
+            d.AddOption(option);
+            option = null;
+        }
+        if (GUILayout.Button("Remove Option"))
+        {
+            d.RemoveOption(option);
+            option = null;
         }
         EditorGUILayout.EndHorizontal();
-
-        int index = 1;
-        foreach (Option p in d.Options)
-        {
-            GUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Option " + index++ + ":");
-            EditorGUILayout.ObjectField(p, typeof(Option), false);
-            GUILayout.EndHorizontal();
-        }
+        */
+        //int index = 1;
+        //foreach (Option p in d.Options)
+        //{
+        //    GUILayout.BeginHorizontal();
+        //    EditorGUILayout.LabelField("Option " + index++ + "("+ p.Id + "):" );
+        //    EditorGUILayout.ObjectField(p, typeof(Option), false);
+        //    GUILayout.EndHorizontal();
+        //}
     }
 }

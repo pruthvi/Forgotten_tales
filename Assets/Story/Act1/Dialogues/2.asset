@@ -16,3 +16,6 @@ MonoBehaviour:
   TextDescription: After a few minutes someone knock the door again, but this time
     much stronger, as if they were kicking the door. What are you going to do?
   AudioDescription: {fileID: 8300000, guid: 94b885d96f5be184cbab7c43bd12a9a9, type: 3}
+  Options:
+  - {fileID: 11400000, guid: 73263b9d92e40d84b8a6bf163a2a5014, type: 2}
+  - {fileID: 11400000, guid: 4e08605b65cd7fa4e930ff48555b7f5a, type: 2}

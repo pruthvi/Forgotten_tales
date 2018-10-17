@@ -42,10 +42,14 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public NarrativeType NarrativeType;
 
+    // Narrative
+    public NarrativeType NarrativeType;
     public NarratorProgress NarratorProgress;
     public NarratorStatus NarratorStatus;
+
+    // Input
+    public InputStatus InputStatus;
 
     [SerializeField]
     public int LastSelectionInput { get; private set; }
@@ -107,6 +111,8 @@ public class GameManager : MonoBehaviour
         NarratorProgress = NarratorProgress.Prologue;
         NarratorStatus = NarratorStatus.Idle;
 
+        InputStatus = InputStatus.Idle;
+
         _currentAct = Act[0];
 
         updateMainMenuDisplay();
@@ -133,6 +139,7 @@ public class GameManager : MonoBehaviour
                 // Update Narrator Progress
                 updateNarratorProgress();
                 updateInGame();
+                updateSelection();
                 // update narrative type
 
                 //narrativeTypeUpdate();
@@ -228,7 +235,7 @@ public class GameManager : MonoBehaviour
                     case 0:
                         // Start Game
                         GameState = GameState.InGame;
-                        updateInGameDisplay();
+                        updateInGameUIDisplay();
                         break;
                     case 1:
                         // Go to Setting
@@ -243,7 +250,10 @@ public class GameManager : MonoBehaviour
             else if(GameState == GameState.InGame)
             {
                 // Move to next dialogue/event
-                _currentAct.NextDialogue(_optionSelectedIndex);
+                if (InputStatus == InputStatus.Selecting)
+                {
+                    InputStatus = InputStatus.Completed;
+                }
             }
             
         }
@@ -319,13 +329,15 @@ public class GameManager : MonoBehaviour
                     NarratorProgress = NarratorProgress.DialogueOption;
                     NarratorStatus = NarratorStatus.Idle;
                     _optionSelectedIndex = 0;
+                    InputStatus = InputStatus.Idle;
                 }
                 break;
             case NarratorProgress.DialogueOption:
                 if (NarratorStatus == NarratorStatus.Idle)
                 {
-                    _narrativeSource.clip = _currentAct.CurrentDialogue.Options[_optionSelectedIndex].AudioDescription;
+                  //  _narrativeSource.clip = _currentAct.CurrentDialogue.Options[_optionSelectedIndex].AudioDescription;
                     updateOptionDisplay();
+                    InputStatus = InputStatus.Selecting;
                 }
                 checkIfFinishedPlay();
                 if (NarratorStatus == NarratorStatus.Completed)
@@ -346,10 +358,13 @@ public class GameManager : MonoBehaviour
         {
             options += (_optionSelectedIndex == i ? "> " : "\t") + " Option " + (i + 1) + ": \n\t\t" + _currentAct.CurrentDialogue.Options[i].TextDescription + "\n";
         }
-        textDescription.text = _currentAct.CurrentDialogue.TextDescription + "\n" + options;
-        _narrativeSource.clip = _currentAct.CurrentDialogue.Options[_optionSelectedIndex].AudioDescription;
-        NarratorStatus = NarratorStatus.Speaking;
-        _narrativeSource.Play();
+        textDescription.text = _currentAct.CurrentDialogue.TextDescription + "\n[" + (_optionSelectedIndex + 1) + "]" + "\n" + options;
+        if (_optionSelectedIndex < _currentAct.CurrentDialogue.Options.Count - 1)
+        {
+            _narrativeSource.clip = _currentAct.CurrentDialogue.Options[_optionSelectedIndex].AudioDescription;
+            NarratorStatus = NarratorStatus.Speaking;
+            _narrativeSource.Play();
+        }
     }
 
     private void checkIfFinishedPlay()
@@ -389,12 +404,24 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 audioManager.FastForwardNarrative();
-                updateInGameDisplay();
+                updateInGameUIDisplay();
+            }
+        }
+
+
+        // Update Input
+        if (InputStatus == InputStatus.Completed)
+        {
+            if (_currentAct.NextDialogue(_optionSelectedIndex))
+            {
+
+                updateInGameUIDisplay();
+                InputStatus = InputStatus.Idle;
             }
         }
     }
 
-    private void updateInGameDisplay()
+    private void updateInGameUIDisplay()
     {
         textUI.text = textInstruction + "Speed: x" + audioManager.FastForwardModifier;
     }

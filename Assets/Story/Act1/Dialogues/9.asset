@@ -19,3 +19,6 @@ MonoBehaviour:
     to the point of doing so? You need to make a decision right now. What are you
     going to do?
   AudioDescription: {fileID: 8300000, guid: ae2fe463118167c4eacd5fa49b866c3a, type: 3}
+  Options:
+  - {fileID: 11400000, guid: e06f2c82ff74801419436cfd25eb440f, type: 2}
+  - {fileID: 11400000, guid: 59a79e7c3a1e6694893da75d231d7b2d, type: 2}

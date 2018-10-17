@@ -30,6 +30,6 @@ public class AudioManager : MonoBehaviour{
             FastForwardModifier++;
         }
 
-        NarrativeSource.pitch = 1 + (0.25f * (FastForwardModifier));
+        NarrativeSource.pitch = 1 + (FastForwardModifier == 1 ? 0 : (0.25f * (FastForwardModifier - 1)));
     }
 }

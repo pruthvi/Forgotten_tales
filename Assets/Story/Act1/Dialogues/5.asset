@@ -18,3 +18,6 @@ MonoBehaviour:
     spit with horrible smell. You feel dizzy and you see someone in front of you.
     And that person is heading for your table. What are you going to do?
   AudioDescription: {fileID: 8300000, guid: 5be53808df907b348a5966f76a9c7721, type: 3}
+  Options:
+  - {fileID: 11400000, guid: 077c7c9e3674e9b4fa5c230dce6e9bc8, type: 2}
+  - {fileID: 11400000, guid: 1ecad6f2eeb87e44887f24296cea289b, type: 2}

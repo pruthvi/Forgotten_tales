@@ -18,3 +18,6 @@ MonoBehaviour:
     Arcane Academy. I have the answers that you are looking for". What are you going
     to do?'
   AudioDescription: {fileID: 8300000, guid: 9ffa775a0b7c69649a7b30573f97262f, type: 3}
+  Options:
+  - {fileID: 11400000, guid: f7f82a83b5579f643b56629e06698a39, type: 2}
+  - {fileID: 11400000, guid: edd6cd05e0f848346a13c019045e2372, type: 2}

@@ -17,3 +17,6 @@ MonoBehaviour:
     the Academy you are surprised by a huge ball of fire about to hit you. What do
     you do?
   AudioDescription: {fileID: 8300000, guid: b5934ee2fa9b33f428f3b1af467e29b0, type: 3}
+  Options:
+  - {fileID: 11400000, guid: 53a3e3d04885f2749a75144195f883a1, type: 2}
+  - {fileID: 11400000, guid: 2905a734e9d143b40be08d4fe863c622, type: 2}

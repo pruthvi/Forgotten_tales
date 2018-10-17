@@ -17,3 +17,4 @@ MonoBehaviour:
     everything without a trace. There is only one local teleportation scroll, you
     keep it and run into the Kalimari headmaster's room (go to 10)\r"
   AudioDescription: {fileID: 8300000, guid: 489d8390c168a9e4795dce6276605c80, type: 3}
+  Options: []
