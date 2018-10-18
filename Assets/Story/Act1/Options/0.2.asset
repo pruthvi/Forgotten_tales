@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc99ba001e99b4845ac629eeecef285f, type: 3}
+  m_Name: 0.2
+  m_EditorClassIdentifier: 
+  Name: Option
+  TextDescription: I ignore the call. I need to finish this research as soon as possible.
+  AudioDescription: {fileID: 8300000, guid: e7cd7ef4614beb8489525ff193b08aad, type: 3}
+  NextEvent: {fileID: 11400000, guid: e946f68cbd206c940acff266835156d9, type: 2}

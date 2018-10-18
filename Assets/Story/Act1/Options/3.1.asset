@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc99ba001e99b4845ac629eeecef285f, type: 3}
+  m_Name: 3.1
+  m_EditorClassIdentifier: 
+  Name: Option
+  TextDescription: "It must have been somebody's joke, I don\u2019t believe Im being
+    trusted. I'm going back to my lab and continue my research."
+  AudioDescription: {fileID: 8300000, guid: a94fca6f1b81a244db77767570150466, type: 3}
+  NextEvent: {fileID: 11400000, guid: c0af59a3853b9a64a93391232f534467, type: 2}

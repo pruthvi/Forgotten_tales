@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
+  m_Name: 0
+  m_EditorClassIdentifier: 
+  NextEvent: {fileID: 0}
+  IsEndOfAct: 0
+  Id: a1d0
+  TextDescription: Then you hear someone knocking on the door. What are you going
+    to do?
+  AudioDescription: {fileID: 8300000, guid: ea2402f8e1507c94585369c7cae5197f, type: 3}
+  Options:
+  - {fileID: 11400000, guid: 4a03f32a2771c5640a1ac7f712d481fc, type: 2}
+  - {fileID: 11400000, guid: a9a4af7c6e241bd459bf716c8cdc008a, type: 2}

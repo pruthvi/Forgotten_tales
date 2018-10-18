@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc99ba001e99b4845ac629eeecef285f, type: 3}
+  m_Name: 9.2
+  m_EditorClassIdentifier: 
+  Name: Option
+  TextDescription: I need to keep my head cool. I going to look for evidence in the
+    room and who could have done this.
+  AudioDescription: {fileID: 8300000, guid: e0c0e42a9297c2b4a858742b245fbbfd, type: 3}
+  NextEvent: {fileID: 11400000, guid: 31bdd370abd912b40a629eff0fa63792, type: 2}

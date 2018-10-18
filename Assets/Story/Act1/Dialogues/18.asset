@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
+  m_Name: 18
+  m_EditorClassIdentifier: 
+  NextEvent: {fileID: 0}
+  IsEndOfAct: 1
+  Id: a1d18
+  TextDescription: "Away from all this confusion you see the Arcane Academy burning
+    in flames, hit by powerful and forbidden magic. There is no sign of who is responsible
+    for this or how many people have been injured in this nefarious attack. You and
+    your ally arrive in a tavern almost on the edge of town. There you find the injured
+    headmaster Kalimari and also find another mysterious figure.\r\nA few hours ago
+    everything was in peace and now by a twist of fate everything will never be the
+    same....\r"
+  AudioDescription: {fileID: 8300000, guid: 1d189daecd7e4e145b7fd57c615cc841, type: 3}
+  Options: []
