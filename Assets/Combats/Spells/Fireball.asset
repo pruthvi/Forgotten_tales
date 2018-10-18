@@ -14,3 +14,5 @@ MonoBehaviour:
   Name: Fire Ball
   BaseDamage: 5
   DamageModifier: 1
+  sfxSoundOnFire: {fileID: 0}
+  sfxSoundOnAttacked: {fileID: 0}

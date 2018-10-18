@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ItemType { Etc, Consumable }
-
+[CreateAssetMenu(menuName = "Forgotten Tales/Combat/Item")]
 public class Item : ScriptableObject {
 
     private static int nextItemId;

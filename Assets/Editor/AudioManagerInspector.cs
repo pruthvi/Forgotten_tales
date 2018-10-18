@@ -28,17 +28,17 @@ public class AudioManagerInspector : Editor
             GUILayout.EndHorizontal();
         }
 
-        if (am.SfxSource != null)
+        if (am.SFXSource != null)
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label("SFX Speed: ", GUILayout.MaxWidth(200));
-            am.SfxSource.pitch = GUILayout.HorizontalSlider(am.SfxSource.pitch, -3, 3);
-            am.SfxSource.pitch = EditorGUILayout.FloatField(am.SfxSource.pitch, GUILayout.MaxWidth(50));
+            am.SFXSource.pitch = GUILayout.HorizontalSlider(am.SFXSource.pitch, -3, 3);
+            am.SFXSource.pitch = EditorGUILayout.FloatField(am.SFXSource.pitch, GUILayout.MaxWidth(50));
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             GUILayout.Label("SFX Volume: ", GUILayout.MaxWidth(200));
-            am.SfxSource.volume = GUILayout.HorizontalSlider(am.SfxSource.volume, 0, 1);
-            am.SfxSource.volume = EditorGUILayout.FloatField(am.SfxSource.volume, GUILayout.MaxWidth(50));
+            am.SFXSource.volume = GUILayout.HorizontalSlider(am.SFXSource.volume, 0, 1);
+            am.SFXSource.volume = EditorGUILayout.FloatField(am.SFXSource.volume, GUILayout.MaxWidth(50));
             GUILayout.EndHorizontal();
         }
 

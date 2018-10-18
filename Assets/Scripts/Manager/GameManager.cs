@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameState { SplashScreen, MainMenu, InGame, Controls, Settings, EndAct, EndGame }
+public enum GameState { SplashScreen, MainMenu, PreGame, InGame, Controls, Settings, EndAct, EndGame }
 //public enum NarrativeType { NarrativePrologue, NarrativeDialogue, NarrativeCombat, NarrativeCombatChoice }
 public enum GameProgress { Prologue, Intro, Dialogue, DialogueOption, EndOfAct }
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     
+    // Managers
     public AudioManager AudioManager { get; private set; }
-
-    private CombatManager combatManager;
+    public SettingManager SettingManager { get; private set; }
     public InputManager InputManager { get; private set; }
-    public Player Player { get; private set; }
+    public CombatManager CombatManager { get; private set; }
 
     // GUI
     public Text textUI;
@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     private string textInstruction = "[R] - Replay | [T] - Replay Dialogue\n[F] Fast Forward | [Esc] Skip | ";
 
     // Splash Screen
-    public AudioClip[] SlpashScreenAudio;
+    public bool SkipSplashScreen;
+    public AudioClip[] SplashScreenAudio;
     public string[] SplashScreenText;
     //private int _currentSplashScreenAudioIndex = 0;
 
@@ -31,6 +32,12 @@ public class GameManager : MonoBehaviour
     public AudioClip ClipMainMenu;
     public AudioClip[] ClipMenuItem;
     private string[] _menuItems = { "Start Game", "Controls", "Settings", "Exit" };
+
+    // Settings
+    public string[] _settingItems = { "BGM Volume: ", "SFX Volume: ", "Narrator Volume: ", "Narrator Speed: "};
+
+    // Controls
+    public string[] _controlItems;
 
     // Intro
     private int _currentIntroClipIndex = 0;
@@ -50,37 +57,50 @@ public class GameManager : MonoBehaviour
             switch (value)
             {
                 case GameState.SplashScreen:
-                    Narrator.SetToIdle();
-                    textDescription.alignment = TextAnchor.MiddleCenter;
-                    StartCoroutine(playSplashScreenAudio());
+                    if (SkipSplashScreen)
+                    {
+                        GameState = GameState.MainMenu;
+                    }
+                    else
+                    {
+                        Narrator.SetToIdle();
+                        textDescription.alignment = TextAnchor.MiddleCenter;
+                        StartCoroutine(playSplashScreenAudio());
+                    }
                     break;
                 case GameState.MainMenu:
-                    InputManager.SetMaxItemCount(_menuItems.Length);
-                    AudioManager.PlayBGM(AudioManager.BGMMainMenuToIntro);
                     Narrator.SetToIdle();
                     textUI.text = "";
-                    InputManager.ChangeInputLayer(InputLayer.MainMenu);
+                    InputManager.ChangeInputLayer(InputLayer.MainMenu, _menuItems.Length);
                     StartCoroutine(playMainMenuEnterAudio());
                     UpdateMainMenuGUI();
                     textDescription.alignment = TextAnchor.MiddleCenter;
+                    Narrator.SetToIdle();
                     break;
                 case GameState.Controls:
                     Narrator.SetToIdle();
-                    InputManager.ChangeInputLayer(InputLayer.Controls);
+                    InputManager.ChangeInputLayer(InputLayer.Controls, _controlItems.Length);
                     StartCoroutine(playControlsAudio());
                     UpdateControlsGUI();
                     textDescription.alignment = TextAnchor.MiddleCenter;
                     break;
                 case GameState.Settings:
                     Narrator.SetToIdle();
-                    InputManager.ChangeInputLayer(InputLayer.Settings);
+                    InputManager.ChangeInputLayer(InputLayer.Settings, _settingItems.Length);
                     textDescription.alignment = TextAnchor.UpperLeft;
                     UpdateSettingsGUI();
                     break;
+                case GameState.PreGame:
+                    textUI.alignment = TextAnchor.MiddleCenter;
+                    InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
+                    UpdatePreGameGUI();
+                    break;
                 case GameState.InGame:
+                    textUI.alignment = TextAnchor.UpperLeft;
+                    GameProgress = GameProgress.Dialogue;
                     AudioManager.PlayBGM(AudioManager.BGMNarrative);
                     Narrator.SetToIdle();
-                    InputManager.ChangeInputLayer(InputLayer.Dialogue);
+                    InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
                     textDescription.alignment = TextAnchor.UpperLeft;
                     UpdateInGameGUI();
                     break;
@@ -103,9 +123,9 @@ public class GameManager : MonoBehaviour
     }
     private int _currentActIndex = 0;
     private bool _actEnd;
-    //private int _optionSelectedIndex = 0;
 
-    
+    // Player
+    public Player Player { get; private set; }
 
     void Awake()
     {
@@ -121,9 +141,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         AudioManager = GetComponentInChildren<AudioManager>();
-
+        SettingManager = new SettingManager(this);
         InputManager = new InputManager(this);
-        Narrator = new Narrator(AudioManager.NarrativeSource);
+        Narrator = new Narrator(this, AudioManager.NarrativeSource);
 
         //GameState = GameState.MainMenu; // For debug purpose, set back to splash screen when publish
         GameState = GameState.SplashScreen;
@@ -137,11 +157,12 @@ public class GameManager : MonoBehaviour
         // To reset current dialogue, if it was being stored
         _currentAct.Init();
         Narrator.Speed = 1;
+        AudioManager.PlayBGM(AudioManager.BGMMainMenuToIntro);
     }
 
     public void StartGame()
     {
-        GameState = GameState.InGame;
+        GameState = GameState.PreGame;
         initGame();
     }
 
@@ -158,18 +179,17 @@ public class GameManager : MonoBehaviour
         //        break;
             case GameState.MainMenu:
                 break;
+            case GameState.PreGame:
+                Narrator.UpdateStatus();
+                updatePreGameProgress();
+                break;
             case GameState.InGame:
                 // Update Narrator Status
                 Narrator.UpdateStatus();
-
                 // Update Game Progress from Prologue to EndOfAct
                 updateGameProgress();
-             //   updateInGame();
-
-
                 break;
             case GameState.Settings:
-                UpdateSettingsGUI();
                 break;
             case GameState.EndAct:
                 // Check if there is more act, if not EndGame
@@ -210,8 +230,46 @@ public class GameManager : MonoBehaviour
     // Update the Settings GUI
     public void UpdateSettingsGUI()
     {
-        textUI.text = "Settings\n[Esc] Back to Menu";
-        textDescription.text = "";
+        textUI.text = "Settings | [Esc] Back to Main Menu | [Up/Down] Select Option | [Left/Right] Adjust Setting";
+
+        string settings = "";
+
+        for (int i = 0; i < _settingItems.Length; i++)
+        {
+            //float max = 0;
+            //float min = 0;
+            float value = 0;
+
+            if (i == 0)
+            {
+            //    max = SettingManager.MaxBGMVolumeValue;
+            //    min = SettingManager.MinBGMVolumeValue;
+               value = SettingManager.BGMVolume * 10;
+            }
+            else if (i == 1)
+            {
+            //    max = SettingManager.MaxSFXVolumeValue;
+            //    min = SettingManager.MaxSFXVolumeValue;
+                value = SettingManager.SFXVolume * 10;
+            }
+            else if (i == 2)
+            {
+            //    max = SettingManager.MaxNarratorVolume;
+            //    min = SettingManager.MaxNarratorVolume;
+                value = SettingManager.NarratorVolume * 10;
+            }
+            else if (i == 3)
+            {
+            //    max = SettingManager.MaxNarratorSpeedValue;
+            //    min = SettingManager.MinNarratorSpeedValue;
+                value = SettingManager.NarratorSpeed;
+            }
+
+            //settings += string.Format("{0} {1}\n\tMin: {2}\tMax: {3} Value: {4}\n", InputManager.SelectedItemIndex == i ? "> " : "\t", _settingItems[i], max, min, value);
+            settings += (InputManager.SelectedItemIndex == i ? "> " : "\t") + _settingItems[i] + ": " + value + "\n";
+        }
+
+        textDescription.text = settings;
     }
 
     // Update Controls Submenu GUI
@@ -221,13 +279,26 @@ public class GameManager : MonoBehaviour
         textDescription.text = "";
     }
 
+    public void UpdatePreGameGUI()
+    {
+        switch (GameProgress)
+        {
+            case GameProgress.Prologue:
+                textUI.text = "Prologue";
+            break;
+            case GameProgress.Intro:
+                textUI.text = "Intro";
+                break;
+        }
+    }
+
     // Update InGame GUI
     public void UpdateInGameGUI()
     {
-        textUI.text = textInstruction + "Speed: x" + Narrator.SpeedModifier;
+        textUI.text = textInstruction + "Speed: x" + Narrator.Speed;
     }
 
-    private void updateGameProgress()
+    private void updatePreGameProgress()
     {
         switch (GameProgress)
         {
@@ -236,12 +307,13 @@ public class GameManager : MonoBehaviour
                 {
                     textDescription.text = _currentAct.PrologueTextDescription;
                     Narrator.Play(_currentAct.AudioPrologue);
-                    InputManager.ChangeInputLayer(InputLayer.Dialogue);
+                    InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
                 }
                 if (Narrator.CompletedOrSkipped)
                 {
                     GameProgress = GameProgress.Intro;
                     Narrator.SetToIdle();
+                    UpdatePreGameGUI();
                 }
                 break;
             case GameProgress.Intro:
@@ -260,18 +332,26 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        GameProgress = GameProgress.Dialogue;
-                        InputManager.ChangeInputLayer(InputLayer.Dialogue);
+                        GameState = GameState.InGame;
+                        InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
                         Narrator.SetToIdle();
+                        UpdatePreGameGUI();
                     }
                 }
                 break;
+        }
+    }
+
+    private void updateGameProgress()
+    {
+        switch (GameProgress)
+        {
             case GameProgress.Dialogue:
                 if (Narrator.IsIdle)
                 {
                     textDescription.text = _currentAct.CurrentDialogue.TextDescription;
                     Narrator.Play(_currentAct.CurrentDialogue.AudioDescription, PlayType.Dialogue);
-                    InputManager.ChangeInputLayer(InputLayer.Dialogue);
+                    InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
                 }
                 if (Narrator.CompletedOrSkipped)
                 {
@@ -284,10 +364,9 @@ public class GameManager : MonoBehaviour
                     if (_currentAct.CurrentDialogue.HasOptions)
                     {
                         GameProgress = GameProgress.DialogueOption;
-                        InputManager.SetMaxItemCount(_currentAct.CurrentDialogue.Options.Count);
+                        InputManager.ChangeInputLayer(InputLayer.ChooseDialogueOption, _currentAct.CurrentDialogue.Options.Count);
                         Narrator.Play(_currentAct.CurrentDialogue.Options[InputManager.SelectedItemIndex].AudioDescription, PlayType.Option);
                         UpdateDialogueWithOptionGUI();
-                        InputManager.ChangeInputLayer(InputLayer.ChooseDialogueOption);
                     }
                     else
                     {
@@ -345,11 +424,11 @@ public class GameManager : MonoBehaviour
 
     IEnumerator playSplashScreenAudio()
     {
-        for (int i = 0; i < SlpashScreenAudio.Length; i++)
+        for (int i = 0; i < SplashScreenAudio.Length; i++)
         {
             textDescription.text = SplashScreenText[i];
-            Narrator.Play(SlpashScreenAudio[i]);
-            yield return new WaitForSeconds(SlpashScreenAudio[i].length * (1 / Narrator.Speed));
+            Narrator.Play(SplashScreenAudio[i]);
+            yield return new WaitForSeconds(SplashScreenAudio[i].length * (1 / Narrator.Speed));
         }
 
         GameState = GameState.MainMenu;

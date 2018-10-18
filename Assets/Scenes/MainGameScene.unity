@@ -454,7 +454,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -645,9 +645,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BackgroundSource: {fileID: 472776813}
-  SfxSource: {fileID: 472776812}
+  SFXSource: {fileID: 472776812}
   NarrativeSource: {fileID: 472776811}
-  SFXMenuSelection: {fileID: 8300000, guid: 8fa4cad43187cfa4b8fc88c8b67aef07, type: 3}
+  SFXMenuItemSelection: {fileID: 8300000, guid: 8fa4cad43187cfa4b8fc88c8b67aef07,
+    type: 3}
   SFXConfirm: {fileID: 8300000, guid: b01f0a3ee2bb95a4c92f17398f63c88c, type: 3}
   SFXSkip: {fileID: 8300000, guid: 0cf0698f11b20ae4683404a798d5d2f5, type: 3}
   BGMMainMenuToIntro: {fileID: 8300000, guid: 4c6382b3090332248a0141c838835522, type: 3}
@@ -930,7 +931,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textUI: {fileID: 135524078}
   textDescription: {fileID: 1372119976}
-  SlpashScreenAudio:
+  SkipSplashScreen: 0
+  SplashScreenAudio:
   - {fileID: 8300000, guid: c13ff1b420728bd47a62552650ba1500, type: 3}
   - {fileID: 8300000, guid: 8097e3277ceb4f7478a2b88ae6c71b93, type: 3}
   - {fileID: 8300000, guid: 49e81f4b5cb55134ab80d2071e35e413, type: 3}
@@ -946,6 +948,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d095c673a0732c548874b75e21e8da2e, type: 3}
   - {fileID: 8300000, guid: d2c7c59342275ce4981e6b36fb9a0b27, type: 3}
   - {fileID: 8300000, guid: 4803234961d68a74795c518f62955cfc, type: 3}
+  _settingItems:
+  - 'BGM Volume: '
+  - 'SFX Volume: '
+  - 'Narrator Volume: '
+  - 'Narrator Speed: '
+  _controlItems: []
   GameProgress: 0
   Act:
   - {fileID: 11400000, guid: 1b0243fe14608cd4fa6ac5b0f40106fa, type: 2}
