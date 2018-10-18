@@ -18,11 +18,18 @@ public class InputManager {
 
     public int SelectedItemIndex { get; private set; }
 
+    public float MaxAdjustmentValue;
+    public float MinAdjustmentValue;
+    public float AdjustmentValue { get; private set; }
+    public float AdjustmentRatio { get; private set; }
+
     private GameManager _gameManager;
+    private SettingManager _settingManager;
 
     public InputManager(GameManager gameManager)
     {
         _gameManager = gameManager;
+        _settingManager = gameManager.SettingManager;
         InputLayer = InputLayer.SplashScreen;
         SelectedItemIndex = 0;
     }
@@ -71,19 +78,16 @@ public class InputManager {
     private void updateMainMenuLayer()
     {
         // Only Take Input for Up/Down Arrow Key and Return Key
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (selectionUp())
         {
-            selectionUp();
             _gameManager.UpdateMainMenuGUI();
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (selectionDown())
         {
-            selectionDown();
             _gameManager.UpdateMainMenuGUI();
         }
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (selectionConfirm())
         {
-            
             if (SelectedItemIndex == 0)
             {
                 // Start
@@ -99,19 +103,18 @@ public class InputManager {
                 // Settings
                 _gameManager.ChangeState(GameState.Settings);
             }
-            else if (SelectedItemIndex == 2)
+            else if (SelectedItemIndex == 3)
             {
                 // Exit
                 Application.Quit();
             }
-            _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXConfirm);
         }
     }
 
     // Handle Inputs for Controls if any
     private void updateControlsLayer()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (goBack())
         {
             _gameManager.ChangeState(GameState.MainMenu);
         }
@@ -121,9 +124,63 @@ public class InputManager {
     private void updateSettingsLayer()
     {
         // Only Take Input for Arrow Keys and Return Key
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (goBack())
         {
             _gameManager.ChangeState(GameState.MainMenu);
+        }
+
+        // Up/Down for Setting Options
+        if (selectionUp() || selectionDown())
+        {
+            if (SelectedItemIndex == 0)
+            {
+                // BGM Volume
+                SetAdjustmentLimit(_settingManager.MaxBGMVolumeValue, _settingManager.MinBGMVolumeValue);
+                SetAdjustmentRatio(_gameManager.SettingManager.BGMVolumeAdjustmentRatio);
+                AdjustmentValue = _gameManager.SettingManager.BGMVolume;
+            }
+            else if (SelectedItemIndex == 1)
+            {
+                // SFX Volume
+                SetAdjustmentLimit(_settingManager.MaxSFXVolumeValue, _settingManager.MinSFXVolumeValue);
+                SetAdjustmentRatio(_gameManager.SettingManager.SFXVolumeAdjustmentRatio);
+                AdjustmentValue = _gameManager.SettingManager.SFXVolume;
+            }
+            else if (SelectedItemIndex == 2)
+            {
+                // Narrator Volume
+                SetAdjustmentLimit(_settingManager.MaxNarratorVolume, _settingManager.MinNarratorVolume);
+                SetAdjustmentRatio(_gameManager.SettingManager.NarratorVolumeAdjustmentRatio);
+                AdjustmentValue = _gameManager.SettingManager.NarratorVolume;
+            }
+            _gameManager.UpdateSettingsGUI();
+        }
+
+        // Left/Right for value
+        if (adjustIncrease() || adjustDecrease())
+        {
+            if (SelectedItemIndex == 0)
+            {
+                // BGM Volume
+                _gameManager.SettingManager.BGMVolume = AdjustmentValue;
+            }
+            else if (SelectedItemIndex == 1)
+            {
+                // SFX Volume
+                _gameManager.SettingManager.SFXVolume = AdjustmentValue;
+            }
+            else if (SelectedItemIndex == 2)
+            {
+                // Narrator Volume
+                _gameManager.SettingManager.NarratorVolume = AdjustmentValue;
+            }
+            else if (SelectedItemIndex == 3)
+            {
+                // Narrator Speed
+                _gameManager.Narrator.FastForward();
+               // _gameManager.SettingManager.NarratorSpeed = AdjustmentValue;
+            }
+            _gameManager.UpdateSettingsGUI();
         }
     }
 
@@ -131,7 +188,7 @@ public class InputManager {
     private void updateDialogueLayer()
     {
         // Skip
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (goBack())
         {
             _gameManager.Narrator.Skip();
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXSkip);
@@ -141,6 +198,8 @@ public class InputManager {
         {
             _gameManager.Narrator.FastForward();
             _gameManager.UpdateInGameGUI();
+            _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+
         }
         // Replay
         if (Input.GetKeyDown(KeyCode.R))
@@ -153,18 +212,16 @@ public class InputManager {
     private void updateChooseDialogueOptionLayer()
     {
         // Choose Dialogue Option
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (selectionUp())
         {
-            selectionUp();
             _gameManager.UpdateDialogueWithOptionGUI();
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (selectionDown())
         {
-            selectionDown();
             _gameManager.UpdateDialogueWithOptionGUI();
         }
         // Confirm Dialogue Option
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (selectionConfirm())
         {
             if (_gameManager.CurrentAct.NextDialogue(SelectedItemIndex))
             {
@@ -172,7 +229,6 @@ public class InputManager {
                 SelectionStatus = SelectionStatus.Valid;
                 _gameManager.Narrator.SetToIdle();
                 _gameManager.GameProgress = GameProgress.Dialogue;
-                _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXConfirm);
             }
         }
         // Fast forward
@@ -207,15 +263,32 @@ public class InputManager {
 
     }
 
-    public void ChangeInputLayer(InputLayer layer)
-    {
-        this.InputLayer = layer;
-    }
-
     public void ChangeInputLayer(InputLayer layer, int maxItemCount)
     {
         this.InputLayer = layer;
-        SetMaxItemCount(maxItemCount);
+        setMaxItemCount(maxItemCount);
+    }
+
+    public void SetAdjustmentLimit(float max, float min)
+    {
+        if (max > min)
+        {
+            MaxAdjustmentValue = max;
+            MinAdjustmentValue = min;
+        }
+        else
+        {
+            MaxAdjustmentValue = min;
+            MinAdjustmentValue = max;
+        }
+    }
+
+    public void SetAdjustmentRatio(float ratio)
+    {
+        if (ratio > 0 && ratio < MaxAdjustmentValue)
+        {
+            AdjustmentRatio = ratio;
+        }
     }
 
     public void ResetSelection()
@@ -224,7 +297,7 @@ public class InputManager {
         this.SelectionStatus = SelectionStatus.None;
     }
 
-    public void SetMaxItemCount(int count)
+    private void setMaxItemCount(int count)
     {
         // Only set MaxItemCount to count if the item count is greater than 1, and set the default SelectedItemIndex to 0
         if (count > 1)
@@ -238,32 +311,97 @@ public class InputManager {
         }    
     }
 
-    private void selectionUp()
+    private bool selectionUp()
     {
-        if (SelectedItemIndex - 1 < 0)
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            SelectedItemIndex = MaxItemCount - 1;
+            if (SelectedItemIndex - 1 < 0)
+            {
+                SelectedItemIndex = MaxItemCount - 1;
+            }
+            else
+            {
+                SelectedItemIndex--;
+            }
+            _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+            return true;
         }
-        else
-        {
-            SelectedItemIndex--;
-        }
-        _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuSelection);
+        return false;
     }
 
-    private void selectionDown()
+    private bool selectionDown()
     {
-        if (SelectedItemIndex + 1 >= MaxItemCount)
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            SelectedItemIndex = 0;
+            if (SelectedItemIndex + 1 >= MaxItemCount)
+            {
+                SelectedItemIndex = 0;
+            }
+            else
+            {
+                SelectedItemIndex++;
+            }
+            _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+            return true;
         }
-        else
-        {
-            SelectedItemIndex++;
-        }
-        _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuSelection);
+        return false;
     }
 
+    private bool adjustIncrease()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (AdjustmentValue + AdjustmentRatio < MaxAdjustmentValue)
+            {
+                AdjustmentValue += AdjustmentRatio;
+            }
+            else
+            {
+                AdjustmentValue = MaxAdjustmentValue;
+            }
+            _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+            return true;
+        }
+        return false;
+    }
+
+    private bool adjustDecrease()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (AdjustmentValue - AdjustmentRatio > MinAdjustmentValue)
+            {
+                AdjustmentValue -= AdjustmentRatio;
+            }
+            else
+            {
+                AdjustmentValue = MinAdjustmentValue;
+            }
+            _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+            return true;
+        }
+        return false;
+    }
+
+    private bool selectionConfirm()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXConfirm);
+            return true;
+        }
+        return false;
+    }
+
+    private bool goBack()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // ToDo: Play back SFX
+            return true;
+        }
+        return false;
+    }
     public bool InputCompleted
     {
         get

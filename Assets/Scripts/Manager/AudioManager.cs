@@ -5,11 +5,11 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour{
 
     public AudioSource BackgroundSource;
-    public AudioSource SfxSource;
+    public AudioSource SFXSource;
     public AudioSource NarrativeSource;
 
     // SFX
-    public AudioClip SFXMenuSelection;
+    public AudioClip SFXMenuItemSelection;
     public AudioClip SFXConfirm;
     public AudioClip SFXSkip;
 
@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour{
 
     public void PlaySFX(AudioClip clip)
     {
-        SfxSource.clip = clip;
-        SfxSource.Play();
+        SFXSource.clip = clip;
+        SFXSource.Play();
     }
 }

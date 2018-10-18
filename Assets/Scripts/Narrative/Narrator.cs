@@ -14,8 +14,11 @@ public class Narrator
     private AudioClip _lastDialogue;
     private AudioClip _currentClip;
 
-    public Narrator(AudioSource source)
+    private GameManager _gameManager;
+
+    public Narrator(GameManager gm, AudioSource source)
     {
+        _gameManager = gm;
         _source = source;
         SpeedModifier = 1;
         SetToIdle();
@@ -146,6 +149,6 @@ public class Narrator
             SpeedModifier++;
         }
 
-        _source.pitch = 1 + (SpeedModifier == 1 ? 0 : (0.25f * (SpeedModifier - 1)));
+        _source.pitch = 1 + (SpeedModifier == 1 ? 0 : (_gameManager.SettingManager.NarratorSpeedAdjustmentRatio * (SpeedModifier - 1)));
     }
 }
