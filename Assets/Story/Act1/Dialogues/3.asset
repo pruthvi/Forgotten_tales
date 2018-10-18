@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: 
   NextEvent: {fileID: 0}
-  Name: Dialogue
+  IsEndOfAct: 0
+  Id: a1d3
   TextDescription: When you arrive outside, you expect the mysterious person reveal
     themselves and talk to you. But after an hour no one appeared. What are you going
     to do?

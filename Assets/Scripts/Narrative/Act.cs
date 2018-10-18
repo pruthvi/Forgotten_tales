@@ -34,7 +34,6 @@ public class Act : ScriptableObject {
     }
 
     public List<Dialogue> Dialogues = new List<Dialogue>();
-    
 
     public bool NextDialogue(int index)
     {
@@ -42,27 +41,40 @@ public class Act : ScriptableObject {
         if (index < CurrentDialogue.Options.Count)
         {
             int indexOfDialogue = indexOf((Dialogue)CurrentDialogue.Options[index].NextEvent);
-            if (indexOfDialogue == -1)
+            if(indexOfDialogue != -1)
             {
-                return false;
+                _currentDialogueIndex = indexOfDialogue;
+                return true;
             }
-            else
+        }
+        return false;
+    }
+
+    public bool NextDialogue()
+    {
+        // check if is valid selection
+        if (CurrentDialogue.Options.Count == 0)
+        {
+            int indexOfDialogue = indexOf((Dialogue)CurrentDialogue.NextEvent);
+            if (indexOfDialogue != -1)
             {
-                Debug.Log(_currentDialogueIndex);
-                if (_currentDialogueIndex + 1 < Dialogues.Count)
-                {
-                    _currentDialogueIndex++;
-                    Debug.Log(_currentDialogueIndex + "++");
-                    return true;
-                }
+                _currentDialogueIndex = indexOfDialogue;
+                return true;
             }
-            
+        }
+        if (!CurrentDialogue.IsEndOfAct)
+        {
+            Debug.LogError("Current dialogue does not have options, and does not have NextEvent to go to.");
         }
         return false;
     }
 
     private int indexOf(Dialogue d)
     {
+        if(d == null)
+        {
+            return -1;
+        }
         for (int i = 0; i < Dialogues.Count; i++)
         {
             if (Dialogues[i].Id == d.Id)
@@ -73,12 +85,16 @@ public class Act : ScriptableObject {
         return -1;
     }
 
-    public void AddDialogue(Dialogue d)
+    //public void AddDialogue(Dialogue d)
+    //{
+    //    if (d != null)
+    //    {
+    //        Dialogues.Add(d);
+    //    }
+    //}
+
+    public void Init()
     {
-        if (d != null)
-        {
-            d.Id = "A" + Dialogues.Count;
-            Dialogues.Add(d);
-        }
+        _currentDialogueIndex = 0;
     }
 }

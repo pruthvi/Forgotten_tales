@@ -15,5 +15,5 @@ MonoBehaviour:
   TextDescription: "Who else could be involved in this? And why wouldn\u2019t they
     talk to me directly inside of the Arcane Academy? I'm going to meet this mysterious
     person."
-  AudioDescription: {fileID: 8300000, guid: e7cd7ef4614beb8489525ff193b08aad, type: 3}
+  AudioDescription: {fileID: 8300000, guid: 31fc872025796e145b012ccd97d774c8, type: 3}
   NextEvent: {fileID: 11400000, guid: 19d12d5b851b64c46baa3034102c0d05, type: 2}

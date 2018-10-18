@@ -15,5 +15,5 @@ MonoBehaviour:
   TextDescription: "How silly, no one else knows about this artifact and what I'm
     doing here, everything is a secret. Must be some prank. I\u2019ll go back to my
     desk and continue my research. No distraction."
-  AudioDescription: {fileID: 8300000, guid: 4907da79f78d9414fa54653b958cab03, type: 3}
+  AudioDescription: {fileID: 8300000, guid: be787866bed57ca44b4d77d65735abd0, type: 3}
   NextEvent: {fileID: 11400000, guid: e946f68cbd206c940acff266835156d9, type: 2}

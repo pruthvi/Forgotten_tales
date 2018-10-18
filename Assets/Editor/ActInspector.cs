@@ -47,16 +47,16 @@ public class ActInspector : Editor {
         // Dialogues
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Dialogues: ");
-        newDialogue = (Dialogue)EditorGUILayout.ObjectField(newDialogue, typeof(Dialogue), false);
-        if (GUILayout.Button("Add Dialogue"))
-        {
-            //if (!act.AddDialogue(newDialogue))
-            //{
-            //    Debug.LogError("Dialogue already added or is null");
-            //}
-            act.AddDialogue(newDialogue);
-            newDialogue = null;
-        }
+        //newDialogue = (Dialogue)EditorGUILayout.ObjectField(newDialogue, typeof(Dialogue), false);
+        //if (GUILayout.Button("Add Dialogue"))
+        //{
+        //    //if (!act.AddDialogue(newDialogue))
+        //    //{
+        //    //    Debug.LogError("Dialogue already added or is null");
+        //    //}
+        //    act.AddDialogue(newDialogue);
+        //    newDialogue = null;
+        //}
         EditorGUILayout.EndHorizontal();
 
 

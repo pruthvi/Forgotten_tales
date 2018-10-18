@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: 9
   m_EditorClassIdentifier: 
   NextEvent: {fileID: 0}
-  Name: Dialogue
+  IsEndOfAct: 0
+  Id: a1d9
   TextDescription: Your room is destroyed; a horrible and nauseating smell is in the
     air. Your research and the mysterious artifact are gone. They left absolutely
     nothing. You have a terrible feeling. Who could be interested in this artifact

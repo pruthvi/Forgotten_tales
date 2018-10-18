@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: 0
   m_EditorClassIdentifier: 
   NextEvent: {fileID: 0}
-  Name: Dialogue
+  IsEndOfAct: 0
+  Id: a1d0
   TextDescription: Then you hear someone knocking on the door. What are you going
     to do?
   AudioDescription: {fileID: 8300000, guid: ea2402f8e1507c94585369c7cae5197f, type: 3}

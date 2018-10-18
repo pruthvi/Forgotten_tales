@@ -14,7 +14,7 @@ public class DialogueInspector : Editor {
         DrawDefaultInspector();
         serializedObject.Update();
 
-        Dialogue d = target as Dialogue;
+        //Dialogue d = target as Dialogue;
 
         /*
         // Dialogues

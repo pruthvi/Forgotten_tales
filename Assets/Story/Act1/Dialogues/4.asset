@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: 4
   m_EditorClassIdentifier: 
   NextEvent: {fileID: 0}
-  Name: Dialogue
+  IsEndOfAct: 0
+  Id: a1d4
   TextDescription: "When you open the door you find no one, just another note on the
     floor. The note says: \"Greetings Arkantus. I need you to meet me at the entrance
     to the Arcane Academy. I have the answers that you are looking for\". What are

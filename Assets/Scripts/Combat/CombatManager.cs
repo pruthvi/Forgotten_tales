@@ -18,8 +18,6 @@ public class CombatManager
     public ICombatant CurrentCombatant { get; private set; }
     public bool TurnEnds { get; private set; }
 
-    event EventHandler combatEventHandler;
-
     public CombatManager()
     {
         this.CombatResult = CombatResult.None;

@@ -6,10 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Forgotten Tale/Narrative/Dialogue", order = 2)]
 public class Dialogue : GameEvent{
 
-    public string Name = "Dialogue";
+    public bool IsEndOfAct = false;
+    public new string Id = "";
     [TextArea]
     public string TextDescription;
     public AudioClip AudioDescription;
+
 
     public List<Option> Options = new List<Option>();
     public void AddOption(Option o)
@@ -20,6 +22,7 @@ public class Dialogue : GameEvent{
             this.Options.Add(o);
         }
     }
+
     public void RemoveOption(Option o)
     {
         if (o != null)
@@ -32,6 +35,14 @@ public class Dialogue : GameEvent{
                     return;
                 }
             }
+        }
+    }
+
+    public bool HasOptions
+    {
+        get
+        {
+            return Options.Count > 0;
         }
     }
 }

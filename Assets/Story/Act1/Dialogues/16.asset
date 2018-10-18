@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 16
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 0}
-  Name: Dialogue
-  TextDescription: "The smoke makes you cough and sob, which gives your position.
-    (go to 15)\r"
+  NextEvent: {fileID: 11400000, guid: 46a60b662c72ec74ca1dacfc38cb967f, type: 2}
+  IsEndOfAct: 0
+  Id: a1d16
+  TextDescription: The smoke makes you cough and sob, which gives your position.
   AudioDescription: {fileID: 8300000, guid: ad92a96157add8a45a7030a205514390, type: 3}
+  Options: []

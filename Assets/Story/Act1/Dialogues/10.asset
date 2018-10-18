@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: 10
   m_EditorClassIdentifier: 
   NextEvent: {fileID: 0}
-  Name: Dialogue
+  IsEndOfAct: 0
+  Id: a1d10
   TextDescription: You arrive quickly in the headmaster's office, something strange
     is happening. You did not find anyone on the way. When you open the door, the
     room is empty. There is nobody. There is a large window in the headmaster's room,
