@@ -43,8 +43,12 @@ public class Battle : GameEvent
     public GameEvent WinEvent;
     public GameEvent LoseEvent;
 
-    public void End()
+    public void InitiateFight(Combatant attacker, Combatant defender, Spell spell)
     {
+        attacker.Attack(defender, spell);
+    }
 
+    public void EndBattle()
+    {
     }
 }

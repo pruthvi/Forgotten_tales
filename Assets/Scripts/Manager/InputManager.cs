@@ -253,12 +253,12 @@ public class InputManager
     {
         if (selectionUp())
         {
-
+            _gameManager.CurrentGameState.UpdateGUI();
         }
 
         if (selectionDown())
         {
-
+            _gameManager.CurrentGameState.UpdateGUI();
         }
 
         if (selectionConfirm())
@@ -266,17 +266,18 @@ public class InputManager
             if (SelectedItemIndex == 0)
             {
                 // Attack
-                _gameManager.CombatManager.CurrentBattle.Attack(_gameManager.Player, _gameManager.CombatManager.CurrentBattle.Enemy);
+                Battle currentBattle = _gameManager.CombatManager.CurrentBattle;
+              //  currentBattle.InitiateFight(_gameManager.Player, currentBattle.Mob);
             }
             else if (SelectedItemIndex == 1)
             {
                 // Choose Item
-                ChangeInputLayer(InputLayer.ChooseItemOption, _gameManager.Player.InventoryManager.Items.Length);
+                ChangeInputLayer(InputLayer.ChooseItemOption, _gameManager.Player.InventoryManager.Items.Count);
             }
             else if (SelectedItemIndex == 2)
             {
                 // Choose Run
-                _gameManager.Player.SetChoice(PlayerChoice.Attack);
+                _gameManager.Player.Choice = PlayerChoice.Attack;
             }
         }
     }

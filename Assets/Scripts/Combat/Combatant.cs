@@ -12,13 +12,13 @@ public abstract class Combatant : ScriptableObject
     public abstract CombatantType CombatantType { get; }
     
     public abstract void Attack(Combatant target, Spell spell);
-    public abstract void Defense();
 
     private float _hp;
     private float _mp;
     private float _maxHp;
     private float _maxMp;
-    private bool _defense;
+    
+    public bool Defense;
 
     public float MaxHP
     {

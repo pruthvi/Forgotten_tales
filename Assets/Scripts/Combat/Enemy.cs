@@ -21,11 +21,6 @@ public class Enemy : Combatant {
         
     }
 
-    public override void Defense()
-    {
-        throw new NotImplementedException();
-    }
-
     public override void OnHit(Combatant attacker, Spell spell)
     {
         //Play goblin getting hit sfx

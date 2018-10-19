@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-public enum PlayerChoice { Idle, Attack, Item, Run }
 public enum BattleTurn { Player, Mob}
 public class BattleState : GameState
 {
@@ -10,8 +9,6 @@ public class BattleState : GameState
     private string[] choices = { "Attack", "Use Item", "Run" };
 
     private BattleTurn BattleTurn;
-
-    public PlayerChoice PlayerChoice;
 
     private Enemy _enemy;
     private Player _player;
@@ -31,7 +28,17 @@ public class BattleState : GameState
 
     public override void UpdateGUI()
     {
-        
+        string turner = "";
+        switch (BattleTurn)
+        {
+            case BattleTurn.Player:
+                turner = "Player";
+                break;
+            case BattleTurn.Mob:
+                turner = "Enemy";
+                break;
+        }
+        _gameManager.TextUI.text = turner;
     }
 
     public override void OnStateEnter()
@@ -70,12 +77,12 @@ public class BattleState : GameState
 
     private void updateMobTurn()
     {
-        _enemy.Attack(_player);
+    //    _enemy.Attack(_player);
     }
 
     private void updatePlayerTurn()
     {
-        switch (PlayerChoice)
+        switch (_player.Choice)
         {
             case PlayerChoice.Idle:
                 // Check for timeout
@@ -90,7 +97,7 @@ public class BattleState : GameState
             case PlayerChoice.Run:
                 // End battle
                 _battle.BattleResult = BattleResult.Lose;
-                _battle.End();
+           //     _battle.End();
                 break;
         }
     }

@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerChoice { Idle, Attack, Item, Run }
 [CreateAssetMenu(menuName = "Forgotten Tale/Combat/Player")]
 public class Player : Combatant {
     
     public InventoryManager InventoryManager = new InventoryManager();
+
+    public PlayerChoice Choice;
 
     public override CombatantType CombatantType
     {
@@ -21,17 +24,12 @@ public class Player : Combatant {
         target.OnHit(this, spell);
     }
 
-    public override void Defense()
-    {
-        _defense = true;
-    }
-
     public override void OnHit(Combatant attacker, Spell spell)
     {
-        if (_defense)
+        if (Defense)
         {
             //playe player block attack sfx
-            _defense = false;
+            Defense = false;
         }
         else
         {
