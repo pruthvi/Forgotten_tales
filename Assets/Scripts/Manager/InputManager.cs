@@ -68,10 +68,10 @@ public class InputManager {
     private void updateSplashScreenLayer()
     {
         // Skip splash screen
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    _gameManager.ChangeState(GameState.MainMenu);
-        //}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _gameManager.ChangeState(GameState.MainMenu);
+        }
     }
 
     // Handle Inputs for MainMenu if any
@@ -313,7 +313,7 @@ public class InputManager {
 
     private bool selectionUp()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if ((Input.GetKeyDown(KeyCode.UpArrow)) || Input.GetButton("menu_up"))
         {
             if (SelectedItemIndex - 1 < 0)
             {
@@ -331,7 +331,7 @@ public class InputManager {
 
     private bool selectionDown()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if ((Input.GetKeyDown(KeyCode.DownArrow)) || Input.GetButton("menu_down"))
         {
             if (SelectedItemIndex + 1 >= MaxItemCount)
             {
@@ -385,7 +385,7 @@ public class InputManager {
 
     private bool selectionConfirm()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if ((Input.GetKeyDown(KeyCode.Return)) || Input.GetButton("Confirm"))
         {
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXConfirm);
             return true;
@@ -395,7 +395,7 @@ public class InputManager {
 
     private bool goBack()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if ((Input.GetKeyDown(KeyCode.Escape)) || Input.GetButton("Escape"))
         {
             // ToDo: Play back SFX
             return true;
