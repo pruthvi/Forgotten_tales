@@ -233,6 +233,12 @@ public class InputManager {
         {
             _gameManager.Narrator.Replay(PlayType.Dialogue);
         }
+
+        // Main Menu
+        if (Input.GetKeyDown(KeyCode.M) || (state.Buttons.Start == ButtonState.Pressed && prevState.Buttons.Start == ButtonState.Released))
+        {
+            _gameManager.ChangeState(GameState.MainMenu);
+        }
     }
 
     // Handle Inputs for ChooseDialogueOption if any
@@ -276,6 +282,12 @@ public class InputManager {
         if ((Input.GetKeyDown(KeyCode.T)) || (state.Triggers.Left == 1))
         {
             _gameManager.Narrator.Replay(PlayType.Dialogue);
+        }
+
+        // Main Menu
+        if (Input.GetKeyDown(KeyCode.M) || (state.Buttons.Start == ButtonState.Pressed && prevState.Buttons.Start == ButtonState.Released))
+        {
+            _gameManager.ChangeState(GameState.MainMenu);
         }
     }
 
