@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XInputDotNetPure;
 
 public enum InputLayer { SplashScreen, MainMenu, Controls, Settings, Dialogue, ChooseDialogueOption, ChoosePreCombatOption, ChooseCombatOption, ChooseItemOption }
 public enum InputStatus { Idle, Selecting, Completed }
@@ -8,6 +9,10 @@ public enum SelectionStatus { None, Valid, Invalid }
 
 public class InputManager
 {
+    bool playerIndexSet = false;
+    PlayerIndex playerIndex;
+    GamePadState state;
+    GamePadState prevState;
 
     public InputLayer InputLayer { get; private set; }
 
@@ -37,6 +42,25 @@ public class InputManager
 
     public void Update()
     {
+        // Find a PlayerIndex, for a single player game
+        // Will find the first controller that is connected ans use it
+        if (!playerIndexSet || !prevState.IsConnected)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                PlayerIndex testPlayerIndex = (PlayerIndex)i;
+                GamePadState testState = GamePad.GetState(testPlayerIndex);
+                if (testState.IsConnected)
+                {
+                    Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+                    playerIndex = testPlayerIndex;
+                    playerIndexSet = true;
+                }
+            }
+        }
+        prevState = state;
+        state = GamePad.GetState(playerIndex);
+
         switch (InputLayer)
         {
             case InputLayer.SplashScreen:
@@ -73,7 +97,7 @@ public class InputManager
     private void updateSplashScreenLayer()
     {
         // Skip splash screen
-        //if (Input.GetKeyDown(KeyCode.Escape))
+        //if ((Input.GetKeyDown(KeyCode.Escape)) || (state.Buttons.Back == ButtonState.Pressed && prevState.Buttons.Back == ButtonState.Released))
         //{
         //    _gameManager.ChangeState(GameState.MainMenu);
         //}
@@ -197,7 +221,8 @@ public class InputManager
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXSkip);
         }
         // Fast forward
-        if (Input.GetKeyDown(KeyCode.F))
+        if ((Input.GetKeyDown(KeyCode.F)) ||
+            (state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released))
         {
             _gameManager.Narrator.FastForward();
             _gameManager.CurrentGameState.UpdateGUI();
@@ -205,7 +230,7 @@ public class InputManager
 
         }
         // Replay
-        if (Input.GetKeyDown(KeyCode.R))
+        if ((Input.GetKeyDown(KeyCode.R)) || (state.Triggers.Left == 1))
         {
             _gameManager.Narrator.Replay(PlayType.Dialogue);
         }
@@ -229,20 +254,21 @@ public class InputManager
             _gameManager.NextEvent();
         }
         // Fast forward
-        if (Input.GetKeyDown(KeyCode.F))
+        if ((Input.GetKeyDown(KeyCode.F)) ||
+            (state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released))
         {
             _gameManager.Narrator.FastForward();
             _gameManager.CurrentGameState.UpdateGUI();
         }
 
         // Replay Option
-        if (Input.GetKeyDown(KeyCode.R))
+        if ((Input.GetKeyDown(KeyCode.R)) || (state.Triggers.Left == 1))
         {
             _gameManager.Narrator.Replay(PlayType.Option);
         }
 
         // Replay Dialogue
-        if (Input.GetKeyDown(KeyCode.T))
+        if ((Input.GetKeyDown(KeyCode.T)) || (state.Buttons.LeftShoulder == ButtonState.Pressed && prevState.Buttons.LeftShoulder == ButtonState.Released))
         {
             _gameManager.Narrator.Replay(PlayType.Dialogue);
         }
@@ -344,7 +370,8 @@ public class InputManager
 
     private bool selectionUp()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if ((Input.GetKeyDown(KeyCode.UpArrow)) ||
+            (state.DPad.Up == ButtonState.Pressed && prevState.DPad.Up == ButtonState.Released))
         {
             if (SelectedItemIndex - 1 < 0)
             {
@@ -363,7 +390,8 @@ public class InputManager
 
     private bool selectionDown()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if ((Input.GetKeyDown(KeyCode.DownArrow)) ||
+            (state.DPad.Down == ButtonState.Pressed && prevState.DPad.Down == ButtonState.Released))
         {
             if (SelectedItemIndex + 1 >= MaxItemCount)
             {
@@ -382,7 +410,8 @@ public class InputManager
 
     private bool adjustIncrease()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if ((Input.GetKeyDown(KeyCode.RightArrow)) ||
+                (state.DPad.Right == ButtonState.Pressed && prevState.DPad.Right == ButtonState.Released))
         {
             if (AdjustmentValue + AdjustmentRatio < MaxAdjustmentValue)
             {
@@ -401,7 +430,8 @@ public class InputManager
 
     private bool adjustDecrease()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if ((Input.GetKeyDown(KeyCode.LeftArrow)) ||
+            (state.DPad.Left == ButtonState.Pressed && prevState.DPad.Left == ButtonState.Released))
         {
             if (AdjustmentValue - AdjustmentRatio > MinAdjustmentValue)
             {
@@ -420,7 +450,8 @@ public class InputManager
 
     private bool selectionConfirm()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if ((Input.GetKeyDown(KeyCode.Return)) ||
+            (state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released))
         {
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXConfirm);
             return true;
@@ -430,7 +461,8 @@ public class InputManager
 
     private bool goBack()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if ((Input.GetKeyDown(KeyCode.Escape)) ||
+            (state.Buttons.Back == ButtonState.Pressed && prevState.Buttons.Back == ButtonState.Released))
         {
             // ToDo: Play back SFX
             return true;
