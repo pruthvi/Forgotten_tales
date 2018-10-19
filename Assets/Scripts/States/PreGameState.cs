@@ -41,6 +41,10 @@ public class PreGameState : GameState
         _gameManager.InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
         _gameManager.TextUI.alignment = TextAnchor.MiddleCenter;
         UpdateGUI();
+
+
+        // Begin the first Act
+        _narrator.BeginAct(0);
     }
 
     public override void OnStateExit()

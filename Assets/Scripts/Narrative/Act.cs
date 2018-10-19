@@ -24,49 +24,22 @@ public class Act : ScriptableObject {
             return Dialogues[_currentDialogueIndex];
         }
     }
-
-    public bool ActEnded
-    {
-        get
-        {
-            return _currentDialogueIndex == Dialogues.Count - 1;
-        }
-    }
-
-    public List<Dialogue> Dialogues = new List<Dialogue>();
     
-    public Dialogue NextDialogue(Dialogue d)
-    {
-        Debug.Log("Called");
-        int index = indexOf(d);
-        if (index >= 0 && index < Dialogues.Count)
-        {
-            _currentDialogueIndex = index;
-            Debug.Log(index);
-            return CurrentDialogue;
-        }
-        return null;
-    }
+    public List<Dialogue> Dialogues = new List<Dialogue>();
 
-    private int indexOf(Dialogue d)
-    {
-        if(d == null)
-        {
-            return -1;
-        }
-        for (int i = 0; i < Dialogues.Count; i++)
-        {
-            if (Dialogues[i].name == d.name)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public void Init()
-    {
-        Debug.Log("Act Init");
-        _currentDialogueIndex = 0;
-    }
+    //private int indexOf(Dialogue d)
+    //{
+    //    if(d == null)
+    //    {
+    //        return -1;
+    //    }
+    //    for (int i = 0; i < Dialogues.Count; i++)
+    //    {
+    //        if (Dialogues[i].name == d.name)
+    //        {
+    //            return i;
+    //        }
+    //    }
+    //    return -1;
+    //}
 }

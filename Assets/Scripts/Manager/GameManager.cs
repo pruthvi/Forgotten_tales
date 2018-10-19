@@ -55,6 +55,22 @@ public class GameManager : MonoBehaviour
     
     public Player Player;
 
+    public InGameState InGameState
+    {
+        get
+        {
+            return (InGameState)States[5];
+        }
+    }
+
+    public BattleState BattleState
+    {
+        get
+        {
+            return (BattleState)States[6];
+        }
+    }
+
     void Awake()
     {
         if (Instance == null)
@@ -74,7 +90,7 @@ public class GameManager : MonoBehaviour
         initGame();
     }
 
-    public void initGame()
+    private void initGame()
     {
         AudioManager = GetComponentInChildren<AudioManager>();
         SettingManager = new SettingManager(this);
@@ -82,15 +98,13 @@ public class GameManager : MonoBehaviour
 
         Narrator = new Narrator(this, AudioManager.NarrativeSource, Acts);
 
-        Narrator.Begin(0);
-
         States.Add(new SplashScreenState(this));
         States.Add(new MainMenuState(this));
         States.Add(new ControlsState(this));
         States.Add(new SettingsState(this));
         States.Add(new PreGameState(this));
         States.Add(new InGameState(this));
-
+        States.Add(new BattleState(this));
         ChangeState(GameStateType.SplashScreen);
     }
 
@@ -138,7 +152,7 @@ public class GameManager : MonoBehaviour
         if (_currentGameState.GameStateType == GameStateType.InGame)
         {
             // Get the InGameState
-            ((InGameState)_states[_states.Count - 1]).NextEvent();
+            InGameState.NextEvent();
         }
     }
 }

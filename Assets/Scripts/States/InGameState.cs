@@ -15,7 +15,18 @@ public class InGameState : GameState
 
     private GameEvent _currentEvent;
 
-    public GameEvent CurrentGameEvent;
+    public GameEvent CurrentGameEvent
+    {
+        get
+        {
+            return _currentEvent;
+        }
+
+        set
+        {
+            _currentEvent = value;
+        }
+    }
 
     public DialogueState DialogueState;
 
@@ -47,9 +58,6 @@ public class InGameState : GameState
 
     public override void OnStateEnter()
     {
-        _narrator.CurrentAct.Init();
-        _currentEvent = _narrator.CurrentAct.CurrentDialogue;
-        Debug.Log("Current Act" + _currentEvent.name);
         _gameManager.InputManager.ChangeInputLayer(InputLayer.Dialogue, _narrator.CurrentAct.CurrentDialogue.Options.Count);
         UpdateGUI();
         _gameManager.TextDescription.alignment = TextAnchor.UpperLeft;
@@ -62,15 +70,16 @@ public class InGameState : GameState
 
     public void updateDialogueWithOptionGUI()
     {
+        Dialogue d = (Dialogue)_currentEvent;
         string options = "";
-        for (int i = 0; i < _narrator.CurrentAct.CurrentDialogue.Options.Count; i++)
+        for (int i = 0; i < d.Options.Count; i++)
         {
-            options += (_gameManager.InputManager.SelectedItemIndex == i ? "> " : "\t") + " Option " + (i + 1) + ": \n\t\t" + _narrator.CurrentAct.CurrentDialogue.Options[i].TextDescription + "\n";
+            options += (_gameManager.InputManager.SelectedItemIndex == i ? "> " : "\t") + " Option " + (i + 1) + ": \n\t\t" + d.Options[i].TextDescription + "\n";
         }
-        _gameManager.TextDescription.text = _narrator.CurrentAct.CurrentDialogue.TextDescription + "\n" + options;
-        if (_gameManager.InputManager.SelectedItemIndex < _narrator.CurrentAct.CurrentDialogue.Options.Count)
+        _gameManager.TextDescription.text = d.TextDescription + "\n" + options;
+        if (_gameManager.InputManager.SelectedItemIndex < d.Options.Count)
         {
-            _narrator.Play(_narrator.CurrentAct.CurrentDialogue.Options[_gameManager.InputManager.SelectedItemIndex].AudioDescription, PlayType.Option);
+            _narrator.Play(d.Options[_gameManager.InputManager.SelectedItemIndex].AudioDescription, PlayType.Option);
         }
     }
 
@@ -93,49 +102,50 @@ public class InGameState : GameState
 
     private void onDialogueOption()
     {
-
-    }
-
-    private void onDialogue()
-    {
-        // If no dialogue playing, play the current dialogue
+        Dialogue d = (Dialogue)_currentEvent;
+        // If no dialogue option playing, play the current dialogue option
         if (_narrator.Status == NarratorStatus.Idle)
         {
             // Play the current dialogue
-            _gameManager.Narrator.Play(_narrator.CurrentAct.CurrentDialogue.AudioDescription);
-        }
-        if (_narrator.Status == NarratorStatus.Completed || _narrator.Status == NarratorStatus.Skipped)
-        {
-            // If dialogue completed or skipped
-            // if has options
-            _gameManager.InputManager.ResetSelection();
-            if (_currentEvent.GameEventType == GameEventType.Dialogue)
+            if (d.HasOptions)
             {
-                Dialogue dialogue = (Dialogue)_currentEvent;
-                if (dialogue.HasOptions)
-                {
-                    _gameManager.InputManager.ChangeInputLayer(InputLayer.ChooseDialogueOption, dialogue.Options.Count);
-                }
-                else
-                {
-                    
-                }
-                
+                _gameManager.Narrator.Play(d.Options[_gameManager.InputManager.SelectedItemIndex].AudioDescription);
             }
         }
     }
 
-    private void onHasOptions()
+    private void onDialogue()
     {
-        DialogueState = DialogueState.DialogueOption;
-        _gameManager.InputManager.ChangeInputLayer(InputLayer.ChooseDialogueOption, _narrator.CurrentAct.CurrentDialogue.Options.Count);
-        _gameManager.TextDescription.text = _narrator.CurrentAct.CurrentDialogue.TextDescription;
-        updateDialogueWithOptionGUI();
-    }
+        Dialogue d = (Dialogue)_currentEvent;
+        // If no dialogue playing, play the current dialogue
+        if (_narrator.Status == NarratorStatus.Idle)
+        {
+            // Play the current dialogue
+            _gameManager.Narrator.Play(d.AudioDescription);
+            DialogueState = DialogueState.Dialogue;
+            UpdateGUI();
 
-    private void goNextEventBaseOnSelection()
-    {
-
+        }
+        // If dialogue completed or skipped
+        if (_narrator.Status == NarratorStatus.Completed || _narrator.Status == NarratorStatus.Skipped)
+        {
+            // Reset input in case
+            _gameManager.InputManager.ResetSelection();
+            Debug.Log("Skipped");
+            // If current event is dialogue;
+            if (d.HasOptions)
+            {
+                Debug.Log("Has Options");
+                _gameManager.InputManager.ChangeInputLayer(InputLayer.ChooseDialogueOption, d.Options.Count);
+                DialogueState = DialogueState.DialogueOption;
+                _gameManager.TextDescription.text = _narrator.CurrentAct.CurrentDialogue.TextDescription;
+                UpdateGUI();
+            }
+            else
+            {
+                Debug.Log("No Options");
+            }
+        }
     }
 
     private void goNextDefaultEvent()
@@ -151,26 +161,69 @@ public class InGameState : GameState
 
             if (dialogue.HasOptions)
             {
-                goNextEventBaseOnSelection();
-            }
-            else
-            {
-                if (_currentEvent.DefaultEvent != null)
+                GameEvent ge = dialogue.Options[_gameManager.InputManager.SelectedItemIndex].NextEvent;
+                if (ge != null)
                 {
-                    _currentEvent = _currentEvent.DefaultEvent;
+                    _currentEvent = ge;
+                    UpdateGUI();
+                    _narrator.Stop();
                 }
                 else
                 {
-                    if (dialogue.IsEndOfAct)
+                    Debug.LogError("Option " + dialogue.Options[_gameManager.InputManager.SelectedItemIndex].name + " does not have next event. ");
+                }
+            }
+            else
+            {
+                if (dialogue.DefaultEvent != null)
+                {
+                    if (dialogue.DefaultEvent.GameEventType == GameEventType.Battle)
                     {
-                        Debug.Log("End of act");
+                        _gameManager.ChangeState(GameStateType.Battle);
                     }
                     else
                     {
-                        Debug.LogError("No default Event or Option");
+                        _currentEvent = _currentEvent.DefaultEvent;
+                        UpdateGUI();
                     }
                 }
+                //if (dialogue.IsEndOfAct)
+                //{
+                //    Debug.Log("End of act, Return to Main Menu");
+                //    //Return to main menu;
+                //    _gameManager.ChangeState(GameStateType.MainMenu);
+                //}
+                //else
+                //{
+                //    if (_currentEvent.DefaultEvent == null)
+                //    {
+                //        Debug.LogError("No default Event or Option");
+                //    }
+                //    else
+                //    {
+                //        
+                //        // If the new event is Battle
+                //        if (_currentEvent.GameEventType == GameEventType.Battle)
+                //        {
+                //            // Start Battle
+                //            
+                //        }
+                //    }
+                //}
             }
+        }
+    }
+
+    public bool OnDialogue
+    {
+
+        get
+        {
+            if (_currentEvent == null || _currentEvent.GameEventType != GameEventType.Dialogue)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

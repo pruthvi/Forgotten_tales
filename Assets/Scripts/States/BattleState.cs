@@ -54,6 +54,7 @@ public class BattleState : GameState
         {
             BattleTurn = BattleTurn.Player;
         }
+        _gameManager.TextUI.text = "Battle";
     }
 
     public override void OnStateExit()

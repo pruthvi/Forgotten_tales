@@ -36,14 +36,6 @@ public class Narrator
             return _acts;
         }
     }
-    private int _currentActIndex;
-    public int CurrentActIndex
-    {
-        get
-        {
-            return _currentActIndex;
-        }
-    }
 
     public Narrator(GameManager gm, AudioSource source, Act[] acts)
     {
@@ -54,12 +46,16 @@ public class Narrator
         _acts = acts;
     }
 
-    public void Begin(int index)
+    // Only call this when change to InGameState
+    public void BeginAct(int index)
     {
         if (index >= 0 && index < Acts.Length)
         {
             _currentAct = Acts[index];
-            _currentActIndex = index;
+            if (_currentAct.Dialogues.Count > 0)
+            {
+                _gameManager.InGameState.CurrentGameEvent = _currentAct.Dialogues[0];
+            }
         }
     }
 
@@ -197,15 +193,19 @@ public class Narrator
 
     IEnumerator playSFXBasedOnTime()
     {
-        for (int i = 0; i < _currentAct.CurrentDialogue.SFX.Count; i++)
+        if (_gameManager.InGameState.OnDialogue)
         {
-            float waitTime = 0;
-            if (i < _currentAct.CurrentDialogue.SFX.Count - 1)
+            Dialogue d = (Dialogue)_gameManager.InGameState.CurrentGameEvent;
+            for (int i = 0; i < d.SFX.Count; i++)
             {
-                waitTime = (_currentAct.CurrentDialogue.SFXTime[i + 1] - _currentAct.CurrentDialogue.SFXTime[i]);
+                float waitTime = 0;
+                if (i < d.SFX.Count - 1)
+                {
+                    waitTime = (d.SFXTime[i + 1] - d.SFXTime[i]);
+                }
+                _gameManager.AudioManager.PlaySFX(d.SFX[i]);
+                yield return new WaitForSeconds(waitTime * (1 / _gameManager.Narrator.Speed));
             }
-            _gameManager.AudioManager.PlaySFX(_currentAct.CurrentDialogue.SFX[i]);
-            yield return new WaitForSeconds(waitTime * (1 / _gameManager.Narrator.Speed));
         }
     }
 }
