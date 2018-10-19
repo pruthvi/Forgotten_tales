@@ -13,6 +13,10 @@ public class Dialogue : GameEvent {
     public AudioClip AudioDescription;
 
     public List<Option> Options = new List<Option>();
+
+    public List<AudioClip> SFX = new List<AudioClip>();
+    public List<float> SFXTime = new List<float>();
+
     public void AddOption(Option o)
     {
         if (o != null)

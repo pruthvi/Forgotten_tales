@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System.Collections;
 public enum NarratorStatus { Idle, Speaking, Completed, Skipped }
 public enum PlayType { Dialogue, Option }
 public class Narrator
@@ -13,6 +13,8 @@ public class Narrator
 
     private AudioClip _lastDialogue;
     private AudioClip _currentClip;
+
+    private float dialogueBeginTime;
 
     private GameManager _gameManager;
 
@@ -130,6 +132,7 @@ public class Narrator
         _source.clip = _currentClip;
         _source.Play();
         Status = NarratorStatus.Speaking;
+        _gameManager.StartCoroutine(playSFXBasedOnTime());
     }
 
     public void Replay(PlayType type)
@@ -168,6 +171,7 @@ public class Narrator
             if (value >= -3 && value <= 3)
             {
                 _source.pitch = value;
+                _gameManager.AudioManager.SFXSource.pitch = _source.pitch;
             }
         }
     }
@@ -188,5 +192,20 @@ public class Narrator
         }
 
         _source.pitch = 1 + (SpeedModifier == 1 ? 0 : (_gameManager.SettingManager.NarratorSpeedAdjustmentRatio * (SpeedModifier - 1)));
+        _gameManager.AudioManager.SFXSource.pitch = _source.pitch;
+    }
+
+    IEnumerator playSFXBasedOnTime()
+    {
+        for (int i = 0; i < _currentAct.CurrentDialogue.SFX.Count; i++)
+        {
+            float waitTime = 0;
+            if (i < _currentAct.CurrentDialogue.SFX.Count - 1)
+            {
+                waitTime = (_currentAct.CurrentDialogue.SFXTime[i + 1] - _currentAct.CurrentDialogue.SFXTime[i]);
+            }
+            _gameManager.AudioManager.PlaySFX(_currentAct.CurrentDialogue.SFX[i]);
+            yield return new WaitForSeconds(waitTime * (1 / _gameManager.Narrator.Speed));
+        }
     }
 }
