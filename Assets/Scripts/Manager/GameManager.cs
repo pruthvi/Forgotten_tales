@@ -130,4 +130,13 @@ public class GameManager : MonoBehaviour
         Narrator.Stop();
         _currentGameState.OnStateEnter();
     }
+
+    public void NextEvent()
+    {
+        if (_currentGameState.GameStateType == GameStateType.InGame)
+        {
+            // Get the InGameState
+            ((InGameState)_states[_states.Count - 1]).NextEvent();
+        }
+    }
 }

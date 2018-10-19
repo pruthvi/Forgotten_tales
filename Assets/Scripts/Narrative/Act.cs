@@ -16,21 +16,12 @@ public class Act : ScriptableObject {
     public string[] IntroTextDescriptions;
 
     private int _currentDialogueIndex;
-    private GameEvent _currentGameEvent;
 
     public Dialogue CurrentDialogue
     {
         get
         {
             return Dialogues[_currentDialogueIndex];
-        }
-    }
-
-    public GameEvent CurrentGameEvent
-    {
-        get
-        {
-            return _currentGameEvent;
         }
     }
 
@@ -43,20 +34,17 @@ public class Act : ScriptableObject {
     }
 
     public List<Dialogue> Dialogues = new List<Dialogue>();
-
-    public bool NextEvent()
+    
+    public Dialogue NextDialogue(Dialogue d)
     {
-        if (_currentGameEvent.GameEventType == GameEventType.Dialogue)
+        int index = indexOf(d);
+        if (index >= 0 && index < Dialogues.Count)
         {
-            _currentDialogueIndex++;
-            _currentGameEvent = CurrentDialogue;
-            return true;
+            _currentDialogueIndex = index;
+            Debug.Log(index);
+            return CurrentDialogue;
         }
-        else
-        {
-            _currentGameEvent = _currentGameEvent.DefaultEvent;
-        }
-        return false;
+        return null;
     }
 
     //public bool NextEventBasedOnOption(int index)
@@ -111,7 +99,7 @@ public class Act : ScriptableObject {
         }
         for (int i = 0; i < Dialogues.Count; i++)
         {
-            if (Dialogues[i].Id == d.Id)
+            if (Dialogues[i].name == d.name)
             {
                 return i;
             }

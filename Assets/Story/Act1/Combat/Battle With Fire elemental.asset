@@ -16,4 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d20034dbddca37940b18ac64dbc312ca, type: 2}
   BattleResult: 0
   WinEvent: {fileID: 11400000, guid: a9521845be97d74419a2154a3f0a045f, type: 2}
-  LoseEvent: {fileID: 0}
+  LoseEvent: {fileID: 11400000, guid: 46a60b662c72ec74ca1dacfc38cb967f, type: 2}

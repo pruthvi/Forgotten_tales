@@ -223,7 +223,7 @@ public class InputManager
         // Confirm Dialogue Option
         if (selectionConfirm())
         {
-            _gameManager.Narrator.CurrentAct.NextEvent();
+            _gameManager.NextEvent();
         }
         // Fast forward
         if (Input.GetKeyDown(KeyCode.F))
