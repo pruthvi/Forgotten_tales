@@ -16,12 +16,21 @@ public class Act : ScriptableObject {
     public string[] IntroTextDescriptions;
 
     private int _currentDialogueIndex;
+    private GameEvent _currentGameEvent;
 
     public Dialogue CurrentDialogue
     {
         get
         {
             return Dialogues[_currentDialogueIndex];
+        }
+    }
+
+    public GameEvent CurrentGameEvent
+    {
+        get
+        {
+            return _currentGameEvent;
         }
     }
 
@@ -35,39 +44,64 @@ public class Act : ScriptableObject {
 
     public List<Dialogue> Dialogues = new List<Dialogue>();
 
-    public bool NextDialogue(int index)
+    public bool NextEvent()
     {
-        // check if is valid selection
-        if (index < CurrentDialogue.Options.Count)
+        if (_currentGameEvent.GameEventType == GameEventType.Dialogue)
         {
-            int indexOfDialogue = indexOf((Dialogue)CurrentDialogue.Options[index].NextEvent);
-            if(indexOfDialogue != -1)
-            {
-                _currentDialogueIndex = indexOfDialogue;
-                return true;
-            }
+            _currentDialogueIndex++;
+            _currentGameEvent = CurrentDialogue;
+            return true;
+        }
+        else
+        {
+            _currentGameEvent = _currentGameEvent.DefaultEvent;
         }
         return false;
     }
 
-    public bool NextDialogue()
-    {
-        // check if is valid selection
-        if (CurrentDialogue.Options.Count == 0)
-        {
-            int indexOfDialogue = indexOf((Dialogue)CurrentDialogue.NextEvent);
-            if (indexOfDialogue != -1)
-            {
-                _currentDialogueIndex = indexOfDialogue;
-                return true;
-            }
-        }
-        if (!CurrentDialogue.IsEndOfAct)
-        {
-            Debug.LogError("Current dialogue does not have options, and does not have NextEvent to go to.");
-        }
-        return false;
-    }
+    //public bool NextEventBasedOnOption(int index)
+    //{
+    //    if (_currentGameEvent.GameEventType == GameEventType.Dialogue)
+    //    {
+    //        // If has option then go to the next event based on selected index
+    //        if (CurrentDialogue.HasOptions)
+    //        {
+    //            // Check if valid selection
+    //            if (index < CurrentDialogue.Options.Count)
+    //            {
+    //                _currentGameEvent = CurrentDialogue.Options[index].NextEvent;
+    //                if (_currentGameEvent.GameEventType == GameEventType.Dialogue)
+    //                {
+    //                    _currentDialogueIndex++;
+    //                    return true;
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            // If no option go to the default event
+
+    //            // Check for default next event type
+    //            if (CurrentDialogue.DefaultEvent.GameEventType == GameEventType.Dialogue)
+    //            {
+    //                _currentDialogueIndex++;
+    //                _currentGameEvent = Dialogues[_currentDialogueIndex];
+    //            }
+    //            else
+    //            {
+    //                _currentGameEvent = _currentGameEvent.DefaultEvent;
+    //                GameManager.Instance.ChangeState(GameState.Battle);
+    //            }
+    //        }
+    //        return true;
+    //    }
+    //    // If no options and no default event log error
+    //    if (!CurrentDialogue.IsEndOfAct)
+    //    {
+    //        Debug.LogError("Current dialogue does not have options, and does not have NextEvent to go to.");
+    //    }
+    //    return false;
+    //}
 
     private int indexOf(Dialogue d)
     {

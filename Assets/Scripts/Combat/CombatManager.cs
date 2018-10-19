@@ -13,10 +13,20 @@ public class CombatManager
     public CombatResult CombatResult;
     public CombatStatus CombatStatus;
     public CombatTurn CombatTurn;
-    public ICombatant Attacker { get; private set; }
-    public ICombatant Defender { get; private set; }
-    public ICombatant CurrentCombatant { get; private set; }
+    public Combatant Attacker { get; private set; }
+    public Combatant Defender { get; private set; }
+    public Combatant CurrentCombatant { get; private set; }
     public bool TurnEnds { get; private set; }
+
+    private Battle _currentBattle;
+
+    public Battle CurrentBattle
+    {
+        get
+        {
+            return _currentBattle;
+        }
+    }
 
     public CombatManager()
     {
@@ -87,16 +97,16 @@ public class CombatManager
 
     private bool checkWinner()
     {
-        if (Attacker.CombatantInfo.HealthPoint < 0)
-        {
-            CombatResult = CombatResult.AttackerLost;
-            return true;
-        }
-        if (Defender.CombatantInfo.HealthPoint < 0)
-        {
-            CombatResult = CombatResult.AttackerWon;
-            return true;
-        }
+        //if (Attacker.CombatantInfo.HealthPoint < 0)
+        //{
+        //    CombatResult = CombatResult.AttackerLost;
+        //    return true;
+        //}
+        //if (Defender.CombatantInfo.HealthPoint < 0)
+        //{
+        //    CombatResult = CombatResult.AttackerWon;
+        //    return true;
+        //}
         return false;
     }
 
@@ -107,7 +117,7 @@ public class CombatManager
 
     // Start the combat
     // Attacker is the one who initial the attack which starts the first turn (Ex: This allow the enemy to attack the player first)
-    public void StartCombat(ICombatant attacker, ICombatant defender)
+    public void StartCombat(Combatant attacker, Combatant defender)
     {
         CombatStatus = CombatStatus.Start;
         CombatTurn = CombatTurn.Attacker;
@@ -117,8 +127,8 @@ public class CombatManager
         CombatStatus = CombatStatus.InProgress;
         CurrentCombatant = Attacker;
 
-        Debug.Log(Attacker.Name + " initial the attack!");
-        Debug.Log(Defender.Name + " is being attacked!");
+        Debug.Log(Attacker.name + " initial the attack!");
+        Debug.Log(Defender.name + " is being attacked!");
 
         StartTurn();
     }

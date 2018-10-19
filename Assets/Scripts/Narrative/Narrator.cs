@@ -16,12 +16,49 @@ public class Narrator
 
     private GameManager _gameManager;
 
-    public Narrator(GameManager gm, AudioSource source)
+    public bool ActEnds;
+
+    private Act _currentAct;
+    public Act CurrentAct
+    {
+        get
+        {
+            return _currentAct;
+        }
+    }
+    private Act[] _acts;
+    public Act[] Acts
+    {
+        get
+        {
+            return _acts;
+        }
+    }
+    private int _currentActIndex;
+    public int CurrentActIndex
+    {
+        get
+        {
+            return _currentActIndex;
+        }
+    }
+
+    public Narrator(GameManager gm, AudioSource source, Act[] acts)
     {
         _gameManager = gm;
         _source = source;
         SpeedModifier = 1;
-        SetToIdle();
+        Stop();
+        _acts = acts;
+    }
+
+    public void Begin(int index)
+    {
+        if (index >= 0 && index < Acts.Length)
+        {
+            _currentAct = Acts[index];
+            _currentActIndex = index;
+        }
     }
 
     public void UpdateStatus()
@@ -114,8 +151,9 @@ public class Narrator
         Status = NarratorStatus.Skipped;
     }
 
-    public void SetToIdle()
+    public void Stop()
     {
+        _source.Stop();
         Status = NarratorStatus.Idle;
     }
 

@@ -551,7 +551,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -929,9 +929,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bebb8a499379247803156fd8f985be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textUI: {fileID: 135524078}
-  textDescription: {fileID: 1372119976}
-  SkipSplashScreen: 0
+  TextUI: {fileID: 135524078}
+  TextDescription: {fileID: 1372119976}
+  SkipSplashScreen: 1
   SplashScreenAudio:
   - {fileID: 8300000, guid: c13ff1b420728bd47a62552650ba1500, type: 3}
   - {fileID: 8300000, guid: 8097e3277ceb4f7478a2b88ae6c71b93, type: 3}
@@ -942,21 +942,17 @@ MonoBehaviour:
   - Made with Unity
   - Divided By Zero
   - Presents
-  ClipMainMenu: {fileID: 8300000, guid: a5a31a1435594e545a4296cdc54eb965, type: 3}
+  ClipMainMenuGuide:
+  - {fileID: 8300000, guid: a5a31a1435594e545a4296cdc54eb965, type: 3}
+  - {fileID: 8300000, guid: 1667e3c095574e64b95d5a7ecaee8c29, type: 3}
   ClipMenuItem:
   - {fileID: 8300000, guid: d5fa7158448257b428338337ca1700dc, type: 3}
   - {fileID: 8300000, guid: d095c673a0732c548874b75e21e8da2e, type: 3}
   - {fileID: 8300000, guid: d2c7c59342275ce4981e6b36fb9a0b27, type: 3}
   - {fileID: 8300000, guid: 4803234961d68a74795c518f62955cfc, type: 3}
-  _settingItems:
-  - 'BGM Volume: '
-  - 'SFX Volume: '
-  - 'Narrator Volume: '
-  - 'Narrator Speed: '
-  _controlItems: []
-  GameProgress: 0
-  Act:
+  Acts:
   - {fileID: 11400000, guid: 1b0243fe14608cd4fa6ac5b0f40106fa, type: 2}
+  GameProgress: 0
 --- !u!4 &1643781143
 Transform:
   m_ObjectHideFlags: 0

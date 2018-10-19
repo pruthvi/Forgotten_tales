@@ -7,87 +7,43 @@ using UnityEditor;
 [CanEditMultipleObjects]
 public class ActInspector : Editor {
 
-    private Dialogue newDialogue;
-    private Option newOption;
+    private bool showDialogues;
 
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
         serializedObject.Update();
         Act act = target as Act;
-
-        /* This is replaced by DrawDefaultInspector
-        // Name
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Name: ");
-        act.Name = EditorGUILayout.TextField("", act.Name);
-        EditorGUILayout.EndHorizontal();
-
-        // Prologue audio
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Prologue Clip: ");
-        act.AudioPrologue = (AudioClip)EditorGUILayout.ObjectField(act.AudioPrologue, typeof(AudioClip), false);
-        EditorGUILayout.EndHorizontal();
-
-        // Prologue text description
-        EditorGUILayout.LabelField("Prologue Text Description: ");
-        act.PrologueTextDescription = EditorGUILayout.TextArea(act.PrologueTextDescription, GUILayout.Height(50));
-
-        // Intro audios
-        EditorGUILayout.LabelField("Intro Audios: ");
-
-        // Intro List
-        for (int i = 0; i < act.AudioIntros.Length; i++)
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+        showDialogues = EditorGUILayout.Foldout(showDialogues, "Dialogues Set Up", true);
+        if (showDialogues)
         {
-            act.AudioIntros[i] = (AudioClip)EditorGUILayout.ObjectField(act.AudioIntros[i], typeof(AudioClip), false);
-        }
-
-        */
-
-        // Dialogues
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Dialogues: ");
-        //newDialogue = (Dialogue)EditorGUILayout.ObjectField(newDialogue, typeof(Dialogue), false);
-        //if (GUILayout.Button("Add Dialogue"))
-        //{
-        //    //if (!act.AddDialogue(newDialogue))
-        //    //{
-        //    //    Debug.LogError("Dialogue already added or is null");
-        //    //}
-        //    act.AddDialogue(newDialogue);
-        //    newDialogue = null;
-        //}
-        EditorGUILayout.EndHorizontal();
-
-
-
-        // Dialogue List
-        int index = 1;
-        foreach (Dialogue d in act.Dialogues)
-        {
-            EditorGUILayout.LabelField("Dialogue " + index++ + ":");
-            GUILayout.Space(5);
-            EditorGUILayout.ObjectField(d, typeof(Dialogue), false);
-            EditorGUI.indentLevel+=2;
-
-            EditorGUILayout.LabelField("Option(s):");
-            int optionIndex = 1;
-            EditorGUI.indentLevel++;
-
-            if (d.Options != null)
+            EditorGUI.indentLevel += 2;
+            // Dialogue List
+            for (int j = 0; j < act.Dialogues.Count; j++)
             {
-                foreach (Option p in d.Options)
+                Dialogue d = act.Dialogues[j];
+                d = (Dialogue)EditorGUILayout.ObjectField("Dialogue " + d.name, d, typeof(Dialogue), false);
+                if (d.Options != null)
                 {
-                    GUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField("Option " + optionIndex++ + ":");
-                    EditorGUILayout.ObjectField(p, typeof(Option), false);
-                    GUILayout.EndHorizontal();
+                    if (d.Options.Count == 0)
+                    {
+                        d.DefaultEvent = (GameEvent)EditorGUILayout.ObjectField("Default Event", d.DefaultEvent, typeof(GameEvent), false);
+                    }
+                    else
+                    {
+                        GUILayout.Label("Option(s):");
+                        for (int i = 0; i < d.Options.Count; i++)
+                        {
+                            d.Options[i] = (Option)EditorGUILayout.ObjectField("Option" + d.Options[i].name, d.Options[i], typeof(Option), false, GUILayout.Width(300));
+                            d.Options[i].NextEvent = (GameEvent)EditorGUILayout.ObjectField("To", d.Options[i].NextEvent, typeof(GameEvent), false, GUILayout.Width(300));
+                        }
+                    }
                 }
+                EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
             }
-           
-
-            EditorGUI.indentLevel-=3;
-            GUILayout.Space(10);
+            EditorGUI.indentLevel -= 2;
         }
+        
     }
 }

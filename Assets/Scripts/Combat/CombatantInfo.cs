@@ -5,12 +5,22 @@ using System.Text;
 
 public class CombatantInfo
 {
-    public int HealthPoint { get; set; }
-    public int MagicPoint { get; set; }
+    public int HealthPoint { get; private set; }
+    public int ManaPoint { get; private set; }
 
     public CombatantInfo(int hp, int mp)
     {
         this.HealthPoint = hp;
-        this.MagicPoint = mp;
+        this.ManaPoint = mp;
+    }
+
+    public void Heal()
+    {
+
+    }
+
+    public void Hit()
+    {
+
     }
 }

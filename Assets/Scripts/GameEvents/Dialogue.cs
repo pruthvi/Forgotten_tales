@@ -3,15 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Forgotten Tale/Narrative/Dialogue", order = 2)]
-public class Dialogue : GameEvent{
+[CreateAssetMenu(menuName ="Forgotten Tale/Game Event/Dialogue", order = 2)]
+public class Dialogue : GameEvent {
 
     public bool IsEndOfAct = false;
-    public new string Id = "";
+
     [TextArea]
     public string TextDescription;
     public AudioClip AudioDescription;
-
 
     public List<Option> Options = new List<Option>();
     public void AddOption(Option o)
@@ -43,6 +42,14 @@ public class Dialogue : GameEvent{
         get
         {
             return Options.Count > 0;
+        }
+    }
+
+    public override GameEventType GameEventType
+    {
+        get
+        {
+            return GameEventType.Dialogue;
         }
     }
 }

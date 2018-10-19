@@ -5,43 +5,23 @@ using UnityEditor;
 
 [CustomEditor(typeof(Dialogue))]
 [CanEditMultipleObjects]
-public class DialogueInspector : Editor {
-
-    private Option option;
+public class DialogueInspector : Editor
+{
 
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
         serializedObject.Update();
 
-        //Dialogue d = target as Dialogue;
+        Dialogue d = target as Dialogue;
 
-        /*
-        // Dialogues
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Options: ");
-        option = (Option)EditorGUILayout.ObjectField(option, typeof(Option), false);
-        EditorGUILayout.EndHorizontal();
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("Add Option"))
+        d.DefaultEvent = (GameEvent)EditorGUILayout.ObjectField("Default Event", d.DefaultEvent, typeof(GameEvent), false);
+
+        EditorGUI.indentLevel++;
+        for(int i = 0; i < d.Options.Count; i++)
         {
-            d.AddOption(option);
-            option = null;
+            d.Options[i].NextEvent = (GameEvent)EditorGUILayout.ObjectField("Next Event for Option " + (i + 1), d.Options[i].NextEvent, typeof(GameEvent), false);
         }
-        if (GUILayout.Button("Remove Option"))
-        {
-            d.RemoveOption(option);
-            option = null;
-        }
-        EditorGUILayout.EndHorizontal();
-        */
-        //int index = 1;
-        //foreach (Option p in d.Options)
-        //{
-        //    GUILayout.BeginHorizontal();
-        //    EditorGUILayout.LabelField("Option " + index++ + "("+ p.Id + "):" );
-        //    EditorGUILayout.ObjectField(p, typeof(Option), false);
-        //    GUILayout.EndHorizontal();
-        //}
+        EditorGUI.indentLevel--;
     }
 }

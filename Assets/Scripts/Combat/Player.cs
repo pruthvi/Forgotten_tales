@@ -1,14 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : ScriptableObject, ICombatant {
+[CreateAssetMenu(menuName = "Forgotten Tale/Combat/Player")]
+public class Player : Combatant {
+    
+    public InventoryManager InventoryManager = new InventoryManager();
 
-    public string Name { get; set; }
-    public CombatantInfo CombatantInfo { get; set; }
-    public InventoryManager InventoryManager { get; private set; }
-
-    public CombatantType CombatantType
+    public override CombatantType CombatantType
     {
         get
         {
@@ -16,25 +16,18 @@ public class Player : ScriptableObject, ICombatant {
         }
     }
 
-    public Player(string name, int hp, int mp)
+    public override void Cast(Spell spell, Combatant target)
     {
-        this.Name = name;
-        this.InventoryManager = new InventoryManager();
-        CombatantInfo = new CombatantInfo(hp, mp);
+        throw new NotImplementedException();
     }
 
-    public void Cast(Spell spell, ICombatant target)
+    public override void Attack(Combatant target)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
-    public void Attack(ICombatant target)
+    public override void Defense()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void Defense()
-    {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 }

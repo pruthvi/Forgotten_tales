@@ -1,41 +1,33 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : ScriptableObject, ICombatant {
-    public string Name
-    {
-        get; set;
-    }
+[CreateAssetMenu(menuName = "Forgotten Tale/Combat/Enemy")]
+public class Enemy : Combatant {
 
-    public CombatantInfo CombatantInfo { get; private set; }
-
-    public CombatantType CombatantType
+    public override CombatantType CombatantType
     {
         get
         {
-            return CombatantType.AI;
+            return CombatantType.Mob;
         }
     }
 
-    public Enemy(string name, int hp, int mp)
+    public Spell[] Spells;
+
+    public override void Cast(Spell spell, Combatant target)
     {
-        this.Name = name;
-        CombatantInfo = new CombatantInfo(hp, mp);
+        throw new NotImplementedException();
     }
 
-    public void Cast(Spell spell, ICombatant target)
+    public override void Attack(Combatant target)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
-    public void Attack(ICombatant target)
+    public override void Defense()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void Defense()
-    {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 }

@@ -8,21 +8,34 @@ using UnityEngine;
 public class Spell : ScriptableObject
 {
     public string Name;
-    public float BaseDamage = 1;
+    private float _baseDamage = 1;
+    public float BaseDamage
+    {
+        get
+        {
+            return _baseDamage;
+        }
+        set
+        {
+            if (value < 1)
+            {
+                _baseDamage = 1;
+            }
+            else
+            {
+                _baseDamage = value;
+            }
+        }
+    }
     public float DamageModifier = 1;
-    public AudioClip sfxSoundOnFire;
-    public AudioClip sfxSoundOnAttacked;
+    public AudioClip SFXSoundOnFire;
+    public AudioClip SFXSoundOnAttacked;
 
-    public float TotalDamage
+    public float FinalDamage
     {
         get
         {
             return BaseDamage * DamageModifier;
         }
-    }
-
-    public void SetDamageModifier(float modifier)
-    {
-        DamageModifier = modifier < 0 ? modifier : 1;
     }
 }

@@ -6,10 +6,11 @@ public enum InputLayer { SplashScreen, MainMenu, Controls, Settings, Dialogue, C
 public enum InputStatus { Idle, Selecting, Completed }
 public enum SelectionStatus { None, Valid, Invalid }
 
-public class InputManager {
+public class InputManager
+{
 
     public InputLayer InputLayer { get; private set; }
-    
+
     public InputStatus InputStatus { get; private set; }
 
     public SelectionStatus SelectionStatus { get; private set; }
@@ -34,7 +35,8 @@ public class InputManager {
         SelectedItemIndex = 0;
     }
 
-    public void Update() {
+    public void Update()
+    {
         switch (InputLayer)
         {
             case InputLayer.SplashScreen:
@@ -52,7 +54,7 @@ public class InputManager {
             case InputLayer.Dialogue:
                 updateDialogueLayer();
                 break;
-            case InputLayer.ChooseDialogueOption:
+           case InputLayer.ChooseDialogueOption:
                 updateChooseDialogueOptionLayer();
                 break;
             case InputLayer.ChoosePreCombatOption:
@@ -80,28 +82,28 @@ public class InputManager {
         // Only Take Input for Up/Down Arrow Key and Return Key
         if (selectionUp())
         {
-            _gameManager.UpdateMainMenuGUI();
+            //  _gameManager.UpdateMainMenuGUI();
         }
         if (selectionDown())
         {
-            _gameManager.UpdateMainMenuGUI();
+            //   _gameManager.UpdateMainMenuGUI();
         }
         if (selectionConfirm())
         {
             if (SelectedItemIndex == 0)
             {
                 // Start
-                _gameManager.StartGame();
+                _gameManager.ChangeState(GameStateType.PreGame);
             }
             else if (SelectedItemIndex == 1)
             {
                 // Controls
-                _gameManager.ChangeState(GameState.Controls);
+                _gameManager.ChangeState(GameStateType.Controls);
             }
             else if (SelectedItemIndex == 2)
             {
                 // Settings
-                _gameManager.ChangeState(GameState.Settings);
+                _gameManager.ChangeState(GameStateType.Settings);
             }
             else if (SelectedItemIndex == 3)
             {
@@ -116,17 +118,17 @@ public class InputManager {
     {
         if (goBack())
         {
-            _gameManager.ChangeState(GameState.MainMenu);
+            _gameManager.ChangeState(GameStateType.MainMenu);
         }
     }
-
+    
     // Handle Inputs for Settings if any
     private void updateSettingsLayer()
     {
         // Only Take Input for Arrow Keys and Return Key
         if (goBack())
         {
-            _gameManager.ChangeState(GameState.MainMenu);
+            _gameManager.ChangeState(GameStateType.MainMenu);
         }
 
         // Up/Down for Setting Options
@@ -153,7 +155,6 @@ public class InputManager {
                 SetAdjustmentRatio(_gameManager.SettingManager.NarratorVolumeAdjustmentRatio);
                 AdjustmentValue = _gameManager.SettingManager.NarratorVolume;
             }
-            _gameManager.UpdateSettingsGUI();
         }
 
         // Left/Right for value
@@ -180,10 +181,9 @@ public class InputManager {
                 _gameManager.Narrator.FastForward();
                // _gameManager.SettingManager.NarratorSpeed = AdjustmentValue;
             }
-            _gameManager.UpdateSettingsGUI();
         }
     }
-
+    
     // Handle Inputs for Dialogue if any
     private void updateDialogueLayer()
     {
@@ -197,7 +197,7 @@ public class InputManager {
         if (Input.GetKeyDown(KeyCode.F))
         {
             _gameManager.Narrator.FastForward();
-            _gameManager.UpdateInGameGUI();
+            _gameManager.CurrentGameState.UpdateGUI();
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
 
         }
@@ -214,28 +214,22 @@ public class InputManager {
         // Choose Dialogue Option
         if (selectionUp())
         {
-            _gameManager.UpdateDialogueWithOptionGUI();
+            _gameManager.CurrentGameState.UpdateGUI();
         }
         if (selectionDown())
         {
-            _gameManager.UpdateDialogueWithOptionGUI();
+            _gameManager.CurrentGameState.UpdateGUI();
         }
         // Confirm Dialogue Option
         if (selectionConfirm())
         {
-            if (_gameManager.CurrentAct.NextDialogue(SelectedItemIndex))
-            {
-                InputStatus = InputStatus.Completed;
-                SelectionStatus = SelectionStatus.Valid;
-                _gameManager.Narrator.SetToIdle();
-                _gameManager.GameProgress = GameProgress.Dialogue;
-            }
+            _gameManager.Narrator.CurrentAct.NextEvent();
         }
         // Fast forward
         if (Input.GetKeyDown(KeyCode.F))
         {
             _gameManager.Narrator.FastForward();
-            _gameManager.UpdateInGameGUI();
+            _gameManager.CurrentGameState.UpdateGUI();
         }
 
         // Replay Option
@@ -250,7 +244,7 @@ public class InputManager {
             _gameManager.Narrator.Replay(PlayType.Dialogue);
         }
     }
-
+    
     // Handle Inputs for ChoosePreCombatOption if any
     private void updateChoosePreCombatOptionLayer()
     {
@@ -265,7 +259,7 @@ public class InputManager {
 
     public void ChangeInputLayer(InputLayer layer, int maxItemCount)
     {
-        this.InputLayer = layer;
+        InputLayer = layer;
         setMaxItemCount(maxItemCount);
     }
 
@@ -293,8 +287,8 @@ public class InputManager {
 
     public void ResetSelection()
     {
-        this.InputStatus = InputStatus.Idle;
-        this.SelectionStatus = SelectionStatus.None;
+        InputStatus = InputStatus.Idle;
+        SelectionStatus = SelectionStatus.None;
     }
 
     private void setMaxItemCount(int count)
@@ -308,7 +302,7 @@ public class InputManager {
         else
         {
             SelectedItemIndex = -1;
-        }    
+        }
     }
 
     private bool selectionUp()
@@ -324,6 +318,7 @@ public class InputManager {
                 SelectedItemIndex--;
             }
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+            _gameManager.CurrentGameState.UpdateGUI();
             return true;
         }
         return false;
@@ -342,6 +337,7 @@ public class InputManager {
                 SelectedItemIndex++;
             }
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+            _gameManager.CurrentGameState.UpdateGUI();
             return true;
         }
         return false;
@@ -360,6 +356,7 @@ public class InputManager {
                 AdjustmentValue = MaxAdjustmentValue;
             }
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+            _gameManager.CurrentGameState.UpdateGUI();
             return true;
         }
         return false;
@@ -378,6 +375,7 @@ public class InputManager {
                 AdjustmentValue = MinAdjustmentValue;
             }
             _gameManager.AudioManager.PlaySFX(_gameManager.AudioManager.SFXMenuItemSelection);
+            _gameManager.CurrentGameState.UpdateGUI();
             return true;
         }
         return false;

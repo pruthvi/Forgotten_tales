@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ItemType { Etc, Consumable }
-[CreateAssetMenu(menuName = "Forgotten Tales/Combat/Item")]
+[CreateAssetMenu(menuName = "Forgotten Tale/Combat/Item")]
 public class Item : ScriptableObject {
 
-    private static int nextItemId;
-    public int Id { get; private set; }
+    public AudioClip NameClip;
     public ItemType ItemType;
-    public string Name;
-
-    public Item(string name, ItemType type)
-    {
-        this.Id = nextItemId++;
-        this.Name = name;
-        this.ItemType = type;
-    }
+    public int Quantity;
+    public int MaxStack;
 
 }
