@@ -37,6 +37,7 @@ public class Act : ScriptableObject {
     
     public Dialogue NextDialogue(Dialogue d)
     {
+        Debug.Log("Called");
         int index = indexOf(d);
         if (index >= 0 && index < Dialogues.Count)
         {
@@ -46,50 +47,6 @@ public class Act : ScriptableObject {
         }
         return null;
     }
-
-    //public bool NextEventBasedOnOption(int index)
-    //{
-    //    if (_currentGameEvent.GameEventType == GameEventType.Dialogue)
-    //    {
-    //        // If has option then go to the next event based on selected index
-    //        if (CurrentDialogue.HasOptions)
-    //        {
-    //            // Check if valid selection
-    //            if (index < CurrentDialogue.Options.Count)
-    //            {
-    //                _currentGameEvent = CurrentDialogue.Options[index].NextEvent;
-    //                if (_currentGameEvent.GameEventType == GameEventType.Dialogue)
-    //                {
-    //                    _currentDialogueIndex++;
-    //                    return true;
-    //                }
-    //            }
-    //        }
-    //        else
-    //        {
-    //            // If no option go to the default event
-
-    //            // Check for default next event type
-    //            if (CurrentDialogue.DefaultEvent.GameEventType == GameEventType.Dialogue)
-    //            {
-    //                _currentDialogueIndex++;
-    //                _currentGameEvent = Dialogues[_currentDialogueIndex];
-    //            }
-    //            else
-    //            {
-    //                _currentGameEvent = _currentGameEvent.DefaultEvent;
-    //                GameManager.Instance.ChangeState(GameState.Battle);
-    //            }
-    //        }
-    //        return true;
-    //    }
-    //    // If no options and no default event log error
-    //    if (!CurrentDialogue.IsEndOfAct)
-    //    {
-    //        Debug.LogError("Current dialogue does not have options, and does not have NextEvent to go to.");
-    //    }
-    //    return false;
-    //}
 
     private int indexOf(Dialogue d)
     {
@@ -107,16 +64,9 @@ public class Act : ScriptableObject {
         return -1;
     }
 
-    //public void AddDialogue(Dialogue d)
-    //{
-    //    if (d != null)
-    //    {
-    //        Dialogues.Add(d);
-    //    }
-    //}
-
     public void Init()
     {
+        Debug.Log("Act Init");
         _currentDialogueIndex = 0;
     }
 }

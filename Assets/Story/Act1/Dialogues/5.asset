@@ -11,9 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 5
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 0}
   IsEndOfAct: 0
-  Id: a1d5
   TextDescription: After a few minutes something violently breaks your window, and
     three spheres fall on the floor and then they explode, spreading a gray smoke,
     spit with horrible smell. You feel dizzy and you see someone in front of you.
@@ -22,3 +20,11 @@ MonoBehaviour:
   Options:
   - {fileID: 11400000, guid: 077c7c9e3674e9b4fa5c230dce6e9bc8, type: 2}
   - {fileID: 11400000, guid: 1ecad6f2eeb87e44887f24296cea289b, type: 2}
+  SFX:
+  - {fileID: 8300000, guid: 800b14114a6070d49be2f533216391e7, type: 3}
+  - {fileID: 8300000, guid: 03281c11b95541a46a19d6c4a362a505, type: 3}
+  - {fileID: 8300000, guid: b01f0a3ee2bb95a4c92f17398f63c88c, type: 3}
+  SFXTime:
+  - 3
+  - 6
+  - 9

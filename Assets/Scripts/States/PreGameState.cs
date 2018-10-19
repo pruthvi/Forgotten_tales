@@ -81,7 +81,6 @@ public class PreGameState : GameState
                     else
                     {
                         _gameManager.ChangeState(GameStateType.InGame);
-                        _gameManager.InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
                     }
                 }
                 break;

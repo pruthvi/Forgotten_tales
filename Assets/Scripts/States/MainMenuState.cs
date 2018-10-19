@@ -48,7 +48,6 @@ public class MainMenuState : GameState
 
     public override void OnStateExit()
     {
-        
     }
 
     public override void OnStateUpdate()
