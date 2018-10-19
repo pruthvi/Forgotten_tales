@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc99ba001e99b4845ac629eeecef285f, type: 3}
+  m_Name: 13.2
+  m_EditorClassIdentifier: 
+  Name: Option
+  TextDescription: I need to save mana. I jump to aside and with my hands I cover
+    my head.
+  AudioDescription: {fileID: 8300000, guid: 5f9508136ae058444b82dd3b9411a3f7, type: 3}
+  NextEvent: {fileID: 11400000, guid: cc5fe056414bade4b88897e9b806161e, type: 2}

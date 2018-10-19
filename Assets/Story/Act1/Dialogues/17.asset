@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
+  m_Name: 17
+  m_EditorClassIdentifier: 
+  NextEvent: {fileID: 11400000, guid: d7b7ed4c49da4d341a39d3d0ef211049, type: 2}
+  IsEndOfAct: 0
+  Id: a1d17
+  TextDescription: "Your maneuver saves your life, but there\u2019s lots of smoke
+    and wreckage on all sides. Somebody appears and quickly pulls you before another
+    ball of fire hits you. He speaks:\r\n- Quick, Arkantus. I was sent by Kalimari
+    to rescue you, we have a lot of things to discuss, there is no time to lose. Let\u2019s
+    go! So, we can safely escape."
+  AudioDescription: {fileID: 8300000, guid: 81891a42a5c47af4397673354ab7ccaa, type: 3}
+  Options: []

@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b2b238ccf4b12479f6a969e1f4d014, type: 3}
+  m_Name: Act1
+  m_EditorClassIdentifier: 
+  Name: Act
+  AudioName: {fileID: 0}
+  PrologueTextDescription: "It is said that history becomes legend as its events recede
+    into the mists of time and that memories grow dimmer in the slumber of peace.
+    Thus, the noble people of Atmos languished in thousand years of peaceful splendor
+    and forget the dark times they lived once. \r\nBut the evil, never forgot.\r\nSo
+    Eligos, the god of death, rise from the darkness once again to release an ancient
+    evil sealed long time ago. Consuming and corrupting every greed heart, Elios will
+    seek all decay living being to bring back his champion once more.\r\nNow, Atmos's
+    fate is uncertain as a shadowy hand rest on it\r."
+  AudioPrologue: {fileID: 8300000, guid: 0983cfab330b40b4cb3f54eb7fcfe22b, type: 3}
+  AudioIntros:
+  - {fileID: 8300000, guid: b2e3950f8ff93544bbc6fc2ea7694e83, type: 3}
+  - {fileID: 8300000, guid: 7ccb4d5401af87c4abfd0efb70596129, type: 3}
+  IntroTextDescriptions:
+  - "Regulos, the bright jewel of Atmos. \r\nA place for order where science and magic
+    walk together. Among so many places in Regulos the most notorious, without a doubt,
+    is the Arcane Academy. \r\nThere, many talented minds study the mysteries of the
+    science of magic.\r\nYou are Arkantus, one of these students. Not so smart or
+    gifted, you would not even be there if it were the kindness of Kalimari, the headmaster
+    of the Arcane Academy.\r\n"
+  - You are concentrated performing advanced alchemy experiments. There is a lot of
+    research to be done and many of them were commissioned by the headmaster himself,
+    Kalimari. The artifact you are examining is intriguing. Its resonance seems to
+    nullify the magical properties of everything around him; it seems to be broken,
+    as if some part of it were missing. After hours of research nothing seems made
+    the artifact react to your experiments. Thus, the real property of this mysterious
+    artifact remains unknown.
+  Dialogues:
+  - {fileID: 11400000, guid: 2f2551c3d8ac95e4b8f4113668b2e9ab, type: 2}
+  - {fileID: 11400000, guid: 1efcc10ef805eb945a21413261a7c031, type: 2}
+  - {fileID: 11400000, guid: e946f68cbd206c940acff266835156d9, type: 2}
+  - {fileID: 11400000, guid: 19d12d5b851b64c46baa3034102c0d05, type: 2}
+  - {fileID: 11400000, guid: a916a3dfba632704e939387a139eb97d, type: 2}
+  - {fileID: 11400000, guid: a7d63b9f1d84c80489c46351dd4a5058, type: 2}
+  - {fileID: 11400000, guid: 9b5ee62083b0faf48b6236b23efd210b, type: 2}
+  - {fileID: 11400000, guid: f6b9308450bad20428600d4445b4dbce, type: 2}
+  - {fileID: 11400000, guid: c0af59a3853b9a64a93391232f534467, type: 2}
+  - {fileID: 11400000, guid: 84c5f87d618dbee46bc3d7b35bb6f9a7, type: 2}
+  - {fileID: 11400000, guid: 31bdd370abd912b40a629eff0fa63792, type: 2}
+  - {fileID: 11400000, guid: 351899bd50c43cf4da1b8bf71d0da99b, type: 2}
+  - {fileID: 11400000, guid: 97c2ff865b8d77c43a8f841563461303, type: 2}
+  - {fileID: 11400000, guid: 2b2ca53a4a7f5a14a8f9e87537801de2, type: 2}
+  - {fileID: 11400000, guid: 46a60b662c72ec74ca1dacfc38cb967f, type: 2}
+  - {fileID: 11400000, guid: a9521845be97d74419a2154a3f0a045f, type: 2}
+  - {fileID: 11400000, guid: c98dc7bd45a21494a8cae2fa506730a2, type: 2}
+  - {fileID: 11400000, guid: cc5fe056414bade4b88897e9b806161e, type: 2}
+  - {fileID: 11400000, guid: d7b7ed4c49da4d341a39d3d0ef211049, type: 2}

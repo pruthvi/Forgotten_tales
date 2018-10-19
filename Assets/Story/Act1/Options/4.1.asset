@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc99ba001e99b4845ac629eeecef285f, type: 3}
+  m_Name: 4.1
+  m_EditorClassIdentifier: 
+  Name: Option
+  TextDescription: How silly, no one else knows about this artifact and what I'm doing
+    here, everything is a secret. Must be some prank. I go back to my desk and continue
+    my research. No distraction.
+  AudioDescription: {fileID: 8300000, guid: 091d58f5d6640f4459d2c3044d80da1c, type: 3}
+  NextEvent: {fileID: 11400000, guid: a7d63b9f1d84c80489c46351dd4a5058, type: 2}

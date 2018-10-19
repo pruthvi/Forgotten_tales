@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc99ba001e99b4845ac629eeecef285f, type: 3}
+  m_Name: 2.1
+  m_EditorClassIdentifier: 
+  Name: Option
+  TextDescription: "How absurd! This is a place of study, who could be doing this?
+    I\u2019ll open the door to solve this."
+  AudioDescription: {fileID: 8300000, guid: a8e1f82244af60249a601647f93fc932, type: 3}
+  NextEvent: {fileID: 11400000, guid: a916a3dfba632704e939387a139eb97d, type: 2}
