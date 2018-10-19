@@ -42,4 +42,9 @@ public class Battle : GameEvent
 
     public GameEvent WinEvent;
     public GameEvent LoseEvent;
+
+    public void End()
+    {
+
+    }
 }

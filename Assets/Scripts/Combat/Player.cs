@@ -16,18 +16,26 @@ public class Player : Combatant {
         }
     }
 
-    public override void Cast(Spell spell, Combatant target)
+    public override void Attack(Combatant target, Spell spell)
     {
-        throw new NotImplementedException();
-    }
-
-    public override void Attack(Combatant target)
-    {
-        throw new NotImplementedException();
+        target.OnHit(this, spell);
     }
 
     public override void Defense()
     {
-        throw new NotImplementedException();
+        _defense = true;
+    }
+
+    public override void OnHit(Combatant attacker, Spell spell)
+    {
+        if (_defense)
+        {
+            //playe player block attack sfx
+            _defense = false;
+        }
+        else
+        {
+            //play player getting hit sfx
+        }
     }
 }

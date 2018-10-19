@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
     }
 
     public GameProgress GameProgress;
+    
+    public Player Player;
 
     void Awake()
     {

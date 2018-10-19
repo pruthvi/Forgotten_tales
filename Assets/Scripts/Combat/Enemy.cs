@@ -16,18 +16,18 @@ public class Enemy : Combatant {
 
     public Spell[] Spells;
 
-    public override void Cast(Spell spell, Combatant target)
+    public override void Attack(Combatant target, Spell spell)
     {
-        throw new NotImplementedException();
-    }
-
-    public override void Attack(Combatant target)
-    {
-        throw new NotImplementedException();
+        
     }
 
     public override void Defense()
     {
         throw new NotImplementedException();
+    }
+
+    public override void OnHit(Combatant attacker, Spell spell)
+    {
+        //Play goblin getting hit sfx
     }
 }

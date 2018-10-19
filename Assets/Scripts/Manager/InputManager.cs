@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum InputLayer { SplashScreen, MainMenu, Controls, Settings, Dialogue, ChooseDialogueOption, ChoosePreCombatOption, ChooseCombatOption }
+public enum InputLayer { SplashScreen, MainMenu, Controls, Settings, Dialogue, ChooseDialogueOption, ChoosePreCombatOption, ChooseCombatOption, ChooseItemOption }
 public enum InputStatus { Idle, Selecting, Completed }
 public enum SelectionStatus { None, Valid, Invalid }
 
@@ -62,6 +62,9 @@ public class InputManager
                 break;
             case InputLayer.ChooseCombatOption:
                 updateChooseCombatOptionLayer();
+                break;
+            case InputLayer.ChooseItemOption:
+                updateChooseItemOptionLayer();
                 break;
         }
     }
@@ -248,11 +251,44 @@ public class InputManager
     // Handle Inputs for ChoosePreCombatOption if any
     private void updateChoosePreCombatOptionLayer()
     {
+        if (selectionUp())
+        {
 
+        }
+
+        if (selectionDown())
+        {
+
+        }
+
+        if (selectionConfirm())
+        {
+            if (SelectedItemIndex == 0)
+            {
+                // Attack
+                _gameManager.CombatManager.CurrentBattle.Attack(_gameManager.Player, _gameManager.CombatManager.CurrentBattle.Enemy);
+            }
+            else if (SelectedItemIndex == 1)
+            {
+                // Choose Item
+                ChangeInputLayer(InputLayer.ChooseItemOption, _gameManager.Player.InventoryManager.Items.Length);
+            }
+            else if (SelectedItemIndex == 2)
+            {
+                // Choose Run
+                _gameManager.Player.SetChoice(PlayerChoice.Attack);
+            }
+        }
     }
 
     // Handle Inputs for ChooseCombatOption if any
     private void updateChooseCombatOptionLayer()
+    {
+
+    }
+
+    // Handle Inputs for ChooseItemOption if any
+    private void updateChooseItemOptionLayer()
     {
 
     }

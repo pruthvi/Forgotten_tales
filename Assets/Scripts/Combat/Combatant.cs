@@ -10,15 +10,15 @@ public abstract class Combatant : ScriptableObject
 {
     public string Name { get; set; }
     public abstract CombatantType CombatantType { get; }
-
-    public abstract void Cast(Spell spell, Combatant target);
-    public abstract void Attack(Combatant target);
+    
+    public abstract void Attack(Combatant target, Spell spell);
     public abstract void Defense();
 
     private float _hp;
     private float _mp;
     private float _maxHp;
     private float _maxMp;
+    private bool _defense;
 
     public float MaxHP
     {
@@ -110,4 +110,6 @@ public abstract class Combatant : ScriptableObject
             }
         }
     }
+
+    public abstract void OnHit(Combatant attacker, Spell spell);
 }
