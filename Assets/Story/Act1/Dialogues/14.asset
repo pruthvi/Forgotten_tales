@@ -11,9 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 14
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 11400000, guid: d7b7ed4c49da4d341a39d3d0ef211049, type: 2}
+  DefaultEvent: {fileID: 11400000, guid: d7b7ed4c49da4d341a39d3d0ef211049, type: 2}
   IsEndOfAct: 0
-  Id: a1d14
   TextDescription: "You quickly pull the magic scroll and read the spell written.
     There is something different about this magic, as if someone interfered with its
     execution. You are surrounded by the magic of teleportation and disappear.\nWhen
@@ -24,3 +23,5 @@ MonoBehaviour:
     Let's go!"
   AudioDescription: {fileID: 8300000, guid: c913fcb9da92f114ca7bd85034dd65e1, type: 3}
   Options: []
+  SFX: []
+  SFXTime: []

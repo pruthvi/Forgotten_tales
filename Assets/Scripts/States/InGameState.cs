@@ -110,12 +110,14 @@ public class InGameState : GameState
     {
         if (_currentEvent.GameEventType == GameEventType.Battle)
         {
-            if (((Battle)_currentEvent).BattleResult == BattleResult.Win)
+            if (((Battle)_currentEvent).BattleResult == BattleResult.Lose)
             {
+                Debug.Log("Player Winsss..");
                 _currentEvent = ((Battle)_currentEvent).WinEvent;
             }
-            else if (((Battle)_currentEvent).BattleResult == BattleResult.Lose)
+            else if (((Battle)_currentEvent).BattleResult == BattleResult.Win)
             {
+                Debug.Log("Player Losseess..");
                 _currentEvent = ((Battle)_currentEvent).LoseEvent;
             }
         }

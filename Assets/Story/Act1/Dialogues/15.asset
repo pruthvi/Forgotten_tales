@@ -11,9 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 15
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 11400000, guid: a9521845be97d74419a2154a3f0a045f, type: 2}
+  DefaultEvent: {fileID: 11400000, guid: af57814f48ba8744189a710ab8eba924, type: 2}
   IsEndOfAct: 0
-  Id: a1d15
   TextDescription: "The mysterious figure helps you remove the stones blocking your
     path. He introduces himself:\r\n-Arkantus, are you okay? My name is Kivan, the
     headmaster Kalimari sent me to rescue you. There is a lot to be discussed and
@@ -23,3 +22,5 @@ MonoBehaviour:
     for combat!\n"
   AudioDescription: {fileID: 8300000, guid: 58fba0974383ea54898ce3a85ed32ca6, type: 3}
   Options: []
+  SFX: []
+  SFXTime: []
