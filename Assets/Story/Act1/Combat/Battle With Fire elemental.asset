@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e81532c3185ca640bbc900fb4c1b969, type: 3}
   m_Name: Battle With Fire elemental
   m_EditorClassIdentifier: 
-  DefaultEvent: {fileID: 11400000, guid: a9521845be97d74419a2154a3f0a045f, type: 2}
+  DefaultEvent: {fileID: 0}
   Initiator: {fileID: 11400000, guid: d20034dbddca37940b18ac64dbc312ca, type: 2}
   Enemies:
   - {fileID: 11400000, guid: d20034dbddca37940b18ac64dbc312ca, type: 2}
