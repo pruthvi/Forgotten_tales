@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public bool SkipSplashScreen;
     public AudioClip[] SplashScreenAudio;
     public string[] SplashScreenText;
-
+    
     // Main Menu
     public AudioClip[] ClipMainMenuGuide;
     public AudioClip[] ClipMenuItem;
@@ -55,6 +55,16 @@ public class GameManager : MonoBehaviour
     
     public Player Player;
 
+    public AudioClip[] ClipPreCombatOptions;
+    public AudioClip[] ClipCombatAttackOptions;
+
+    public string[] PreCombatOptions;
+    public string[] CombatAttackOptions;
+
+    public AudioClip[] AudioBattles;
+
+    public AudioClip[] AudioAssets;
+
     public InGameState InGameState
     {
         get
@@ -70,6 +80,8 @@ public class GameManager : MonoBehaviour
             return (BattleState)States[6];
         }
     }
+
+
 
     void Awake()
     {
@@ -141,6 +153,9 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStateType.InGame:
                 _currentGameState = States[5];
+                break;
+            case GameStateType.Battle:
+                _currentGameState = States[6];
                 break;
         }
         Narrator.Stop();

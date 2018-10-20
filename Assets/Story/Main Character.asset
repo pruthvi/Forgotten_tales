@@ -11,3 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c28fdc2c990fca642a0768b076b556a2, type: 3}
   m_Name: Main Character
   m_EditorClassIdentifier: 
+  Spells:
+  - {fileID: 11400000, guid: 89dd82a62247844469ab537cdf80c5ee, type: 2}
+  Defense: 0
+  Choice: 1

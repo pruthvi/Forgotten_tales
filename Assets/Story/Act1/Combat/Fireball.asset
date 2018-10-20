@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b58636815988b4f86c4041d5234ac0, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
-  Name: 
-  DamageModifier: 1
-  SFXSoundOnFire: {fileID: 0}
-  SFXSoundOnAttacked: {fileID: 0}
+  Name: Fireball
+  DamageModifier: 3
+  SFXSoundOnFire: {fileID: 8300000, guid: da7525cf1a0c1634e907bd12884d6350, type: 3}
+  SFXSoundOnAttacked: {fileID: 8300000, guid: a84a8b4cbbb595741ad88341d0518e26, type: 3}

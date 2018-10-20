@@ -15,8 +15,6 @@ public class DialogueInspector : Editor
 
         Dialogue d = target as Dialogue;
 
-        d.DefaultEvent = (GameEvent)EditorGUILayout.ObjectField("Default Event", d.DefaultEvent, typeof(GameEvent), false);
-
         EditorGUI.indentLevel++;
         for(int i = 0; i < d.Options.Count; i++)
         {

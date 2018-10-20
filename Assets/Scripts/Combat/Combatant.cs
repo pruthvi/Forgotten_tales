@@ -13,11 +13,13 @@ public abstract class Combatant : ScriptableObject
     
     public abstract void Attack(Combatant target, Spell spell);
 
-    private float _hp;
-    private float _mp;
+    public Spell[] Spells;
+
     private float _maxHp;
     private float _maxMp;
-    
+
+    private float _hp;
+    private float _mp;
     public bool Defense;
 
     public float MaxHP

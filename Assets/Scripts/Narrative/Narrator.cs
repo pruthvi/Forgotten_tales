@@ -128,7 +128,7 @@ public class Narrator
         _source.clip = _currentClip;
         _source.Play();
         Status = NarratorStatus.Speaking;
-        _gameManager.StartCoroutine(playSFXBasedOnTime());
+        //_gameManager.StartCoroutine(playSFXBasedOnTime());
     }
 
     public void Replay(PlayType type)
@@ -147,6 +147,7 @@ public class Narrator
 
     public void Skip()
     {
+        Debug.Log("Skipped");
         Status = NarratorStatus.Skipped;
     }
 
@@ -191,21 +192,21 @@ public class Narrator
         _gameManager.AudioManager.SFXSource.pitch = _source.pitch;
     }
 
-    IEnumerator playSFXBasedOnTime()
-    {
-        if (_gameManager.InGameState.OnDialogue)
-        {
-            Dialogue d = (Dialogue)_gameManager.InGameState.CurrentGameEvent;
-            for (int i = 0; i < d.SFX.Count; i++)
-            {
-                float waitTime = 0;
-                if (i < d.SFX.Count - 1)
-                {
-                    waitTime = (d.SFXTime[i + 1] - d.SFXTime[i]);
-                }
-                _gameManager.AudioManager.PlaySFX(d.SFX[i]);
-                yield return new WaitForSeconds(waitTime * (1 / _gameManager.Narrator.Speed));
-            }
-        }
-    }
+    //IEnumerator playSFXBasedOnTime()
+    //{
+    //    if (_gameManager.InGameState.OnDialogue)
+    //    {
+    //        Dialogue d = (Dialogue)_gameManager.InGameState.CurrentGameEvent;
+    //        for (int i = 0; i < d.SFX.Count; i++)
+    //        {
+    //            float waitTime = 0;
+    //            if (i < d.SFX.Count - 1)
+    //            {
+    //                waitTime = (d.SFXTime[i + 1] - d.SFXTime[i]);
+    //            }
+    //            _gameManager.AudioManager.PlaySFX(d.SFX[i]);
+    //            yield return new WaitForSeconds(waitTime * (1 / _gameManager.Narrator.Speed));
+    //        }
+    //    }
+    //}
 }
