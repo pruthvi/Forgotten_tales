@@ -14,15 +14,16 @@ public class Enemy : Combatant {
         }
     }
 
-    public Spell[] Spells;
-
     public override void Attack(Combatant target, Spell spell)
     {
-        
+        GameManager.Instance.AudioManager.PlaySFX(spell.SFXSoundOnFire);
+        target.OnHit(this, spell);
     }
 
     public override void OnHit(Combatant attacker, Spell spell)
     {
         //Play goblin getting hit sfx
+        GameManager.Instance.AudioManager.PlaySFX2(spell.SFXSoundOnAttacked);
+        this.HP -= spell.FinalDamage;
     }
 }

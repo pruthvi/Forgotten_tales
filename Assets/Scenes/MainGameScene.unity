@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 472776812}
   - component: {fileID: 472776811}
   - component: {fileID: 472776814}
+  - component: {fileID: 472776815}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -646,6 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BackgroundSource: {fileID: 472776813}
   SFXSource: {fileID: 472776812}
+  SFXSource2: {fileID: 472776815}
   NarrativeSource: {fileID: 472776811}
   SFXMenuItemSelection: {fileID: 8300000, guid: 8fa4cad43187cfa4b8fc88c8b67aef07,
     type: 3}
@@ -654,6 +656,101 @@ MonoBehaviour:
   BGMMainMenuToIntro: {fileID: 8300000, guid: 4c6382b3090332248a0141c838835522, type: 3}
   BGMNarrative: {fileID: 8300000, guid: 74b0d1722851bbe4f8d573f59e0a8c0f, type: 3}
   BGMCombat: {fileID: 8300000, guid: b345b6cda2ab787439ede837f93a22ff, type: 3}
+--- !u!82 &472776815
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 472776809}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,22 +1028,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TextUI: {fileID: 135524078}
   TextDescription: {fileID: 1372119976}
-  SkipSplashScreen: 1
+  SkipSplashScreen: 0
   SplashScreenAudio:
-  - {fileID: 8300000, guid: c13ff1b420728bd47a62552650ba1500, type: 3}
   - {fileID: 8300000, guid: 8097e3277ceb4f7478a2b88ae6c71b93, type: 3}
   - {fileID: 8300000, guid: 49e81f4b5cb55134ab80d2071e35e413, type: 3}
   - {fileID: 8300000, guid: 048c012487feed0498f62bd1c8fe6c76, type: 3}
+  - {fileID: 8300000, guid: c13ff1b420728bd47a62552650ba1500, type: 3}
   SplashScreenText:
-  - Forgotten Tales - The Cult of Darkness
   - Made with Unity
   - Divided By Zero
   - Presents
+  - Forgotten Tales - The Cult of Darkness
   ClipMainMenuGuide:
   - {fileID: 8300000, guid: a5a31a1435594e545a4296cdc54eb965, type: 3}
   - {fileID: 8300000, guid: 1667e3c095574e64b95d5a7ecaee8c29, type: 3}
   ClipMenuItem:
-  - {fileID: 8300000, guid: d5fa7158448257b428338337ca1700dc, type: 3}
+  - {fileID: 8300000, guid: f14bd437111eede4896db839f585eb25, type: 3}
   - {fileID: 8300000, guid: d095c673a0732c548874b75e21e8da2e, type: 3}
   - {fileID: 8300000, guid: d2c7c59342275ce4981e6b36fb9a0b27, type: 3}
   - {fileID: 8300000, guid: 4803234961d68a74795c518f62955cfc, type: 3}
@@ -954,6 +1051,29 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b0243fe14608cd4fa6ac5b0f40106fa, type: 2}
   GameProgress: 0
   Player: {fileID: 11400000, guid: dd54d86a3104eb344ab741028bc2f553, type: 2}
+  ClipPreCombatOptions:
+  - {fileID: 8300000, guid: c49306baf70c1aa4498270f9285bc2b4, type: 3}
+  - {fileID: 8300000, guid: f595d6db2ca6ba04a9c0bda9b4337295, type: 3}
+  - {fileID: 8300000, guid: 64662fce73e14d4429e0a4c052f3718a, type: 3}
+  ClipCombatAttackOptions:
+  - {fileID: 8300000, guid: 91e8625f5690ef1479a135c70bbf169b, type: 3}
+  - {fileID: 0}
+  PreCombatOptions:
+  - Fight
+  - Item
+  - Run
+  CombatAttackOptions:
+  - Spell
+  - Defense
+  AudioBattles:
+  - {fileID: 8300000, guid: 2633b14841503204c96cab25760528a1, type: 3}
+  - {fileID: 8300000, guid: 0dffd3c3aa0def54681590dd008337df, type: 3}
+  - {fileID: 8300000, guid: 94b2c4ebea225524ea95efc54557d8ea, type: 3}
+  - {fileID: 8300000, guid: a84a8b4cbbb595741ad88341d0518e26, type: 3}
+  - {fileID: 8300000, guid: d3429bcae53a7484da974d495f3c282f, type: 3}
+  - {fileID: 8300000, guid: 469aca8cb84eaf2449578a83fe9d4561, type: 3}
+  - {fileID: 8300000, guid: f21695146a925d94ba630ec9860311d5, type: 3}
+  AudioAssets: []
 --- !u!4 &1643781143
 Transform:
   m_ObjectHideFlags: 0

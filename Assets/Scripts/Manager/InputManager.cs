@@ -253,45 +253,88 @@ public class InputManager
     {
         if (selectionUp())
         {
-            _gameManager.CurrentGameState.UpdateGUI();
+            _gameManager.BattleState.UpdatePlayerTurnGUI();
+
+            if (_gameManager.ClipPreCombatOptions[SelectedItemIndex] != null)
+            {
+                _gameManager.Narrator.Play(_gameManager.ClipPreCombatOptions[SelectedItemIndex]);
+            }
+
         }
 
         if (selectionDown())
         {
-            _gameManager.CurrentGameState.UpdateGUI();
+            _gameManager.BattleState.UpdatePlayerTurnGUI();
+
+
+            if (_gameManager.ClipPreCombatOptions[SelectedItemIndex] != null)
+            {
+                _gameManager.Narrator.Play(_gameManager.ClipPreCombatOptions[SelectedItemIndex]);
+            }
+
         }
 
         if (selectionConfirm())
         {
-            if (SelectedItemIndex == 0)
-            {
-                // Attack
-                Battle currentBattle = _gameManager.CombatManager.CurrentBattle;
-              //  currentBattle.InitiateFight(_gameManager.Player, currentBattle.Mob);
-            }
-            else if (SelectedItemIndex == 1)
-            {
-                // Choose Item
-                ChangeInputLayer(InputLayer.ChooseItemOption, _gameManager.Player.InventoryManager.Items.Count);
-            }
-            else if (SelectedItemIndex == 2)
-            {
-                // Choose Run
-                _gameManager.Player.Choice = PlayerChoice.Attack;
-            }
+            _gameManager.BattleState.SelectPreCombatOption(SelectedItemIndex);
+            _gameManager.CurrentGameState.UpdateGUI();
         }
     }
 
     // Handle Inputs for ChooseCombatOption if any
     private void updateChooseCombatOptionLayer()
     {
+        if (selectionUp())
+        {
+            _gameManager.BattleState.UpdatePlayerTurnGUI();
 
+
+            if (_gameManager.ClipCombatAttackOptions[SelectedItemIndex] != null)
+            {
+                _gameManager.Narrator.Play(_gameManager.ClipCombatAttackOptions[SelectedItemIndex]);
+            }
+        }
+
+        if (selectionDown())
+        {
+            _gameManager.BattleState.UpdatePlayerTurnGUI();
+
+            if (_gameManager.ClipCombatAttackOptions[SelectedItemIndex] != null)
+            {
+                _gameManager.Narrator.Play(_gameManager.ClipCombatAttackOptions[SelectedItemIndex]);
+            }
+        }
+
+        if (selectionConfirm())
+        {
+            _gameManager.BattleState.SelectCombatOption(SelectedItemIndex);
+            _gameManager.CurrentGameState.UpdateGUI();
+        }
     }
 
     // Handle Inputs for ChooseItemOption if any
     private void updateChooseItemOptionLayer()
     {
+        if (goBack())
+        {
+            _gameManager.BattleState.PlayerSelectingStatus = PlayerSelectingStatus.NoSelection;
+            ChangeInputLayer(InputLayer.ChoosePreCombatOption, _gameManager.PreCombatOptions.Length);
+        }
+        if (selectionUp())
+        {
+            _gameManager.BattleState.UpdatePlayerTurnGUI();
 
+        }
+
+        if (selectionDown())
+        {
+            _gameManager.BattleState.UpdatePlayerTurnGUI();
+        }
+        if (selectionConfirm())
+        {
+            _gameManager.BattleState.SelectCombatOption(SelectedItemIndex);
+            _gameManager.CurrentGameState.UpdateGUI();
+        }
     }
 
     public void ChangeInputLayer(InputLayer layer, int maxItemCount)

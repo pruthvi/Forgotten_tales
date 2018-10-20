@@ -6,7 +6,9 @@ public class AudioManager : MonoBehaviour{
 
     public AudioSource BackgroundSource;
     public AudioSource SFXSource;
+    public AudioSource SFXSource2;
     public AudioSource NarrativeSource;
+
 
     // SFX
     public AudioClip SFXMenuItemSelection;
@@ -28,5 +30,11 @@ public class AudioManager : MonoBehaviour{
     {
         SFXSource.clip = clip;
         SFXSource.Play();
+    }
+
+    public void PlaySFX2(AudioClip clip)
+    {
+        SFXSource2.clip = clip;
+        SFXSource2.Play();
     }
 }

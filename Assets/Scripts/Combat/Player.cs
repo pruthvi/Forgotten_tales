@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public enum PlayerChoice { Idle, Attack, Item, Run }
+public enum PlayerChoice { Idle, Fight, Attack, Spell, Defense, Item, Run }
 [CreateAssetMenu(menuName = "Forgotten Tale/Combat/Player")]
 public class Player : Combatant {
     
@@ -21,6 +18,7 @@ public class Player : Combatant {
 
     public override void Attack(Combatant target, Spell spell)
     {
+        GameManager.Instance.AudioManager.PlaySFX(spell.SFXSoundOnFire);
         target.OnHit(this, spell);
     }
 
@@ -28,12 +26,23 @@ public class Player : Combatant {
     {
         if (Defense)
         {
-            //playe player block attack sfx
+            float rng = Random.Range(0, 1);
+            if (rng < 0.2)
+            {
+                // Block attack
+                //GameManager.Instance.AudioManager.PlaySFX(GameManager.Instance.AudioBattles[]);
+            }
+            else
+            {
+                GameManager.Instance.AudioManager.PlaySFX2(spell.SFXSoundOnAttacked);
+            }
             Defense = false;
         }
         else
         {
-            //play player getting hit sfx
+            this.HP -= spell.FinalDamage;
+            GameManager.Instance.AudioManager.PlaySFX2(spell.SFXSoundOnAttacked);
         }
+        
     }
 }

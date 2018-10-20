@@ -9,5 +9,5 @@ public abstract class GameEvent : ScriptableObject
 {
     public string Id { get; private set; }
     public abstract GameEventType GameEventType { get; }
-    public virtual GameEvent DefaultEvent { get; set; }
+    public GameEvent DefaultEvent;
 }
