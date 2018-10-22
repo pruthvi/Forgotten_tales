@@ -28,8 +28,23 @@ public class Spell : ScriptableObject
         }
     }
     public float DamageModifier = 1;
-    public AudioClip SFXSoundOnFire;
-    public AudioClip SFXSoundOnAttacked;
+    private float _cost = 0;
+    public float Cost
+    {
+        get
+        {
+            return _cost;
+        }
+        set
+        {
+            if (value >= 0)
+            {
+                _cost = value;
+            }
+        }
+    }
+    public AudioClip SFXWhenFire;
+    public AudioClip SFXWhenHit;
 
     public float FinalDamage
     {

@@ -6,10 +6,6 @@ using UnityEngine;
 
 public class ControlsState : GameState
 {
-    public ControlsState(GameManager gm) : base(gm)
-    {
-
-    }
 
     public override GameStateType GameStateType
     {
@@ -19,26 +15,32 @@ public class ControlsState : GameState
         }
     }
 
-    public override void UpdateGUI()
+    public override void OnGUIChange()
     {
-        _gameManager.TextUI.text = "Controls\n[Esc] Back to Menu";
-        _gameManager.TextDescription.text = "";
+        _gm.UIManager.Header = "Controls\n[Esc] Back to Menu | [Up/Down]";
+        _gm.UIManager.Content = "";
     }
 
-    public override void OnStateEnter()
+    public override void OnEnter()
     {
-        _gameManager.InputManager.ChangeInputLayer(InputLayer.Controls, 0);
-        //StartCoroutine(playControlsAudio());
-        UpdateGUI();
-        _gameManager.TextDescription.alignment = TextAnchor.MiddleCenter;
+        _gm.UIManager.TextContent.alignment = TextAnchor.MiddleCenter;
+        OnGUIChange();
     }
 
-    public override void OnStateExit()
+    public override void OnExit()
     {
     }
 
-    public override void OnStateUpdate()
+    public override void OnUpdate()
     {
 
+    }
+
+    public override void OnInput()
+    {
+        if (_gm.InputManager.SelectionSkipOrExit(false))
+        {
+            _gm.ChangeState(GameStateType.MainMenu);
+        }
     }
 }

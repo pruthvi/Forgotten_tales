@@ -6,12 +6,10 @@ using System.Text;
 using UnityEngine;
 
 public class SplashScreenState : GameState
-{ 
-
-    public SplashScreenState(GameManager gm) : base(gm)
-    {
-
-    }
+{
+    public bool SkipSplashScreen;
+    public AudioClip[] AudioSplashScreen;
+    public string[] AudioTextDescription;
 
     public override GameStateType GameStateType
     {
@@ -21,41 +19,46 @@ public class SplashScreenState : GameState
         }
     }
 
-    public override void UpdateGUI()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void OnStateEnter()
-    {
-        if (_gameManager.SkipSplashScreen)
-        {
-            _gameManager.ChangeState(GameStateType.MainMenu);
-        }
-        else
-        {
-            _gameManager.TextDescription.alignment = TextAnchor.MiddleCenter;
-            _gameManager.StartCoroutine(playSplashScreenAudio());
-        }
-    }
-
-    public override void OnStateExit()
-    {
-    }
-
-    public override void OnStateUpdate()
+    public override void OnGUIChange()
     {
         
     }
 
+    public override void OnEnter()
+    {
+        if (SkipSplashScreen)
+        {
+            _gm.ChangeState(GameStateType.MainMenu);
+        }
+        else
+        {
+            _gm.UIManager.TextContent.alignment = TextAnchor.MiddleCenter;
+            _gm.StartCoroutine(playSplashScreenAudio());
+        }
+    }
+
+    public override void OnExit()
+    {
+    }
+
+    public override void OnUpdate()
+    {
+
+    }
+
     IEnumerator playSplashScreenAudio()
     {
-        for (int i = 0; i < _gameManager.SplashScreenAudio.Length; i++)
+        for (int i = 0; i < AudioSplashScreen.Length; i++)
         {
-            _gameManager.TextDescription.text = _gameManager.SplashScreenText[i];
-            _gameManager.Narrator.Play(_gameManager.SplashScreenAudio[i]);
-            yield return new WaitForSeconds(_gameManager.SplashScreenAudio[i].length * (1 / _gameManager.Narrator.Speed));
+            _gm.UIManager.Content = AudioTextDescription[i];
+            _gm.Narrator.Play(AudioSplashScreen[i]);
+            yield return new WaitForSeconds(AudioSplashScreen[i].length * (1 / _gm.Narrator.Speed));
         }
-        _gameManager.ChangeState(GameStateType.MainMenu);
+        _gm.ChangeState(GameStateType.MainMenu);
+    }
+
+    public override void OnInput()
+    {
+        
     }
 }

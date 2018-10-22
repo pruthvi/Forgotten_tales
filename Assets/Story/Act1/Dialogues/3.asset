@@ -11,13 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 0}
+  DefaultEvent: {fileID: 0}
   IsEndOfAct: 0
-  Id: a1d3
-  TextDescription: When you arrive outside, you expect the mysterious person reveal
-    themselves and talk to you. But after an hour no one appeared. What are you going
-    to do?
-  AudioDescription: {fileID: 8300000, guid: fdeea80c42bb29a42a037ff90e1869dd, type: 3}
+  DialogueText: When you arrive outside, you expect the mysterious person reveal themselves
+    and talk to you. But after an hour no one appeared. What are you going to do?
+  DialogueClip: {fileID: 8300000, guid: fdeea80c42bb29a42a037ff90e1869dd, type: 3}
   Options:
   - {fileID: 11400000, guid: 60f54bfc95aa4de4aa5a8e45a0c42ef3, type: 2}
   - {fileID: 11400000, guid: d5144faec99632349a259fa6860bbfc5, type: 2}
+  SFX: []
+  SFXTime: []
+  StopDialogueSFX: 0

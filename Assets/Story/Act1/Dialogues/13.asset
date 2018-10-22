@@ -11,13 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 13
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 0}
+  DefaultEvent: {fileID: 0}
   IsEndOfAct: 0
-  Id: a1d13
-  TextDescription: You run away at full speed. When you arrive at the main hall of
-    the Academy you are surprised by a huge ball of fire about to hit you. What do
-    you do?
-  AudioDescription: {fileID: 8300000, guid: b5934ee2fa9b33f428f3b1af467e29b0, type: 3}
+  DialogueText: You run away at full speed. When you arrive at the main hall of the
+    Academy you are surprised by a huge ball of fire about to hit you. What do you
+    do?
+  DialogueClip: {fileID: 8300000, guid: b5934ee2fa9b33f428f3b1af467e29b0, type: 3}
   Options:
   - {fileID: 11400000, guid: 53a3e3d04885f2749a75144195f883a1, type: 2}
   - {fileID: 11400000, guid: 2905a734e9d143b40be08d4fe863c622, type: 2}
+  SFX: []
+  SFXTime: []
+  StopDialogueSFX: 0

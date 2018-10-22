@@ -14,32 +14,6 @@ public class Act : ScriptableObject {
     public AudioClip[] AudioIntros;
     [TextArea]
     public string[] IntroTextDescriptions;
-
-    private int _currentDialogueIndex;
-
-    public Dialogue CurrentDialogue
-    {
-        get
-        {
-            return Dialogues[_currentDialogueIndex];
-        }
-    }
     
     public List<Dialogue> Dialogues = new List<Dialogue>();
-
-    //private int indexOf(Dialogue d)
-    //{
-    //    if(d == null)
-    //    {
-    //        return -1;
-    //    }
-    //    for (int i = 0; i < Dialogues.Count; i++)
-    //    {
-    //        if (Dialogues[i].name == d.name)
-    //        {
-    //            return i;
-    //        }
-    //    }
-    //    return -1;
-    //}
 }

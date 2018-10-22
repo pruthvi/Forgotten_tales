@@ -8,6 +8,8 @@ public class Player : Combatant {
 
     public PlayerChoice Choice;
 
+    public AudioClip SFXBlockAttack;
+
     public override CombatantType CombatantType
     {
         get
@@ -18,7 +20,7 @@ public class Player : Combatant {
 
     public override void Attack(Combatant target, Spell spell)
     {
-        GameManager.Instance.AudioManager.PlaySFX(spell.SFXSoundOnFire);
+        GameManager.Instance.AudioManager.Play(spell.SFXWhenFire, AudioChannel.SFX1);
         target.OnHit(this, spell);
     }
 
@@ -30,18 +32,18 @@ public class Player : Combatant {
             if (rng < 0.2)
             {
                 // Block attack
-                //GameManager.Instance.AudioManager.PlaySFX(GameManager.Instance.AudioBattles[]);
+                GameManager.Instance.AudioManager.Play(SFXBlockAttack, AudioChannel.SFX2);
             }
             else
             {
-                GameManager.Instance.AudioManager.PlaySFX2(spell.SFXSoundOnAttacked);
+                GameManager.Instance.AudioManager.Play(spell.SFXWhenFire, AudioChannel.SFX2);
             }
             Defense = false;
         }
         else
         {
             this.HP -= spell.FinalDamage;
-            GameManager.Instance.AudioManager.PlaySFX2(spell.SFXSoundOnAttacked);
+            GameManager.Instance.AudioManager.Play(spell.SFXWhenHit, AudioChannel.SFX2);
         }
         
     }

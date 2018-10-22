@@ -4,28 +4,23 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class SettingsState : GameState
+public class SettingState : GameState
 {
 
     // Settings
     public string[] _settingItems = { "BGM Volume: ", "SFX Volume: ", "Narrator Volume: ", "Narrator Speed: " };
-
-    public SettingsState(GameManager gm) : base(gm)
-    {
-
-    }
-
+    
     public override GameStateType GameStateType
     {
         get
         {
-            return GameStateType.Settings;
+            return GameStateType.Setting;
         }
     }
 
-    public override void UpdateGUI()
+    public override void OnGUIChange()
     {
-        _gameManager.TextUI.text = "Settings | [Esc] Back to Main Menu | [Up/Down] Select Option | [Left/Right] Adjust Setting";
+        _gm.UIManager.Header = "Settings | [Esc] Back to Main Menu | [Up/Down] Select Option | [Left/Right] Adjust Setting";
 
         string settings = "";
 
@@ -39,47 +34,54 @@ public class SettingsState : GameState
             {
                 //    max = SettingManager.MaxBGMVolumeValue;
                 //    min = SettingManager.MinBGMVolumeValue;
-                value = (int)((_gameManager.SettingManager.BGMVolume / _gameManager.SettingManager.MaxBGMVolumeValue) * 100) + " %";
+                value = (int)((_gm.SettingManager.BGMVolume / _gm.SettingManager.MaxBGMVolumeValue) * 100) + " %";
             }
             else if (i == 1)
             {
                 //    max = SettingManager.MaxSFXVolumeValue;
                 //    min = SettingManager.MaxSFXVolumeValue;
-                value = (int)((_gameManager.SettingManager.SFXVolume / _gameManager.SettingManager.MaxSFXVolumeValue) * 100) + " %";
+                value = (int)((_gm.SettingManager.SFXVolume / _gm.SettingManager.MaxSFXVolumeValue) * 100) + " %";
             }
             else if (i == 2)
             {
                 //    max = SettingManager.MaxNarratorVolume;
                 //    min = SettingManager.MaxNarratorVolume;
-                value = (int)((_gameManager.SettingManager.NarratorVolume / _gameManager.SettingManager.MaxNarratorVolume) * 100) + " %";
+                value = (int)((_gm.SettingManager.NarratorVolume / _gm.SettingManager.MaxNarratorVolume) * 100) + " %";
             }
             else if (i == 3)
             {
                 //    max = SettingManager.MaxNarratorSpeedValue;
                 //    min = SettingManager.MinNarratorSpeedValue;
-                value = _gameManager.SettingManager.NarratorSpeed + "";
+                value = _gm.SettingManager.NarratorSpeed + "";
             }
 
             //settings += string.Format("{0} {1}\n\tMin: {2}\tMax: {3} Value: {4}\n", InputManager.SelectedItemIndex == i ? "> " : "\t", _settingItems[i], max, min, value);
-            settings += (_gameManager.InputManager.SelectedItemIndex == i ? "> " : "\t") + _settingItems[i] + ": " + value + "\n";
+            settings += (_gm.InputManager.SelectedItemIndex == i ? "> " : "\t") + _settingItems[i] + ": " + value + "\n";
         }
 
-        _gameManager.TextDescription.text = settings;
+        _gm.UIManager.Content = settings;
     }
 
-    public override void OnStateEnter()
+    public override void OnEnter()
     {
-        _gameManager.Narrator.Stop();
-        _gameManager.InputManager.ChangeInputLayer(InputLayer.Settings, _settingItems.Length);
-        _gameManager.TextDescription.alignment = TextAnchor.UpperLeft;
-        UpdateGUI();
+        _gm.Narrator.Stop();
+        _gm.UIManager.TextHeader.alignment = TextAnchor.UpperLeft;
+        OnGUIChange();
     }
 
-    public override void OnStateExit()
+    public override void OnExit()
     {
     }
 
-    public override void OnStateUpdate()
+    public override void OnUpdate()
     {
+    }
+
+    public override void OnInput()
+    {
+        if (_gm.InputManager.SelectionSkipOrExit(false))
+        {
+            _gm.ChangeState(GameStateType.MainMenu);
+        }
     }
 }

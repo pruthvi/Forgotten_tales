@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class SettingManager
+public class SettingManager : MonoBehaviour
 {
     // BGM
     public float BGMVolume
     {
         get
         {
-            return _gameManager.AudioManager.BackgroundSource.volume;
+            return GameManager.Instance.AudioManager.BGMChannel.volume;
         }
 
         set
         {
             if (value >= 0 && value <= 1)
             {
-                _gameManager.AudioManager.BackgroundSource.volume = value;
+                GameManager.Instance.AudioManager.BGMChannel.volume = value;
             }
         }
     }
@@ -31,14 +31,14 @@ public class SettingManager
     {
         get
         {
-            return _gameManager.AudioManager.SFXSource.volume;
+            return GameManager.Instance.AudioManager.SFX1Channel.volume;
         }
 
         set
         {
             if (value >= 0 && value <= 1)
             {
-                _gameManager.AudioManager.SFXSource.volume = value;
+                GameManager.Instance.AudioManager.SFX1Channel.volume = value;
             }
         }
     }
@@ -51,14 +51,14 @@ public class SettingManager
     {
         get
         {
-            return _gameManager.AudioManager.NarrativeSource.volume;
+            return GameManager.Instance.AudioManager.NarratorChannel.volume;
         }
 
         set
         {
             if (value >= 0 && value <= 1)
             {
-                _gameManager.AudioManager.NarrativeSource.volume = value;
+                GameManager.Instance.AudioManager.NarratorChannel.volume = value;
             }
         }
     }
@@ -70,25 +70,18 @@ public class SettingManager
     {
         get
         {
-            return _gameManager.AudioManager.NarrativeSource.pitch;
+            return GameManager.Instance.AudioManager.NarratorChannel.pitch;
         }
 
         set
         {
             if (value >= -3 && value <= 3)
             {
-                _gameManager.AudioManager.NarrativeSource.pitch = value;
+                GameManager.Instance.AudioManager.NarratorChannel.pitch = value;
             }
         }
     }
     public float NarratorSpeedAdjustmentRatio = 0.25f;
     public float MaxNarratorSpeedValue = 1.75f;
     public float MinNarratorSpeedValue = 1;
-
-    private GameManager _gameManager;
-
-    public SettingManager(GameManager gm)
-    {
-        _gameManager = gm;
-    }
 }

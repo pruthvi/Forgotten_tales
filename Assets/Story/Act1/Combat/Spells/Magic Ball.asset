@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5b58636815988b4f86c4041d5234ac0, type: 3}
-  m_Name: Fireball
+  m_Name: Magic Ball
   m_EditorClassIdentifier: 
-  Name: Fireball
+  Name: Magic Ball
   DamageModifier: 3
-  SFXSoundOnFire: {fileID: 8300000, guid: da7525cf1a0c1634e907bd12884d6350, type: 3}
-  SFXSoundOnAttacked: {fileID: 8300000, guid: a84a8b4cbbb595741ad88341d0518e26, type: 3}
+  SFXWhenFire: {fileID: 8300000, guid: efbabdc1e8b99d34eb6f1c358da490ff, type: 3}
+  SFXWhenHit: {fileID: 8300000, guid: 94b2c4ebea225524ea95efc54557d8ea, type: 3}

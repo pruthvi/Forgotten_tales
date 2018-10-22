@@ -7,13 +7,8 @@ using UnityEngine;
 
 public class MainMenuState : GameState
 {
-
-    private string[] _menuItems = { "Start Game", "Controls", "Settings", "Exit" };
-
-    public MainMenuState(GameManager gm) : base(gm)
-    {
-
-    }
+    public AudioClip[] MainMenuItemClips;
+    public string[] MenuItemsText;
 
     public override GameStateType GameStateType
     {
@@ -23,43 +18,70 @@ public class MainMenuState : GameState
         }
     }
 
-    public override void UpdateGUI()
+    public override void OnGUIChange()
     {
         // Display each MenuItem
         string menu = "";
-        for (int i = 0; i < _menuItems.Length; i++)
+        for (int i = 0; i < MenuItemsText.Length; i++)
         {
             // Put > infront of the MenuItem if it was the SelectedIndex
-            menu += (_gameManager.InputManager.SelectedItemIndex == i ? "> " : "\t") + _menuItems[i] + "\n";
+            menu += (_gm.InputManager.SelectedItemIndex == i ? "> " : "\t") + MenuItemsText[i] + "\n";
         }
-        _gameManager.TextDescription.text = menu;
+        _gm.UIManager.TextContent.text = menu;
     }
 
-    public override void OnStateEnter()
+    public override void OnEnter()
     {
-        _gameManager.InputManager.ChangeInputLayer(InputLayer.MainMenu, _menuItems.Length);
-        _gameManager.AudioManager.PlayBGM(_gameManager.AudioManager.BGMMainMenuToIntro);
-        _gameManager.TextUI.text = "";
-        _gameManager.TextDescription.alignment = TextAnchor.MiddleCenter;
-        UpdateGUI();
-        _gameManager.Narrator.Play(_gameManager.ClipMainMenuGuide[0]);
-        //_gameManager.StartCoroutine(playMainMenuEnterAudio());
+        _gm.AudioManager.Play(_gm.AudioManager.BGMMainMenuToIntro, AudioChannel.BGM);
+        _gm.UIManager.Header = "";
+        _gm.UIManager.TextContent.alignment = TextAnchor.MiddleCenter;
+        _gm.InputManager.SetMenuItemLimit(MenuItemsText.Length);
+        OnGUIChange();
     }
 
-    public override void OnStateExit()
+    public override void OnExit()
     {
     }
 
-    public override void OnStateUpdate()
+    public override void OnUpdate()
     {
     }
 
-    //IEnumerator playMainMenuEnterAudio()
-    //{
-    //    for (int i = 0; i < _gameManager.ClipMainMenuGuide.Length; i++)
-    //    {
-    //        _gameManager.Narrator.Play(_gameManager.ClipMainMenuGuide[i]);
-    //        yield return new WaitForSeconds(_gameManager.ClipMainMenuGuide[i].length * (1 / _gameManager.Narrator.Speed));
-    //    }
-    //}
+    public override void OnInput()
+    {
+        if (_gm.InputManager.SelectionUp())
+        {
+            _gm.AudioManager.Play(MainMenuItemClips[_gm.InputManager.SelectedItemIndex], AudioChannel.SFX2);
+            OnGUIChange();
+        }
+
+        if (_gm.InputManager.SelectionDown())
+        {
+            _gm.AudioManager.Play(MainMenuItemClips[_gm.InputManager.SelectedItemIndex], AudioChannel.SFX2);
+            OnGUIChange();
+        }
+
+        if (_gm.InputManager.SelectionConfirm())
+        {
+            int index = _gm.InputManager.SelectedItemIndex;
+
+            if (index == 0)
+            {
+                _gm.ChangeState(GameStateType.PreGame);
+            }
+            else if (index == 1)
+            {
+                _gm.ChangeState(GameStateType.Controls);
+            }
+            else if (index == 2)
+            {
+                _gm.ChangeState(GameStateType.Setting);
+            }
+            else if (index == 3)
+            {
+                Application.Quit();
+            }
+        }
+    }
+    
 }

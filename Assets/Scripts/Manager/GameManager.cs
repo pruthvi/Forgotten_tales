@@ -3,33 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameProgress { Prologue, Intro, DialogueBegin, EndOfAct }
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     // Managers
-    public AudioManager AudioManager { get; private set; }
-    public SettingManager SettingManager { get; private set; }
-    public InputManager InputManager { get; private set; }
-    public CombatManager CombatManager { get; private set; }
+    [HideInInspector]
+    public AudioManager AudioManager;
+    [HideInInspector]
+    public SettingManager SettingManager;
+    [HideInInspector]
+    public InputManager InputManager;
+    [HideInInspector]
+    public UIManager UIManager;
+    [HideInInspector]
     public Narrator Narrator;
-
-    // GUI
-    public Text TextUI;
-    public Text TextDescription;
-
-    // Splash Screen
-    public bool SkipSplashScreen;
-    public AudioClip[] SplashScreenAudio;
-    public string[] SplashScreenText;
-    
-    // Main Menu
-    public AudioClip[] ClipMainMenuGuide;
-    public AudioClip[] ClipMenuItem;
-
-    // Narrator
-    public Act[] Acts;
 
     // Game Related
 
@@ -41,7 +29,7 @@ public class GameManager : MonoBehaviour
             return _states;
         }
     }
-
+    
     private GameState _currentGameState;
     public GameState CurrentGameState
     {
@@ -50,20 +38,6 @@ public class GameManager : MonoBehaviour
             return _currentGameState;
         }
     }
-
-    public GameProgress GameProgress;
-    
-    public Player Player;
-
-    public AudioClip[] ClipPreCombatOptions;
-    public AudioClip[] ClipCombatAttackOptions;
-
-    public string[] PreCombatOptions;
-    public string[] CombatAttackOptions;
-
-    public AudioClip[] AudioBattles;
-
-    public AudioClip[] AudioAssets;
 
     public InGameState InGameState
     {
@@ -81,7 +55,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    private GameStateType _currentGameStateType;
+    public GameStateType CurrentGameStateType
+    {
+        get
+        {
+            return _currentGameStateType;
+        }
+    }
 
     void Awake()
     {
@@ -95,36 +76,44 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        AudioManager = GetComponentInChildren<AudioManager>();
+        SettingManager = GetComponentInChildren<SettingManager>();
+        InputManager = GetComponentInChildren<InputManager>();
+        UIManager = GetComponentInChildren<UIManager>();
+        Narrator = GetComponentInChildren<Narrator>();
     }
 
     void Start()
     {
-        initGame();
-    }
+        States.Add(GetComponent<SplashScreenState>());
+        States.Add(GetComponent<MainMenuState>());
+        States.Add(GetComponent<ControlsState>());
+        States.Add(GetComponent<SettingState>());
+        States.Add(GetComponent<PreGameState>());
+        States.Add(GetComponent<InGameState>());
+        States.Add(GetComponent<BattleState>());
 
-    private void initGame()
-    {
-        AudioManager = GetComponentInChildren<AudioManager>();
-        SettingManager = new SettingManager(this);
-        InputManager = new InputManager(this);
 
-        Narrator = new Narrator(this, AudioManager.NarrativeSource, Acts);
+        foreach (GameState gs in States)
+        {
+            gs.InitState();
+        }
 
-        States.Add(new SplashScreenState(this));
-        States.Add(new MainMenuState(this));
-        States.Add(new ControlsState(this));
-        States.Add(new SettingsState(this));
-        States.Add(new PreGameState(this));
-        States.Add(new InGameState(this));
-        States.Add(new BattleState(this));
         ChangeState(GameStateType.SplashScreen);
     }
 
+
+
+    // Call OnUpdate when MonoBehaviour call Update
     void Update()
     {
-        InputManager.Update();
-        Narrator.UpdateStatus();
-        _currentGameState.OnStateUpdate();
+        // Update only if GameState has the same type
+        if (_currentGameState.GameStateType == _currentGameStateType)
+        {
+            _currentGameState.OnInput();
+            _currentGameState.OnUpdate();
+        }
     }
 
     public void ChangeState(GameStateType stateType)
@@ -132,7 +121,7 @@ public class GameManager : MonoBehaviour
         if (_currentGameState != null)
         {
             Narrator.Stop();
-            _currentGameState.OnStateExit();
+            _currentGameState.OnExit();
         }
         switch (stateType)
         {
@@ -145,7 +134,7 @@ public class GameManager : MonoBehaviour
             case GameStateType.Controls:
                 _currentGameState = States[2];
                 break;
-            case GameStateType.Settings:
+            case GameStateType.Setting:
                 _currentGameState = States[3];
                 break;
             case GameStateType.PreGame:
@@ -159,7 +148,8 @@ public class GameManager : MonoBehaviour
                 break;
         }
         Narrator.Stop();
-        _currentGameState.OnStateEnter();
+        _currentGameStateType = stateType;
+        _currentGameState.OnEnter();
     }
 
     public void NextEvent()

@@ -2,39 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour{
+public enum AudioChannel { BGM, SFX1, SFX2, Narrator }
+public class AudioManager : MonoBehaviour
+{
 
-    public AudioSource BackgroundSource;
-    public AudioSource SFXSource;
-    public AudioSource SFXSource2;
-    public AudioSource NarrativeSource;
-
-
-    // SFX
-    public AudioClip SFXMenuItemSelection;
-    public AudioClip SFXConfirm;
-    public AudioClip SFXSkip;
+    public AudioSource BGMChannel;
+    public AudioSource SFX1Channel;
+    public AudioSource SFX2Channel;
+    public AudioSource NarratorChannel;
 
     // BGM
     public AudioClip BGMMainMenuToIntro;
     public AudioClip BGMNarrative;
     public AudioClip BGMCombat;
 
-    public void PlayBGM(AudioClip clip)
+    void Start()
     {
-        BackgroundSource.clip = clip;
-        BackgroundSource.Play();
+        AudioSource[] sources = GetComponents<AudioSource>();
+        if (sources.Length >= 4)
+        {
+            BGMChannel = sources[0];
+            SFX1Channel = sources[1];
+            SFX2Channel = sources[2];
+            NarratorChannel = sources[3];
+        }
     }
 
-    public void PlaySFX(AudioClip clip)
-    {
-        SFXSource.clip = clip;
-        SFXSource.Play();
-    }
+    //
+    public bool LoopAudio;
 
-    public void PlaySFX2(AudioClip clip)
+    public void Play(AudioClip clip, AudioChannel channel)
     {
-        SFXSource2.clip = clip;
-        SFXSource2.Play();
+        switch (channel)
+        {
+            case AudioChannel.BGM:
+                BGMChannel.clip = clip;
+                BGMChannel.Play();
+                break;
+            case AudioChannel.SFX1:
+                SFX1Channel.clip = clip;
+                SFX1Channel.Play();
+                break;
+            case AudioChannel.SFX2:
+                SFX2Channel.clip = clip;
+                SFX2Channel.Play();
+                break;
+            case AudioChannel.Narrator:
+                NarratorChannel.clip = clip;
+                NarratorChannel.Play();
+                break;
+        }
     }
 }

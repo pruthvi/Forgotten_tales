@@ -33,6 +33,7 @@ public abstract class Combatant : ScriptableObject
             if (value > 0)
             {
                 _maxHp = value;
+                _hp = _maxHp;
             }
             else
             {
@@ -56,6 +57,7 @@ public abstract class Combatant : ScriptableObject
             if (value > 0)
             {
                 _maxMp = value;
+                _mp = _maxMp;
             }
             else
             {

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 135524079}
   - component: {fileID: 135524078}
   m_Layer: 5
-  m_Name: TextUI
+  m_Name: UI_Text_Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,72 +188,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 135524076}
   m_CullTransparentMesh: 0
---- !u!1 &170076733
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 170076735}
-  - component: {fileID: 170076734}
-  m_Layer: 0
-  m_Name: Directional Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!108 &170076734
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 170076733}
-  m_Enabled: 1
-  serializedVersion: 8
-  m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 1
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!4 &170076735
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 170076733}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &410542215
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +248,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &472776809
 GameObject:
@@ -324,10 +258,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 472776810}
+  - component: {fileID: 472776814}
   - component: {fileID: 472776813}
   - component: {fileID: 472776812}
   - component: {fileID: 472776811}
-  - component: {fileID: 472776814}
   - component: {fileID: 472776815}
   m_Layer: 0
   m_Name: AudioManager
@@ -360,7 +294,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -455,7 +389,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -550,7 +484,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -645,17 +579,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fb5411dd07c23479b1a83975842a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackgroundSource: {fileID: 472776813}
-  SFXSource: {fileID: 472776812}
-  SFXSource2: {fileID: 472776815}
-  NarrativeSource: {fileID: 472776811}
-  SFXMenuItemSelection: {fileID: 8300000, guid: 8fa4cad43187cfa4b8fc88c8b67aef07,
-    type: 3}
-  SFXConfirm: {fileID: 8300000, guid: b01f0a3ee2bb95a4c92f17398f63c88c, type: 3}
-  SFXSkip: {fileID: 8300000, guid: 0cf0698f11b20ae4683404a798d5d2f5, type: 3}
+  BGMChannel: {fileID: 472776813}
+  SFX1Channel: {fileID: 472776812}
+  SFX2Channel: {fileID: 472776811}
+  NarratorChannel: {fileID: 472776815}
   BGMMainMenuToIntro: {fileID: 8300000, guid: 4c6382b3090332248a0141c838835522, type: 3}
   BGMNarrative: {fileID: 8300000, guid: 74b0d1722851bbe4f8d573f59e0a8c0f, type: 3}
   BGMCombat: {fileID: 8300000, guid: b345b6cda2ab787439ede837f93a22ff, type: 3}
+  LoopAudio: 0
 --- !u!82 &472776815
 AudioSource:
   m_ObjectHideFlags: 0
@@ -751,6 +682,48 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &504288489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 504288490}
+  - component: {fileID: 504288491}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &504288490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 504288489}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1643781143}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &504288491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 504288489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38bb2cf1f1fb8b64ea48af1cea67e65b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TextHeader: {fileID: 135524078}
+  TextContent: {fileID: 1372119976}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,6 +802,104 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &582330946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 582330947}
+  - component: {fileID: 582330948}
+  m_Layer: 0
+  m_Name: Narrator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &582330947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 582330946}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1643781143}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &582330948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 582330946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ea78f67e98d90468512f6241850bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Status: 0
+  MaxSpeedModifier: 4
+  ActEnds: 0
+  Acts:
+  - {fileID: 11400000, guid: 1b0243fe14608cd4fa6ac5b0f40106fa, type: 2}
+  StopDialogueSFX: 0
+--- !u!1 &902003101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 902003102}
+  - component: {fileID: 902003103}
+  m_Layer: 0
+  m_Name: SettingsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &902003102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 902003101}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1643781143}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &902003103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 902003101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b4cdc4bbe4bf34995ee45d9d3fd3cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGMVolumeAdjustmentRatio: 0
+  MaxBGMVolumeValue: 0
+  MinBGMVolumeValue: 0
+  SFXVolumeAdjustmentRatio: 0
+  MaxSFXVolumeValue: 0
+  MinSFXVolumeValue: 0
+  NarratorVolumeAdjustmentRatio: 0
+  MaxNarratorVolume: 0
+  MinNarratorVolume: 0
+  NarratorSpeedAdjustmentRatio: 0
+  MaxNarratorSpeedValue: 0
+  MinNarratorSpeedValue: 0
 --- !u!1 &1220183143
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,7 +1006,7 @@ GameObject:
   - component: {fileID: 1372119977}
   - component: {fileID: 1372119976}
   m_Layer: 5
-  m_Name: TextDescription
+  m_Name: UI_Text_Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -999,6 +1070,98 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1372119974}
   m_CullTransparentMesh: 0
+--- !u!1 &1510981638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1510981639}
+  - component: {fileID: 1510981640}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1510981639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1510981638}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1643781143}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1510981640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1510981638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1674632a9f45342b41a09fe3ba9f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InputLayer: 0
+  SelectionStatus: 0
+  SFX:
+  - {fileID: 8300000, guid: 8fa4cad43187cfa4b8fc88c8b67aef07, type: 3}
+  - {fileID: 8300000, guid: b01f0a3ee2bb95a4c92f17398f63c88c, type: 3}
+  - {fileID: 8300000, guid: 0cf0698f11b20ae4683404a798d5d2f5, type: 3}
+--- !u!1 &1550615413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550615414}
+  - component: {fileID: 1550615415}
+  m_Layer: 0
+  m_Name: Narrator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1550615414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1550615413}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1643781143}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1550615415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1550615413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ea78f67e98d90468512f6241850bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Status: 0
+  MaxSpeedModifier: 0
+  ActEnds: 0
+  Acts:
+  - {fileID: 11400000, guid: 1b0243fe14608cd4fa6ac5b0f40106fa, type: 2}
+  StopDialogueSFX: 0
 --- !u!1 &1643781141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,6 +1171,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1643781143}
   - component: {fileID: 1643781142}
+  - component: {fileID: 1643781149}
+  - component: {fileID: 1643781148}
+  - component: {fileID: 1643781147}
+  - component: {fileID: 1643781150}
+  - component: {fileID: 1643781146}
+  - component: {fileID: 1643781145}
+  - component: {fileID: 1643781144}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1026,54 +1196,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bebb8a499379247803156fd8f985be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextUI: {fileID: 135524078}
-  TextDescription: {fileID: 1372119976}
-  SkipSplashScreen: 0
-  SplashScreenAudio:
-  - {fileID: 8300000, guid: 8097e3277ceb4f7478a2b88ae6c71b93, type: 3}
-  - {fileID: 8300000, guid: 49e81f4b5cb55134ab80d2071e35e413, type: 3}
-  - {fileID: 8300000, guid: 048c012487feed0498f62bd1c8fe6c76, type: 3}
-  - {fileID: 8300000, guid: c13ff1b420728bd47a62552650ba1500, type: 3}
-  SplashScreenText:
-  - Made with Unity
-  - Divided By Zero
-  - Presents
-  - Forgotten Tales - The Cult of Darkness
-  ClipMainMenuGuide:
-  - {fileID: 8300000, guid: a5a31a1435594e545a4296cdc54eb965, type: 3}
-  - {fileID: 8300000, guid: 1667e3c095574e64b95d5a7ecaee8c29, type: 3}
-  ClipMenuItem:
-  - {fileID: 8300000, guid: f14bd437111eede4896db839f585eb25, type: 3}
-  - {fileID: 8300000, guid: d095c673a0732c548874b75e21e8da2e, type: 3}
-  - {fileID: 8300000, guid: d2c7c59342275ce4981e6b36fb9a0b27, type: 3}
-  - {fileID: 8300000, guid: 4803234961d68a74795c518f62955cfc, type: 3}
-  Acts:
-  - {fileID: 11400000, guid: 1b0243fe14608cd4fa6ac5b0f40106fa, type: 2}
-  GameProgress: 0
-  Player: {fileID: 11400000, guid: dd54d86a3104eb344ab741028bc2f553, type: 2}
-  ClipPreCombatOptions:
-  - {fileID: 8300000, guid: c49306baf70c1aa4498270f9285bc2b4, type: 3}
-  - {fileID: 8300000, guid: f595d6db2ca6ba04a9c0bda9b4337295, type: 3}
-  - {fileID: 8300000, guid: 64662fce73e14d4429e0a4c052f3718a, type: 3}
-  ClipCombatAttackOptions:
-  - {fileID: 8300000, guid: 91e8625f5690ef1479a135c70bbf169b, type: 3}
-  - {fileID: 0}
-  PreCombatOptions:
-  - Fight
-  - Item
-  - Run
-  CombatAttackOptions:
-  - Spell
-  - Defense
-  AudioBattles:
-  - {fileID: 8300000, guid: 2633b14841503204c96cab25760528a1, type: 3}
-  - {fileID: 8300000, guid: 0dffd3c3aa0def54681590dd008337df, type: 3}
-  - {fileID: 8300000, guid: 94b2c4ebea225524ea95efc54557d8ea, type: 3}
-  - {fileID: 8300000, guid: a84a8b4cbbb595741ad88341d0518e26, type: 3}
-  - {fileID: 8300000, guid: d3429bcae53a7484da974d495f3c282f, type: 3}
-  - {fileID: 8300000, guid: 469aca8cb84eaf2449578a83fe9d4561, type: 3}
-  - {fileID: 8300000, guid: f21695146a925d94ba630ec9860311d5, type: 3}
-  AudioAssets: []
+  AudioManager: {fileID: 0}
+  SettingManager: {fileID: 0}
+  InputManager: {fileID: 0}
+  UIManager: {fileID: 0}
+  Narrator: {fileID: 0}
 --- !u!4 &1643781143
 Transform:
   m_ObjectHideFlags: 0
@@ -1085,6 +1212,118 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 472776810}
+  - {fileID: 1510981639}
+  - {fileID: 1550615414}
+  - {fileID: 902003102}
+  - {fileID: 504288490}
+  - {fileID: 582330947}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1643781144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643781141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4fbbebbcd3f6de408b526c683f6dfa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  ClipPreCombatOptions: []
+  ClipCombatAttackOptions: []
+  PreCombatOptions: []
+  CombatAttackOptions: []
+  PlayerSelectingStatus: 0
+--- !u!114 &1643781145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643781141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08c55960ce8acb4ab44156240cb00b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 11400000, guid: dd54d86a3104eb344ab741028bc2f553, type: 2}
+--- !u!114 &1643781146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643781141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0b21c5904b7df449542f8dc59f480d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PreGameProgress: 0
+--- !u!114 &1643781147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643781141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2bebcb4cc1d1b54d9b04ffdabd10298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settingItems: []
+--- !u!114 &1643781148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643781141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f729ff04f4755ca4990bec5eb7aef07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainMenuItemClips:
+  - {fileID: 8300000, guid: d5fa7158448257b428338337ca1700dc, type: 3}
+  - {fileID: 8300000, guid: d095c673a0732c548874b75e21e8da2e, type: 3}
+  - {fileID: 8300000, guid: d2c7c59342275ce4981e6b36fb9a0b27, type: 3}
+  - {fileID: 8300000, guid: 4803234961d68a74795c518f62955cfc, type: 3}
+  MenuItemsText:
+  - Start Game
+  - Controls
+  - Setting
+  - Exit
+--- !u!114 &1643781149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643781141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf4d9099ad28e949a781400a7f4bc74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkipSplashScreen: 1
+  AudioSplashScreen:
+  - {fileID: 8300000, guid: 8097e3277ceb4f7478a2b88ae6c71b93, type: 3}
+  - {fileID: 8300000, guid: 49e81f4b5cb55134ab80d2071e35e413, type: 3}
+  - {fileID: 8300000, guid: 048c012487feed0498f62bd1c8fe6c76, type: 3}
+  - {fileID: 8300000, guid: c13ff1b420728bd47a62552650ba1500, type: 3}
+  AudioTextDescription:
+  - Made with Unity
+  - Divided by Zero
+  - Presents
+  - Forgotten Tale - The Cult of Darkness
+--- !u!114 &1643781150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643781141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df05aec56f8f894987d00562846a744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

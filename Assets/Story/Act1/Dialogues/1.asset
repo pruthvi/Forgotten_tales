@@ -11,14 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 0}
+  DefaultEvent: {fileID: 0}
   IsEndOfAct: 0
-  Id: a1d1
-  TextDescription: 'When you open the door you find no one, just a note on the floor.
+  DialogueText: 'When you open the door you find no one, just a note on the floor.
     The note says: "Greetings Arkantus. I need you to meet me at the entrance to the
     Arcane Academy. I have the answers that you are looking for". What are you going
     to do?'
-  AudioDescription: {fileID: 8300000, guid: 9ffa775a0b7c69649a7b30573f97262f, type: 3}
+  DialogueClip: {fileID: 8300000, guid: 9ffa775a0b7c69649a7b30573f97262f, type: 3}
   Options:
   - {fileID: 11400000, guid: f7f82a83b5579f643b56629e06698a39, type: 2}
   - {fileID: 11400000, guid: edd6cd05e0f848346a13c019045e2372, type: 2}
+  SFX: []
+  SFXTime: []
+  StopDialogueSFX: 1

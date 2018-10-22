@@ -11,14 +11,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 10
   m_EditorClassIdentifier: 
+  DefaultEvent: {fileID: 0}
   IsEndOfAct: 0
-  TextDescription: You arrive quickly in the headmaster's office, something strange
-    is happening. You did not find anyone on the way. When you open the door, the
-    room is empty. There is nobody. There is a large window in the headmaster's room,
-    through it you see several flaming points going in the direction of the Arcane
-    Academy. They are huge fireballs! What are you going to do?
-  AudioDescription: {fileID: 8300000, guid: 798ff17890dbaa049ae4071984d46aa4, type: 3}
+  DialogueText: You arrive quickly in the headmaster's office, something strange is
+    happening. You did not find anyone on the way. When you open the door, the room
+    is empty. There is nobody. There is a large window in the headmaster's room, through
+    it you see several flaming points going in the direction of the Arcane Academy.
+    They are huge fireballs! What are you going to do?
+  DialogueClip: {fileID: 8300000, guid: 798ff17890dbaa049ae4071984d46aa4, type: 3}
   Options:
   - {fileID: 11400000, guid: b4b912ce31a81eb4890b0da66b3c70ca, type: 2}
   - {fileID: 11400000, guid: 55917cbffdaf2e64b838a96e346e122b, type: 2}
   - {fileID: 11400000, guid: d95b0d0f92df6fa4baa5bc4ef6b653bc, type: 2}
+  SFX: []
+  SFXTime: []
+  StopDialogueSFX: 0

@@ -21,5 +21,7 @@ public class DialogueInspector : Editor
             d.Options[i].NextEvent = (GameEvent)EditorGUILayout.ObjectField("Next Event for Option " + (i + 1), d.Options[i].NextEvent, typeof(GameEvent), false);
         }
         EditorGUI.indentLevel--;
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

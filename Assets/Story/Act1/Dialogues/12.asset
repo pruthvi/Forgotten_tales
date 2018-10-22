@@ -11,15 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 12
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 0}
+  DefaultEvent: {fileID: 0}
   IsEndOfAct: 0
-  Id: a1d12
-  TextDescription: You quickly shelter yourself under the table when a big explosion
+  DialogueText: You quickly shelter yourself under the table when a big explosion
     hits the room. The Arcane Academy is under attack. Part of the ceiling collapses
     on top of your desk, trapping you underneath it. Someone enters the room and calls
     your name as I've been looking for you, worried. The person seems injured. What
     are you going to do?
-  AudioDescription: {fileID: 8300000, guid: 243695f4a52bc0a4db2e279f8afdd172, type: 3}
+  DialogueClip: {fileID: 8300000, guid: 243695f4a52bc0a4db2e279f8afdd172, type: 3}
   Options:
   - {fileID: 11400000, guid: 350d4a35ff92aad47918eaa8091fd449, type: 2}
   - {fileID: 11400000, guid: ae8aed19a02ce0140b7ed0e1a1400738, type: 2}
+  SFX: []
+  SFXTime: []
+  StopDialogueSFX: 0

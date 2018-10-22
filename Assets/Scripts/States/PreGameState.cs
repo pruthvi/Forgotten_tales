@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+public enum PreGameProgress { Prologue, Intro }
+
 public class PreGameState : GameState
 {
-    private Narrator _narrator;
     private int _currentIntroClipIndex;
 
-    public PreGameState(GameManager gm) : base(gm)
-    {
-        _narrator = gm.Narrator;
-    }
+    public PreGameProgress PreGameProgress;
 
     public override GameStateType GameStateType
     {
@@ -22,73 +20,76 @@ public class PreGameState : GameState
         }
     }
 
-    public override void UpdateGUI()
+    public override void OnGUIChange()
     {
-        switch (_gameManager.GameProgress)
+        switch (PreGameProgress)
         {
-            case GameProgress.Prologue:
-                _gameManager.TextUI.text = "Prologue";
+            case PreGameProgress.Prologue:
+                _gm.UIManager.Header = "Prologue";
                 break;
-            case GameProgress.Intro:
-                _gameManager.TextUI.text = "Intro";
+            case PreGameProgress.Intro:
+                _gm.UIManager.Header = "Intro";
                 break;
         }
     }
 
-    public override void OnStateEnter()
+    public override void OnEnter()
     {
-        _gameManager.GameProgress = GameProgress.Prologue;
-        _gameManager.InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
-        _gameManager.TextUI.alignment = TextAnchor.MiddleCenter;
-        UpdateGUI();
-
-
+        _gm.UIManager.TextHeader.alignment = TextAnchor.MiddleCenter;
         // Begin the first Act
-        _narrator.BeginAct(0);
+        _gm.Narrator.BeginAct(0);
+
+        // Play Prelogue
+        PreGameProgress = PreGameProgress.Prologue;
+        _gm.UIManager.Content = _gm.Narrator.CurrentAct.PrologueTextDescription;
+        _gm.Narrator.Play(_gm.Narrator.CurrentAct.AudioPrologue);
+        OnGUIChange();
     }
 
-    public override void OnStateExit()
+    public override void OnExit()
     {
-        _gameManager.GameProgress = GameProgress.DialogueBegin;
+        _gm.Narrator.SetToIdle();
     }
 
-    public override void OnStateUpdate()
+    public override void OnUpdate()
     {
-        switch (_gameManager.GameProgress)
+        if (_gm.Narrator.CompletedOrSkipped)
         {
-            case GameProgress.Prologue:
-                if (_narrator.IsIdle)
-                {
-                    _gameManager.TextDescription.text = _narrator.CurrentAct.PrologueTextDescription;
-                    _narrator.Play(_gameManager.Narrator.CurrentAct.AudioPrologue);
-                    _gameManager.InputManager.ChangeInputLayer(InputLayer.Dialogue, 0);
-                }
-                if (_narrator.CompletedOrSkipped)
-                {
-                    _gameManager.GameProgress = GameProgress.Intro;
-                    UpdateGUI();
-                }
-                break;
-            case GameProgress.Intro:
-                if (_narrator.IsIdle)
-                {
-                    _gameManager.TextDescription.text = _narrator.CurrentAct.IntroTextDescriptions[_currentIntroClipIndex];
-                    _narrator.Play(_narrator.CurrentAct.AudioIntros[_currentIntroClipIndex]);
-                }
-                if (_narrator.CompletedOrSkipped)
-                {
-                    if (_currentIntroClipIndex + 1 < _narrator.CurrentAct.AudioIntros.Length)
-                    {
-                        _currentIntroClipIndex++;
-                        _narrator.Stop();
-                    }
-                    else
-                    {
-                        _gameManager.ChangeState(GameStateType.InGame);
-                    }
-                }
-                break;
+            if (_currentIntroClipIndex == _gm.Narrator.CurrentAct.AudioIntros.Length - 1)
+            {
+                _gm.ChangeState(GameStateType.InGame);
+            }
         }
     }
 
+    private void playIntro(int index)
+    {
+        OnGUIChange();
+        _gm.UIManager.Content = _gm.Narrator.CurrentAct.IntroTextDescriptions[_currentIntroClipIndex];
+        _gm.Narrator.Play(_gm.Narrator.CurrentAct.AudioIntros[_currentIntroClipIndex]);
     }
+
+    public override void OnInput()
+    {
+        if (_gm.InputManager.SelectionSkipOrExit(true))
+        {
+            if (PreGameProgress == PreGameProgress.Prologue)
+            {
+                _gm.Narrator.Stop();
+                PreGameProgress = PreGameProgress.Intro;
+                playIntro(_currentIntroClipIndex);
+                OnGUIChange();
+            }
+            else if(PreGameProgress == PreGameProgress.Intro)
+            {
+                if (_currentIntroClipIndex == _gm.Narrator.CurrentAct.AudioIntros.Length - 1)
+                {
+                    _gm.ChangeState(GameStateType.InGame);
+                    return;
+                }
+                _currentIntroClipIndex++;
+                playIntro(_currentIntroClipIndex);
+            }
+        }
+    }
+}

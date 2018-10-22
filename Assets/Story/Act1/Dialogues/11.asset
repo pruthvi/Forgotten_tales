@@ -11,11 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130aac1fa4a29a2408600baae6438254, type: 3}
   m_Name: 11
   m_EditorClassIdentifier: 
-  NextEvent: {fileID: 11400000, guid: 84c5f87d618dbee46bc3d7b35bb6f9a7, type: 2}
+  DefaultEvent: {fileID: 11400000, guid: 84c5f87d618dbee46bc3d7b35bb6f9a7, type: 2}
   IsEndOfAct: 0
-  Id: a1d11
-  TextDescription: The room is in complete chaos. The person who invaded took almost
+  DialogueText: The room is in complete chaos. The person who invaded took almost
     everything without a trace. There is only one local teleportation scroll, you
     keep it and run into the Kalimari headmaster's room.
-  AudioDescription: {fileID: 8300000, guid: 489d8390c168a9e4795dce6276605c80, type: 3}
+  DialogueClip: {fileID: 8300000, guid: 489d8390c168a9e4795dce6276605c80, type: 3}
   Options: []
+  SFX: []
+  SFXTime: []
+  StopDialogueSFX: 0

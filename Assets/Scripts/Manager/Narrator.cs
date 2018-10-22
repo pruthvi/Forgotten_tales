@@ -2,11 +2,13 @@
 using System.Collections;
 public enum NarratorStatus { Idle, Speaking, Completed, Skipped }
 public enum PlayType { Dialogue, Option }
-public class Narrator
+public class Narrator : MonoBehaviour
 {
-    private AudioSource _source;
-    public NarratorStatus Status { get; private set; }
+    private AudioSource _speaker;
+    // Narrator
 
+    public NarratorStatus Status;
+   
     public int MaxSpeedModifier = 4;
 
     public int SpeedModifier { get; private set; }
@@ -15,8 +17,6 @@ public class Narrator
     private AudioClip _currentClip;
 
     private float dialogueBeginTime;
-
-    private GameManager _gameManager;
 
     public bool ActEnds;
 
@@ -28,23 +28,23 @@ public class Narrator
             return _currentAct;
         }
     }
-    private Act[] _acts;
-    public Act[] Acts
+
+    public Act[] Acts;
+
+    public bool StopDialogueSFX;
+
+    public Dialogue FirstDialogue
     {
-        get
-        {
-            return _acts;
-        }
+        get;
+        private set;
     }
 
-    public Narrator(GameManager gm, AudioSource source, Act[] acts)
+    void Start()
     {
-        _gameManager = gm;
-        _source = source;
-        SpeedModifier = 1;
-        Stop();
-        _acts = acts;
+        _speaker = GameManager.Instance.AudioManager.NarratorChannel;
     }
+
+
 
     // Only call this when change to InGameState
     public void BeginAct(int index)
@@ -54,18 +54,18 @@ public class Narrator
             _currentAct = Acts[index];
             if (_currentAct.Dialogues.Count > 0)
             {
-                _gameManager.InGameState.CurrentGameEvent = _currentAct.Dialogues[0];
+                FirstDialogue = _currentAct.Dialogues[0];
             }
         }
     }
 
-    public void UpdateStatus()
+    void Update()
     {
-        if (_source.clip != null)
+        if (_speaker.clip != null)
         {
             if (Status == NarratorStatus.Speaking)
             {
-                if (!_source.isPlaying)
+                if (!_speaker.isPlaying)
                 {
                     Status = NarratorStatus.Completed;
                 }
@@ -125,35 +125,38 @@ public class Narrator
     public void Play(AudioClip clip)
     {
         _currentClip = clip;
-        _source.clip = _currentClip;
-        _source.Play();
+        _speaker.clip = _currentClip;
+        _speaker.Play();
         Status = NarratorStatus.Speaking;
-        //_gameManager.StartCoroutine(playSFXBasedOnTime());
     }
 
     public void Replay(PlayType type)
     {
         if(type == PlayType.Dialogue && _lastDialogue != null)
         {
-            _source.clip = _lastDialogue;
+            _speaker.clip = _lastDialogue;
         }
         else
         {
-            _source.clip = _currentClip;
+            _speaker.clip = _currentClip;
         }
-        _source.Play();
+        _speaker.Play();
         Status = NarratorStatus.Speaking;
     }
 
     public void Skip()
     {
-        Debug.Log("Skipped");
         Status = NarratorStatus.Skipped;
+    }
+
+    public void SetToIdle()
+    {
+        Status = NarratorStatus.Idle;
     }
 
     public void Stop()
     {
-        _source.Stop();
+        _speaker.Stop();
         Status = NarratorStatus.Idle;
     }
 
@@ -161,21 +164,21 @@ public class Narrator
     {
         get
         {
-            return _source.pitch;
+            return _speaker.pitch;
         }
         set
         {
             if (value >= -3 && value <= 3)
             {
-                _source.pitch = value;
-                _gameManager.AudioManager.SFXSource.pitch = _source.pitch;
+                _speaker.pitch = value;
+                GameManager.Instance.AudioManager.SFX1Channel.pitch = _speaker.pitch;
             }
         }
     }
 
     public void FastForward()
     {
-        if (_source.clip == null)
+        if (_speaker.clip == null)
         {
             return;
         }
@@ -188,25 +191,7 @@ public class Narrator
             SpeedModifier++;
         }
 
-        _source.pitch = 1 + (SpeedModifier == 1 ? 0 : (_gameManager.SettingManager.NarratorSpeedAdjustmentRatio * (SpeedModifier - 1)));
-        _gameManager.AudioManager.SFXSource.pitch = _source.pitch;
+        _speaker.pitch = 1 + (SpeedModifier == 1 ? 0 : (GameManager.Instance.SettingManager.NarratorSpeedAdjustmentRatio * (SpeedModifier - 1)));
+        GameManager.Instance.AudioManager.SFX1Channel.pitch = _speaker.pitch;
     }
-
-    //IEnumerator playSFXBasedOnTime()
-    //{
-    //    if (_gameManager.InGameState.OnDialogue)
-    //    {
-    //        Dialogue d = (Dialogue)_gameManager.InGameState.CurrentGameEvent;
-    //        for (int i = 0; i < d.SFX.Count; i++)
-    //        {
-    //            float waitTime = 0;
-    //            if (i < d.SFX.Count - 1)
-    //            {
-    //                waitTime = (d.SFXTime[i + 1] - d.SFXTime[i]);
-    //            }
-    //            _gameManager.AudioManager.PlaySFX(d.SFX[i]);
-    //            yield return new WaitForSeconds(waitTime * (1 / _gameManager.Narrator.Speed));
-    //        }
-    //    }
-    //}
 }

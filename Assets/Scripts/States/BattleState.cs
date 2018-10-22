@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public enum BattleTurn { Player, Mob }
 public enum PlayerSelectingStatus { NoSelection, Combat }
@@ -10,7 +11,13 @@ public class BattleState : GameState
     private BattleTurn BattleTurn;
 
     private Enemy _enemy;
-    private Player _player;
+    public Player Player;
+
+    public AudioClip[] ClipPreCombatOptions;
+    public AudioClip[] ClipCombatAttackOptions;
+
+    public string[] PreCombatOptions;
+    public string[] CombatAttackOptions;
 
     private float maxPlayerTurnTime = 15;
 
@@ -32,11 +39,6 @@ public class BattleState : GameState
 
     private bool playerSelecting;
 
-    public BattleState(GameManager gm) : base(gm)
-    {
-        _gameManager = gm;
-    }
-
     public override GameStateType GameStateType
     {
         get
@@ -45,27 +47,25 @@ public class BattleState : GameState
         }
     }
 
-    public override void UpdateGUI()
+    public override void OnGUIChange()
     {
         switch (BattleTurn)
         {
             case BattleTurn.Player:
-                _gameManager.TextUI.text = "Player - HP: " + _gameManager.Player.HP + "/" + _gameManager.Player.MaxHP + " Time Left: " + (maxPlayerTurnTime - (int)timer);
+                _gm.UIManager.Header = "Player - HP: " + Player.HP + "/" + Player.MaxHP + " Time Left: " + (maxPlayerTurnTime - (int)timer);
                 break;
             case BattleTurn.Mob:
-                _gameManager.TextUI.text = "Mob - HP: " + _battle.Enemies[0].HP + "/" + _battle.Enemies[0].MaxHP + " Time Left: " + (mobTimer - (int)timer);
+                _gm.UIManager.Header = "Mob - HP: " + _battle.Enemies[0].HP + "/" + _battle.Enemies[0].MaxHP + " Time Left: " + (mobTimer - (int)timer);
                 break;
         }
         
     }
 
-    public override void OnStateEnter()
+    public override void OnEnter()
     {
-        //_gameManager.InputManager.
-        _battle = (Battle)_gameManager.InGameState.CurrentGameEvent;
-        _gameManager.TextUI.text = "";
-        _player = _gameManager.Player;
-        _player.HP = _player.MaxHP;
+        _battle = (Battle)_gm.InGameState.CurrentGameEvent;
+        _gm.UIManager.Header = "";
+        Player.HP = Player.MaxHP;
         _battle.Enemies[0].HP = _battle.Enemies[0].MaxHP;
         if (_battle.Initiator.CombatantType == CombatantType.Mob)
         {
@@ -75,15 +75,15 @@ public class BattleState : GameState
         {
             BattleTurn = BattleTurn.Player;
         }
-        _gameManager.TextDescription.text = "";
+        _gm.UIManager.Content = "";
     }
 
-    public override void OnStateExit()
+    public override void OnExit()
     {
         
     }
 
-    public override void OnStateUpdate()
+    public override void OnUpdate()
     {
         if (timer + Time.deltaTime < maxPlayerTurnTime)
         {
@@ -93,18 +93,18 @@ public class BattleState : GameState
         {
             switchTurn();
         }
-        UpdateGUI();
+        OnGUIChange();
         switch (BattleTurn)
         {
             case BattleTurn.Mob:
                 if (_battle.Enemies[0].HP <= 0)
                 {
-                    _gameManager.ChangeState(GameStateType.InGame);
+                    _gm.ChangeState(GameStateType.InGame);
                 }
                 if (timer >= mobTimer / 2)
                 {
-                    _battle.InitiateFight(_battle.Enemies[0], _gameManager.Player, _battle.Enemies[0].Spells[0]);
-                    switchTurn();
+                    //_battle.InitiateFight(_battle.Enemies[0], _gm.Player, _battle.Enemies[0].Spells[0]);
+                    //switchTurn();
                 }
                 break;
             case BattleTurn.Player:
@@ -116,9 +116,9 @@ public class BattleState : GameState
     {
         if (BattleTurn == BattleTurn.Player)
         {
-            _gameManager.Narrator.Play(_gameManager.AudioBattles[6]);
-            BattleTurn = BattleTurn.Mob;
-            _gameManager.TextDescription.text = "";
+            //_gm.Narrator.Play(_gm.AudioBattles[6]);
+            //BattleTurn = BattleTurn.Mob;
+            //_gm.UIManager.Content = "";
         }
         else
         {
@@ -136,26 +136,26 @@ public class BattleState : GameState
 
     public void UpdatePlayerTurnGUI()
     {
-        if (PlayerSelectingStatus == PlayerSelectingStatus.NoSelection)
-        {
-            string preCombatMenu = "";
-            for (int i = 0; i < _gameManager.PreCombatOptions.Length; i++)
-            {
-                // Put > infront of the MenuItem if it was the SelectedIndex
-                preCombatMenu += (_gameManager.InputManager.SelectedItemIndex == i ? "> " : "\t") + _gameManager.PreCombatOptions[i] + "\n";
-            }
-            _gameManager.TextDescription.text = preCombatMenu;
-        }
-        else
-        {
-            string combatMenu = "";
-            for (int i = 0; i < _gameManager.CombatAttackOptions.Length; i++)
-            {
-                // Put > infront of the MenuItem if it was the SelectedIndex
-                combatMenu += (_gameManager.InputManager.SelectedItemIndex == i ? "> " : "\t") + _gameManager.CombatAttackOptions[i] + "\n";
-            }
-            _gameManager.TextDescription.text = combatMenu;
-        }
+        //if (PlayerSelectingStatus == PlayerSelectingStatus.NoSelection)
+        //{
+        //    string preCombatMenu = "";
+        //    for (int i = 0; i < _gm.PreCombatOptions.Length; i++)
+        //    {
+        //        // Put > infront of the MenuItem if it was the SelectedIndex
+        //        preCombatMenu += (_gm.InputManager.SelectedItemIndex == i ? "> " : "\t") + _gm.PreCombatOptions[i] + "\n";
+        //    }
+        //    _gm.TextDescription.text = preCombatMenu;
+        //}
+        //else
+        //{
+        //    string combatMenu = "";
+        //    for (int i = 0; i < _gm.CombatAttackOptions.Length; i++)
+        //    {
+        //        // Put > infront of the MenuItem if it was the SelectedIndex
+        //        combatMenu += (_gm.InputManager.SelectedItemIndex == i ? "> " : "\t") + _gm.CombatAttackOptions[i] + "\n";
+        //    }
+        //    _gm.TextDescription.text = combatMenu;
+        //}
         //switch (_player.Choice)
         //{
         //    case PlayerChoice.Idle:
@@ -175,60 +175,65 @@ public class BattleState : GameState
 
     private void onPlayerTurnEnter()
     {
-        // Play your turn
-        _gameManager.Narrator.Play(_gameManager.AudioBattles[5]);
-        _gameManager.InputManager.ChangeInputLayer(InputLayer.ChoosePreCombatOption, _gameManager.PreCombatOptions.Length);
-        PlayerSelectingStatus = PlayerSelectingStatus.NoSelection;
-        UpdatePlayerTurnGUI();
-        // If Low Health
-        if (_gameManager.Player.HP <= _gameManager.Player.MaxHP / 2)
-        {
-            _gameManager.AudioManager.PlaySFX(_gameManager.AudioBattles[4]);
-        }
-        if (_gameManager.ClipPreCombatOptions[_gameManager.InputManager.SelectedItemIndex] != null)
-        {
-            _gameManager.Narrator.Play(_gameManager.ClipPreCombatOptions[_gameManager.InputManager.SelectedItemIndex]);
-        }
+        //// Play your turn
+        //_gm.Narrator.Play(_gm.AudioBattles[5]);
+        //_gm.InputManager.ChangeInputLayer(InputLayer.ChoosePreCombatOption, PreCombatOptions);
+        //PlayerSelectingStatus = PlayerSelectingStatus.NoSelection;
+        //UpdatePlayerTurnGUI();
+        //// If Low Health
+        //if (_gm.Player.HP <= _gm.Player.MaxHP / 2)
+        //{
+        //    _gm.AudioManager.PlaySFX(_gm.AudioBattles[4]);
+        //}
+        //if (_gm.ClipPreCombatOptions[_gm.InputManager.SelectedItemIndex] != null)
+        //{
+        //    _gm.Narrator.Play(_gm.ClipPreCombatOptions[_gm.InputManager.SelectedItemIndex]);
+        //}
     }
 
     public void SelectPreCombatOption(int index)
     {
-        if (index == 0)
-        {
-            // Fight
-            _player.Choice = PlayerChoice.Fight;
-            _gameManager.InputManager.ChangeInputLayer(InputLayer.ChooseCombatOption, _gameManager.PreCombatOptions.Length);
-            PlayerSelectingStatus = PlayerSelectingStatus.Combat;
-            UpdatePlayerTurnGUI();
-        }
-        else if (index == 1)
-        {
-            // Item
-            _player.Choice = PlayerChoice.Item;
-            _gameManager.InputManager.ChangeInputLayer(InputLayer.ChooseItemOption, _player.InventoryManager.Items.Count);
-        }
-        else if (index == 2)
-        {
-            _battle.BattleResult = BattleResult.Lose;
-            _gameManager.ChangeState(GameStateType.InGame);
-        }
+        //if (index == 0)
+        //{
+        //    // Fight
+        //    _player.Choice = PlayerChoice.Fight;
+        //    _gm.InputManager.ChangeInputLayer(InputLayer.ChooseCombatOption, _gm.PreCombatOptions.Length);
+        //    PlayerSelectingStatus = PlayerSelectingStatus.Combat;
+        //    UpdatePlayerTurnGUI();
+        //}
+        //else if (index == 1)
+        //{
+        //    // Item
+        //    _player.Choice = PlayerChoice.Item;
+        //    _gm.InputManager.ChangeInputLayer(InputLayer.ChooseItemOption, _player.InventoryManager.Items.Count);
+        //}
+        //else if (index == 2)
+        //{
+        //    _battle.BattleResult = BattleResult.Lose;
+        //    _gm.ChangeState(GameStateType.InGame);
+        //}
 
     }
 
     public void SelectCombatOption(int index)
     {
-        if (index == 0)
-        {
-            // Spell
-            _battle.InitiateFight(_player, _battle.Enemies[0], _player.Spells[0]);
-        }
-        else if (index == 1)
-        {
-            // Defense
-            _player.Defense = true;
-        }
-        _gameManager.InputManager.ChangeInputLayer(InputLayer.ChoosePreCombatOption, _gameManager.PreCombatOptions.Length);
-        _gameManager.TextDescription.text = "";
-        switchTurn();
+        //if (index == 0)
+        //{
+        //    // Spell
+        //    _battle.InitiateFight(_player, _battle.Enemies[0], _player.Spells[0]);
+        //}
+        //else if (index == 1)
+        //{
+        //    // Defense
+        //    _player.Defense = true;
+        //}
+        //_gm.InputManager.ChangeInputLayer(InputLayer.ChoosePreCombatOption, _gm.PreCombatOptions.Length);
+        //_gm.TextDescription.text = "";
+        //switchTurn();
+    }
+
+    public override void OnInput()
+    {
+        
     }
 }
