@@ -29,8 +29,11 @@ public class MainMenuState : GameState
         string menu = "";
         for (int i = 0; i < _menuItems.Length; i++)
         {
+            //_gameManager.Narrator.Play(_gameManager.ClipMenuItem[0]);
             // Put > infront of the MenuItem if it was the SelectedIndex
             menu += (_gameManager.InputManager.SelectedItemIndex == i ? "> " : "\t") + _menuItems[i] + "\n";
+            // _gameManager.Narrator.Play(d.Options[_gameManager.InputManager.SelectedItemIndex].AudioDescription);
+            _gameManager.Narrator.Play(_gameManager.ClipMenuItem[_gameManager.InputManager.SelectedItemIndex]);
         }
         _gameManager.TextDescription.text = menu;
     }
@@ -42,8 +45,9 @@ public class MainMenuState : GameState
         _gameManager.TextUI.text = "";
         _gameManager.TextDescription.alignment = TextAnchor.MiddleCenter;
         UpdateGUI();
-        _gameManager.Narrator.Play(_gameManager.ClipMainMenuGuide[0]);
-        //_gameManager.StartCoroutine(playMainMenuEnterAudio());
+        //_gameManager.Narrator.Play(_gameManager.ClipMainMenuGuide[0]);
+        _gameManager.StartCoroutine(playMainMenuEnterAudio());
+        
     }
 
     public override void OnStateExit()
@@ -54,12 +58,15 @@ public class MainMenuState : GameState
     {
     }
 
-    //IEnumerator playMainMenuEnterAudio()
-    //{
-    //    for (int i = 0; i < _gameManager.ClipMainMenuGuide.Length; i++)
-    //    {
-    //        _gameManager.Narrator.Play(_gameManager.ClipMainMenuGuide[i]);
-    //        yield return new WaitForSeconds(_gameManager.ClipMainMenuGuide[i].length * (1 / _gameManager.Narrator.Speed));
-    //    }
-    //}
+    IEnumerator playMainMenuEnterAudio()
+    {
+        for (int i = 0; i < _gameManager.ClipMainMenuGuide.Length; i++)
+        {
+            _gameManager.Narrator.Play(_gameManager.ClipMainMenuGuide[i]);
+            yield return new WaitForSeconds(_gameManager.ClipMainMenuGuide[i].length * (1 / _gameManager.Narrator.Speed));
+        }
+        _gameManager.Narrator.Play(_gameManager.ClipMenuItem[0]);
+    }
+
+
 }
