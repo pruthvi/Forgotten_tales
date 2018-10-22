@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Name: 17
   m_EditorClassIdentifier: 
   DefaultEvent: {fileID: 11400000, guid: d7b7ed4c49da4d341a39d3d0ef211049, type: 2}
-  IsEndOfAct: 0
+  IsEndOfAct: 1
   TextDescription: "Your maneuver saves your life, but there\u2019s lots of smoke
     and wreckage on all sides. Somebody appears and quickly pulls you before another
     ball of fire hits you. He speaks:\r\n- Quick, Arkantus. I was sent by Kalimari
     to rescue you, we have a lot of things to discuss, there is no time to lose. Let\u2019s
-    go! So, we can safely escape."
-  AudioDescription: {fileID: 8300000, guid: 81891a42a5c47af4397673354ab7ccaa, type: 3}
+    go! So, we can safely escape.\n\nAway from all this confusion you see the Arcane
+    Academy burning in flames, hit by powerful and forbidden magic. There is no sign
+    of who is responsible for this or how many people have been injured in this nefarious
+    attack. You and your ally arrive in a tavern almost on the edge of town. There
+    you find the injured headmaster Kalimari and also find another mysterious figure.\r\nA
+    few hours ago everything was in peace and now by a twist of fate everything will
+    never be the same....\r"
+  AudioDescription: {fileID: 8300000, guid: f1722917fb6574a40b40854b31533493, type: 3}
   Options: []
   SFX: []
   SFXTime: []

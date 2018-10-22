@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: 19
   m_EditorClassIdentifier: 
   DefaultEvent: {fileID: 11400000}
-  IsEndOfAct: 1
+  IsEndOfAct: 0
   TextDescription: End of Act 1
   AudioDescription: {fileID: 8300000, guid: e83453cb74ef2ff4db5fb45b65fef5a7, type: 3}
   Options: []

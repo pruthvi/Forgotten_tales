@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: 14
   m_EditorClassIdentifier: 
   DefaultEvent: {fileID: 11400000, guid: d7b7ed4c49da4d341a39d3d0ef211049, type: 2}
-  IsEndOfAct: 0
+  IsEndOfAct: 1
   TextDescription: "You quickly pull the magic scroll and read the spell written.
     There is something different about this magic, as if someone interfered with its
     execution. You are surrounded by the magic of teleportation and disappear.\nWhen
@@ -20,8 +20,14 @@ MonoBehaviour:
     a magical scroll too. He introduces himself\r\n\"Hello Arkantus. My name is Kivan,
     I was sent by Kalimari to make sure you got safely out of this hell.\" There is
     much to be discussed and there is no time to lose, everything will be explained.
-    Let's go!"
-  AudioDescription: {fileID: 8300000, guid: c913fcb9da92f114ca7bd85034dd65e1, type: 3}
+    Let's go!\n\nAway from all this confusion you see the Arcane Academy burning in
+    flames, hit by powerful and forbidden magic. There is no sign of who is responsible
+    for this or how many people have been injured in this nefarious attack. You and
+    your ally arrive in a tavern almost on the edge of town. There you find the injured
+    headmaster Kalimari and also find another mysterious figure.\r\nA few hours ago
+    everything was in peace and now by a twist of fate everything will never be the
+    same....\r"
+  AudioDescription: {fileID: 8300000, guid: bb109dbea9f9d96439e2d529cde14ee6, type: 3}
   Options: []
   SFX: []
   SFXTime: []
