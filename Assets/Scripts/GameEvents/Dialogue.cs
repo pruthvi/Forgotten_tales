@@ -7,6 +7,8 @@ public enum DialougeStatus { BeginDialogue, PlayingDialogue, DialogueOption, End
 [CreateAssetMenu(menuName ="Forgotten Tale/Game Event/Dialogue", order = 2)]
 public class Dialogue : GameEvent {
 
+    private string textInstruction = "[R] - Replay | [T] - Replay Dialogue\n[F] Fast Forward | [Esc] Skip | ";
+
     public bool IsEndOfAct = false;
 
     [TextArea]
@@ -47,6 +49,8 @@ public class Dialogue : GameEvent {
 
         // Play the dialogue clip
         _gm.Narrator.Play(DialogueClip, PlayType.Dialogue);
+        _gm.UIManager.TextContent.alignment = TextAnchor.UpperLeft;
+        OnGUIChange();
         _gm.UIManager.Content = DialogueText;
 
         _gm.InputManager.SetMenuItemLimit(Options.Count);
@@ -77,7 +81,8 @@ public class Dialogue : GameEvent {
 
     public override void OnGUIChange()
     {
-        
+        string text = textInstruction + "Speed: x" + _gm.Narrator.Speed;
+        _gm.UIManager.Header = text;
     }
 
     private void showDialogueOptions()
@@ -116,6 +121,11 @@ public class Dialogue : GameEvent {
 
     public override void OnInput()
     {
+        if (_gm.InputManager.FastForward())
+        {
+            _gm.Narrator.FastForward();
+        }
+
         switch (dialougeStatus)
         {
             case DialougeStatus.PlayingDialogue:

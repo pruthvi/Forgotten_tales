@@ -1177,7 +1177,6 @@ GameObject:
   - component: {fileID: 1643781150}
   - component: {fileID: 1643781146}
   - component: {fileID: 1643781145}
-  - component: {fileID: 1643781144}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1220,23 +1219,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1643781144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1643781141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4fbbebbcd3f6de408b526c683f6dfa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  ClipPreCombatOptions: []
-  ClipCombatAttackOptions: []
-  PreCombatOptions: []
-  CombatAttackOptions: []
-  PlayerSelectingStatus: 0
 --- !u!114 &1643781145
 MonoBehaviour:
   m_ObjectHideFlags: 0

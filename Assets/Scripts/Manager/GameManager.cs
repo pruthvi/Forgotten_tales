@@ -47,14 +47,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public BattleState BattleState
-    {
-        get
-        {
-            return (BattleState)States[6];
-        }
-    }
-
     private GameStateType _currentGameStateType;
     public GameStateType CurrentGameStateType
     {
@@ -92,7 +84,6 @@ public class GameManager : MonoBehaviour
         States.Add(GetComponent<SettingState>());
         States.Add(GetComponent<PreGameState>());
         States.Add(GetComponent<InGameState>());
-        States.Add(GetComponent<BattleState>());
 
 
         foreach (GameState gs in States)

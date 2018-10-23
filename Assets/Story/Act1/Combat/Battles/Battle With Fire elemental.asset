@@ -12,9 +12,25 @@ MonoBehaviour:
   m_Name: Battle With Fire elemental
   m_EditorClassIdentifier: 
   DefaultEvent: {fileID: 0}
-  Initiator: {fileID: 11400000, guid: d20034dbddca37940b18ac64dbc312ca, type: 2}
-  Enemies:
-  - {fileID: 11400000, guid: d20034dbddca37940b18ac64dbc312ca, type: 2}
-  BattleResult: 2
+  SFXTicking: {fileID: 8300000, guid: 76e9ea479fda2bb408bacc9041e77439, type: 3}
+  ClipPreCombatOptions:
+  - {fileID: 8300000, guid: c49306baf70c1aa4498270f9285bc2b4, type: 3}
+  - {fileID: 8300000, guid: f595d6db2ca6ba04a9c0bda9b4337295, type: 3}
+  - {fileID: 8300000, guid: 64662fce73e14d4429e0a4c052f3718a, type: 3}
+  ClipCombatAttackOptions:
+  - {fileID: 8300000, guid: 91e8625f5690ef1479a135c70bbf169b, type: 3}
+  - {fileID: 8300000, guid: 800b14114a6070d49be2f533216391e7, type: 3}
+  PreCombatOptions:
+  - Fight
+  - Item
+  - Run
+  CombatAttackOptions:
+  - Spell
+  - Defense
+  InitiatedByEnemy: 1
+  Enemy: {fileID: 11400000, guid: d20034dbddca37940b18ac64dbc312ca, type: 2}
+  BattleResult: 1
+  MaxPlayerTimePerTurn: 5
+  MaxMobTimePerTurn: 5
   WinEvent: {fileID: 11400000, guid: a9521845be97d74419a2154a3f0a045f, type: 2}
   LoseEvent: {fileID: 11400000, guid: 46a60b662c72ec74ca1dacfc38cb967f, type: 2}

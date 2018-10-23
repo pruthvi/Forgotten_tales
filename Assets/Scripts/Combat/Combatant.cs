@@ -20,6 +20,8 @@ public abstract class Combatant : ScriptableObject
 
     private float _hp;
     private float _mp;
+
+    [HideInInspector]
     public bool Defense;
 
     public float MaxHP

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class InGameState : GameState
 {
-    private string textInstruction = "[R] - Replay | [T] - Replay Dialogue\n[F] Fast Forward | [Esc] Skip | ";
 
     private Narrator _narrator;
 
@@ -32,8 +31,6 @@ public class InGameState : GameState
 
     public override void OnGUIChange()
     {
-        string text = textInstruction + "Speed: x" + _gm.Narrator.Speed;
-        _gm.UIManager.Header = text;
     }
 
     public override void OnEnter()
@@ -81,6 +78,18 @@ public class InGameState : GameState
     {
         if (_currentEvent != null)
         {
+            if (_currentEvent.GameEventType == GameEventType.Battle)
+            {
+                Battle b = (Battle)_currentEvent;
+                if (b.BattleResult == BattleResult.PlayerWin)
+                {
+                    NextEvent(b.WinEvent);
+                }
+                else if (b.BattleResult == BattleResult.PlayerLose)
+                {
+                    NextEvent(b.LoseEvent);
+                }
+            }
             _currentEvent.OnInput();
             _currentEvent.OnUpdate();
         }

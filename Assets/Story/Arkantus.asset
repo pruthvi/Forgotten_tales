@@ -14,5 +14,4 @@ MonoBehaviour:
   Spells:
   - {fileID: 11400000, guid: 89dd82a62247844469ab537cdf80c5ee, type: 2}
   Defense: 0
-  Choice: 1
   SFXBlockAttack: {fileID: 0}

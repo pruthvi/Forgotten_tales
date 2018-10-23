@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 
-public enum PlayerChoice { Idle, Fight, Attack, Spell, Defense, Item, Run }
+
 [CreateAssetMenu(menuName = "Forgotten Tale/Combat/Player")]
 public class Player : Combatant {
     
     public InventoryManager InventoryManager = new InventoryManager();
-
-    public PlayerChoice Choice;
 
     public AudioClip SFXBlockAttack;
 

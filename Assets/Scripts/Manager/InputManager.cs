@@ -481,6 +481,15 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
+    public bool FastForward()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public bool SelectionSkipOrExit(bool skipDialogue)
     {
         if (Input.GetKeyDown(KeyCode.Escape))

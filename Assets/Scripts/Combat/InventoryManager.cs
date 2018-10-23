@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryManager{
 
-    public List<Item> Items { get; private set; }
+    public List<Item> Items = new List<Item>();
 
     private int _maxItemSlot = 4;
     public int MaxItemSlot
@@ -13,11 +13,6 @@ public class InventoryManager{
         {
             return _maxItemSlot;
         }
-    }
-
-    public InventoryManager()
-    {
-        Items = new List<Item>();
     }
 
     public bool AddItem(Item item)

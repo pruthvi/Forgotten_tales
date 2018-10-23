@@ -11,7 +11,7 @@ public class EnemyInspector : Editor
     {
         Enemy e = target as Enemy;
 
-        e.name = EditorGUILayout.TextField("Name", e.name);
+        e.Name = EditorGUILayout.TextField("Name", e.Name);
 
         e.MaxHP = EditorGUILayout.FloatField("Max HP", e.MaxHP);
         e.MaxMP = EditorGUILayout.FloatField("Max MP", e.MaxMP);
